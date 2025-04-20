@@ -3,986 +3,1620 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpinSelect - Modern Random Picker</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>SpinSelect Pro - Customizable Random Picker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
-            --primary-color: #6c5ce7;
-            --secondary-color: #a29bfe;
-            --accent-color: #fd79a8;
-            --dark-color: #2d3436;
-            --light-color: #f5f6fa;
-            --success-color: #00b894;
-            --warning-color: #fdcb6e;
-            --danger-color: #d63031;
+            /* Base Theme Colors (Can be overridden by themes) */
+            --primary-color: #6c5ce7; /* [cite: 1] */
+            --secondary-color: #a29bfe; /* [cite: 2] */
+            --accent-color: #fd79a8; /* [cite: 2] */
+            --dark-color: #2d3436; /* [cite: 2] */
+            --light-color: #f5f6fa; /* [cite: 2] */
+            --success-color: #00b894; /* [cite: 2] */
+            --warning-color: #fdcb6e; /* [cite: 2] */
+            --danger-color: #d63031; /* [cite: 2] */
+            --bg-color: #f8f9fa; /* [cite: 5] */
+            --text-color: #333;
+            --card-bg: white;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --shadow-hover-color: rgba(0, 0, 0, 0.15);
+        }
+
+        /* Theme Classes */
+        body.theme-1 { --primary-color: #6c5ce7; --secondary-color: #a29bfe; --accent-color: #fd79a8; } /* [cite: 90, 144] */
+        body.theme-2 { --primary-color: #00b894; --secondary-color: #55efc4; --accent-color: #0984e3; } /* [cite: 91, 144] */
+        body.theme-3 { --primary-color: #fd79a8; --secondary-color: #fab1a0; --accent-color: #6c5ce7; } /* [cite: 92, 144] */
+        body.theme-4 { --primary-color: #fdcb6e; --secondary-color: #ffeaa7; --accent-color: #fd79a8; } /* [cite: 93, 145] */
+        body.theme-5 { --primary-color: #0984e3; --secondary-color: #74b9ff; --accent-color: #00b894; } /* [cite: 94, 145] */
+        body.theme-6 { --primary-color: #d63031; --secondary-color: #ff7675; --accent-color: #fdcb6e; } /* [cite: 95, 145] */
+        body.theme-7 { --primary-color: #2c3e50; --secondary-color: #34495e; --accent-color: #1abc9c; } /* New Theme */
+        body.theme-8 { --primary-color: #e74c3c; --secondary-color: #c0392b; --accent-color: #f1c40f; } /* New Theme */
+        body.theme-9 { --primary-color: #8e44ad; --secondary-color: #9b59b6; --accent-color: #3498db; } /* New Theme */
+
+        /* Premium Theme Indicator */
+        .premium-theme::after {
+            content: 'PRO';
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            font-size: 0.6em;
+            background-color: gold;
+            color: black;
+            padding: 1px 3px;
+            border-radius: 3px;
+            font-weight: bold;
         }
 
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; /* [cite: 3] */
+            padding: 0; /* [cite: 4] */
+            box-sizing: border-box; /* [cite: 4] */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* [cite: 4] */
         }
 
         body {
-            background-color: #f8f9fa;
-            color: var(--dark-color);
-            line-height: 1.6;
+            background-color: var(--bg-color); /* [cite: 5] */
+            color: var(--text-color); /* [cite: 6] */
+            line-height: 1.6; /* [cite: 6] */
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+            max-width: 1400px; /* Increased max-width */
+            margin: 1rem auto; /* [cite: 7] */
+            padding: 1.5rem; /* [cite: 7] */
         }
 
         header {
-            text-align: center;
-            margin-bottom: 2rem;
-            animation: fadeIn 0.8s ease-in-out;
+            text-align: center; /* [cite: 7] */
+            margin-bottom: 2rem; /* [cite: 8] */
+            animation: fadeInDown 0.8s ease-out;
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            font-size: clamp(2rem, 5vw, 3rem); /* Responsive font size */ /* [cite: 8] */
+            margin-bottom: 0.5rem; /* [cite: 9] */
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color)); /* [cite: 9] */
             -webkit-background-clip: text;
             background-clip: text;
-            color: transparent;
+            color: transparent; /* [cite: 9] */
             display: inline-block;
         }
 
         .tagline {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 1.5rem;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* [cite: 10] */
+            color: #666; /* [cite: 11] */
+            margin-bottom: 1.5rem; /* [cite: 11] */
         }
 
+        /* Main layout: Controls on left, Wheel on right */
         .app-container {
             display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            animation: slideUp 0.6s ease-out;
+            grid-template-columns: 350px 1fr; /* Fixed width controls */ /* [cite: 11] */
+            gap: 2rem; /* [cite: 12] */
+            background: var(--card-bg); /* [cite: 12] */
+            border-radius: 15px; /* [cite: 12] */
+            box-shadow: 0 10px 30px var(--shadow-color); /* [cite: 12] */
+            padding: 2rem; /* [cite: 12] */
+            animation: fadeInUp 0.6s ease-out; /* [cite: 13] */
+            transition: background-color 0.3s ease;
         }
 
-        @media (max-width: 768px) {
+        /* Responsive layout for smaller screens */
+        @media (max-width: 992px) {
             .app-container {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr; /* Stack controls and wheel */ /* [cite: 13] */
             }
+            .controls { order: 2; } /* Show controls below wheel */
+            .wheel-section-content { font-size: 1rem; } /* Adjust font size */
+        }
+         @media (max-width: 576px) {
+            .container { padding: 1rem; }
+            .app-container { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
+            .tagline { font-size: 0.85rem; }
+            .btn { font-size: 0.9rem; padding: 0.7rem 1.2rem;}
+            .spin-btn { padding: 0.9rem 2rem; font-size: 1.1rem; }
+            textarea { min-height: 100px; } /* [cite: 25] */
         }
 
         .controls {
             display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+            flex-direction: column; /* [cite: 14] */
+            gap: 1.5rem; /* [cite: 15] */
         }
 
         .control-group {
-            background: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            background: var(--bg-color); /* [cite: 15] */
+            padding: 1.5rem; /* [cite: 16] */
+            border-radius: 10px; /* [cite: 16] */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* [cite: 16] */
+            border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         h2 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            font-size: 1.3rem; /* [cite: 17] */
+            margin-bottom: 1rem; /* [cite: 18] */
+            color: var(--primary-color); /* [cite: 18] */
+            display: flex; /* [cite: 18] */
+            align-items: center; /* [cite: 18] */
+            gap: 0.5rem; /* [cite: 18] */
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            transition: color 0.3s ease, border-color 0.3s ease;
         }
 
         .input-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1rem; /* [cite: 19] */
+        }
+         .input-group:last-child {
+            margin-bottom: 0;
         }
 
         label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #555;
+            display: block; /* [cite: 20] */
+            margin-bottom: 0.5rem; /* [cite: 21] */
+            font-weight: 600; /* Increased font-weight */ /* [cite: 21] */
+            color: #555; /* [cite: 21] */
+            font-size: 0.95rem;
+             transition: color 0.3s ease;
         }
 
-        input, textarea, select {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border 0.3s;
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%; /* [cite: 21] */
+            padding: 0.8rem; /* [cite: 22] */
+            border: 1px solid var(--border-color); /* [cite: 22] */
+            border-radius: 6px; /* [cite: 22] */
+            font-size: 1rem; /* [cite: 22] */
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* [cite: 22] */
         }
 
         input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+            outline: none; /* [cite: 23] */
+            border-color: var(--primary-color); /* [cite: 24] */
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 20%, transparent); /* [cite: 24] */
         }
 
         textarea {
-            min-height: 120px;
-            resize: vertical;
+            min-height: 120px; /* [cite: 25] */
+            resize: vertical; /* [cite: 26] */
         }
 
+        /* Button Styles */
         .btn {
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            padding: 0.8rem 1.5rem; /* [cite: 26] */
+            border: none; /* [cite: 27] */
+            border-radius: 6px; /* [cite: 27] */
+            font-size: 1rem; /* [cite: 27] */
+            font-weight: 600; /* [cite: 27] */
+            cursor: pointer; /* [cite: 27] */
+            transition: all 0.2s ease-in-out; /* [cite: 27] */
+            display: inline-flex; /* [cite: 27] */
+            align-items: center; /* [cite: 27] */
+            justify-content: center; /* [cite: 27] */
+            gap: 0.5rem; /* [cite: 28] */
+            text-decoration: none;
+            line-height: 1; /* Prevent text wrapping issues */
         }
 
-        .btn-primary {
+        .btn:hover {
+            transform: translateY(-2px); /* [cite: 30, 33, 35] */
+            box-shadow: 0 4px 10px var(--shadow-hover-color);
+        }
+         .btn:active {
+             transform: translateY(0px);
+             box-shadow: 0 2px 5px var(--shadow-color);
+         }
+         .btn:disabled {
+             opacity: 0.6;
+             cursor: not-allowed;
+             transform: none;
+             box-shadow: none;
+         }
+
+        .btn-primary { background-color: var(--primary-color); color: white; } /* [cite: 28, 29] */
+        .btn-primary:hover { background-color: color-mix(in srgb, var(--primary-color) 90%, black); } /* [cite: 29] */
+        .btn-secondary { background-color: var(--secondary-color); color: white; } /* [cite: 31, 32] */
+        .btn-secondary:hover { background-color: color-mix(in srgb, var(--secondary-color) 90%, black); } /* [cite: 32] */
+        .btn-accent { background-color: var(--accent-color); color: white; } /* [cite: 33, 34] */
+        .btn-accent:hover { background-color: color-mix(in srgb, var(--accent-color) 90%, black); } /* [cite: 34] */
+        .btn-danger { background-color: var(--danger-color); color: white; }
+        .btn-danger:hover { background-color: color-mix(in srgb, var(--danger-color) 90%, black); }
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        .btn-outline:hover {
             background-color: var(--primary-color);
             color: white;
         }
 
-        .btn-primary:hover {
-            background-color: #5a4bd1;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(108, 92, 231, 0.3);
-        }
 
-        .btn-secondary {
-            background-color: var(--secondary-color);
-            color: white;
-        }
+        .btn-group { display: flex; gap: 0.5rem; flex-wrap: wrap; } /* [cite: 35, 36] */
 
-        .btn-secondary:hover {
-            background-color: #8c7ae6;
-            transform: translateY(-2px);
-        }
-
-        .btn-accent {
-            background-color: var(--accent-color);
-            color: white;
-        }
-
-        .btn-accent:hover {
-            background-color: #e84393;
-            transform: translateY(-2px);
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .wheel-container {
+        /* Wheel Area */
+        .wheel-area {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between; /* Push spin button down */
             position: relative;
+            min-height: 550px; /* Ensure space for wheel and button */
         }
 
-        .wheel {
-            width: 100%;
-            max-width: 500px;
-            height: 500px;
-            position: relative;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-            transform: rotate(0deg);
+        .wheel-container { /* [cite: 36] */
+             width: 100%;
+             padding-top: 100%; /* Maintain aspect ratio 1:1 */
+             position: relative;
+             margin-bottom: 1rem; /* Space before spin button */
+        }
+
+        .wheel { /* [cite: 37] */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%; /* [cite: 38] */
+            overflow: hidden; /* [cite: 38] */
+            box-shadow: 0 0 25px var(--shadow-color), inset 0 0 15px rgba(0,0,0,0.1); /* [cite: 38] */
+            border: 5px solid white;
+            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1); /* Adjusted timing function */ /* [cite: 39] */
+            transform: rotate(0deg); /* [cite: 39] */
+            background-color: var(--light-color); /* Fallback bg */
         }
 
         .wheel-center {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: white;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary-color);
-            font-size: 1.5rem;
+            position: absolute; /* [cite: 39] */
+            width: 12%; /* Relative size */ /* [cite: 40] */
+            height: 12%; /* [cite: 40] */
+            background: white; /* [cite: 40] */
+            border-radius: 50%; /* [cite: 40] */
+            top: 50%; /* [cite: 40] */
+            left: 50%; /* [cite: 40] */
+            transform: translate(-50%, -50%); /* [cite: 40] */
+            z-index: 10; /* [cite: 40] */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* [cite: 41] */
+            display: flex; /* [cite: 41] */
+            align-items: center; /* [cite: 41] */
+            justify-content: center; /* [cite: 41] */
+            color: var(--primary-color); /* [cite: 41] */
+            font-size: 1.5rem; /* [cite: 41] */
+             transition: color 0.3s ease;
         }
 
         .wheel-section {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            transform-origin: bottom right;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            position: absolute; /* [cite: 42] */
+            width: 50%; /* [cite: 43] */
+            height: 50%; /* [cite: 43] */
+            transform-origin: 100% 100%; /* Bottom right */ /* [cite: 43] */
+            overflow: hidden; /* [cite: 43] */
+            /* clip-path: polygon(0 0, 100% 0, 100% 100%); OLD */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 0%); /* Triangle */ /* [cite: 44] */
         }
 
         .wheel-section-content {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            transform: rotate(45deg);
+            position: absolute; /* [cite: 44] */
+            left: -100%;
+            width: 200%; /* [cite: 45] */
+            height: 200%; /* [cite: 45] */
+            text-align: center; /* [cite: 46] */
+            transform: skewY(var(--skew-angle)) rotate(calc(var(--section-angle) / 2));
+            padding: 10px; /* [cite: 46] */
+            font-weight: 600; /* Adjusted font weight */ /* [cite: 45] */
+            color: white; /* [cite: 45] */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); /* [cite: 46] */
+            font-size: clamp(0.7rem, 1.5vw, 1.1rem); /* Responsive font size */ /* [cite: 46] */
+            word-break: break-word; /* [cite: 46] */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: bold;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-            font-size: 1.2rem;
-            text-align: center;
-            padding: 1rem;
-            word-break: break-word;
+            line-height: 1.2;
         }
 
+        /* Pointer */
         .pointer {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            z-index: 20;
+            position: absolute; /* [cite: 47] */
+            top: -10px; /* Adjusted position */ /* [cite: 48] */
+            left: 50%; /* [cite: 48] */
+            transform: translateX(-50%); /* [cite: 48] */
+            width: 0; /* [cite: 49] */
+            height: 0; /* [cite: 49] */
+            z-index: 20; /* [cite: 48] */
+            /* Triangle pointer */
+            border-left: 20px solid transparent; /* [cite: 50] */
+            border-right: 20px solid transparent; /* [cite: 50] */
+            border-top: 30px solid var(--danger-color); /* [cite: 50] */
+            transition: border-top-color 0.3s ease;
+        }
+        /* Alternative Pointer Style */
+        .pointer.style-arrow {
+             border: none;
+             width: 30px;
+             height: 40px;
+             background-color: var(--danger-color);
+             clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+             top: -20px; /* Adjust arrow position */
         }
 
-        .pointer:before {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 30px solid var(--danger-color);
-        }
 
         .spin-btn {
-            margin-top: 2rem;
-            padding: 1rem 2.5rem;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-            color: white;
-            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
+            margin-top: 1.5rem; /* [cite: 51] */
+            padding: 1rem 2.5rem; /* [cite: 52] */
+            font-size: 1.2rem; /* [cite: 52] */
+            border-radius: 50px; /* [cite: 52] */
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color)); /* [cite: 52] */
+            color: white; /* [cite: 52] */
+            box-shadow: 0 8px 15px color-mix(in srgb, var(--primary-color) 30%, transparent); /* [cite: 53] */
+            position: relative; /* [cite: 53] */
+            overflow: hidden; /* [cite: 53] */
+            z-index: 1; /* [cite: 53] */
+            border: none;
         }
 
         .spin-btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s;
+            content: ''; /* [cite: 54] */
+            position: absolute; /* [cite: 55] */
+            top: 0; left: -100%; /* Start hidden */ /* [cite: 55] */
+            width: 100%; height: 100%; /* [cite: 55] */
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            z-index: 1; /* [cite: 55] */
+            transition: left 0.6s ease; /* [cite: 56] */
         }
-
-        .spin-btn:hover:before {
-            opacity: 1;
+        .spin-btn:not(:disabled):hover:before {
+            left: 100%; /* Slide across on hover */ /* [cite: 57] */
         }
-
         .spin-btn:active {
-            transform: translateY(2px);
+            transform: translateY(1px); /* [cite: 57] */
+            box-shadow: 0 5px 10px color-mix(in srgb, var(--primary-color) 25%, transparent); /* [cite: 58] */
         }
 
+        /* Result Modal */
         .result-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
+            position: fixed; /* [cite: 58] */
+            top: 0; left: 0; /* [cite: 59] */
+            width: 100%; height: 100%; /* [cite: 59] */
+            background: rgba(0, 0, 0, 0.7); /* [cite: 59] */
+            display: flex; /* [cite: 59] */
+            align-items: center; /* [cite: 59] */
+            justify-content: center; /* [cite: 59] */
+            z-index: 1000; /* Higher z-index */ /* [cite: 60] */
+            opacity: 0; /* [cite: 60] */
+            pointer-events: none; /* [cite: 60] */
+            transition: opacity 0.3s ease-in-out; /* [cite: 60] */
         }
-
         .result-modal.active {
-            opacity: 1;
-            pointer-events: all;
+            opacity: 1; /* [cite: 60] */
+            pointer-events: all; /* [cite: 61] */
         }
-
         .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 500px;
-            width: 90%;
-            transform: scale(0.8);
-            transition: transform 0.3s;
-            position: relative;
+            background: var(--card-bg); /* [cite: 61] */
+            padding: 2rem 2.5rem; /* [cite: 62] */
+            border-radius: 15px; /* [cite: 62] */
+            text-align: center; /* [cite: 62] */
+            max-width: 550px; /* [cite: 62] */
+            width: 90%; /* [cite: 62] */
+            transform: scale(0.9); /* [cite: 62] */
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease; /* [cite: 63] */
+            position: relative; /* [cite: 62] */
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
         }
-
         .result-modal.active .modal-content {
-            transform: scale(1);
+            transform: scale(1); /* [cite: 63] */
         }
-
         .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #666;
+            position: absolute; /* [cite: 64] */
+            top: 10px; right: 15px; /* [cite: 65] */
+            background: none; border: none; /* [cite: 65] */
+            font-size: 2rem; /* Increased size */ /* [cite: 65] */
+            cursor: pointer; /* [cite: 65] */
+            color: #aaa; /* [cite: 65] */
+            line-height: 1;
+            padding: 5px;
+            transition: color 0.2s;
         }
+         .modal-close:hover { color: var(--dark-color); }
 
         .winner-text {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: var(--primary-color);
+            font-size: 1.5rem; /* [cite: 66] */
+            margin-bottom: 0.5rem; /* [cite: 67] */
+            color: var(--text-color); /* [cite: 67] */
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
-
+        .winner-list {
+             max-height: 200px; /* Allow scrolling for many winners */
+             overflow-y: auto;
+             margin: 1rem 0;
+             padding: 0.5rem;
+             background: var(--bg-color);
+             border-radius: 8px;
+             border: 1px solid var(--border-color);
+        }
         .winner-name {
-            font-size: 3rem;
-            font-weight: bold;
-            margin: 1rem 0;
-            color: var(--accent-color);
-            animation: pulse 1.5s infinite;
+            font-size: clamp(1.8rem, 5vw, 2.8rem); /* Responsive font size */ /* [cite: 67] */
+            font-weight: bold; /* [cite: 68] */
+            color: var(--accent-color); /* [cite: 68] */
+            padding: 0.5rem 0;
+            line-height: 1.2;
+            animation: pulse 1.5s infinite ease-in-out; /* [cite: 68] */
+             transition: color 0.3s ease;
         }
+         .winner-list .winner-name { /* Style for multiple winners */
+             font-size: 1.4rem;
+             padding: 0.3rem 0;
+             animation: none; /* Disable pulse for list items */
+             border-bottom: 1px dashed var(--border-color);
+         }
+         .winner-list .winner-name:last-child {
+             border-bottom: none;
+         }
 
+        /* Share Options */
         .share-options {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
+            display: flex; /* [cite: 69] */
+            gap: 1rem; /* [cite: 70] */
+            justify-content: center; /* [cite: 70] */
+            margin-top: 1.5rem; /* [cite: 70] */
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+             transition: border-color 0.3s ease;
         }
-
         .share-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 45px; /* [cite: 70] */
+            height: 45px; /* [cite: 71] */
+            border-radius: 50%; /* [cite: 71] */
+            display: flex; /* [cite: 71] */
+            align-items: center; /* [cite: 71] */
+            justify-content: center; /* [cite: 71] */
+            color: white; /* [cite: 71] */
+            font-size: 1.3rem; /* [cite: 71] */
+            text-decoration: none;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s; /* [cite: 71] */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .share-btn:hover {
+            transform: translateY(-3px) scale(1.05); /* [cite: 72] */
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+        .twitter { background-color: #1DA1F2; } /* [cite: 73] */
+        .facebook { background-color: #1877F2; } /* Updated Facebook color */ /* [cite: 74] */
+        .whatsapp { background-color: #25D366; } /* [cite: 75] */
+        .copy-link { background-color: var(--secondary-color); } /* [cite: 76] */
+        .email { background-color: #7f8c8d; } /* Added Email */
+
+
+        /* Saved Wheels Section */
+        .saved-wheels { margin-top: 1rem; } /* [cite: 77] */
+        .saved-wheels-list {
+            max-height: 200px;
+            overflow-y: auto;
+            padding-right: 5px; /* Space for scrollbar */
+        }
+        .saved-wheel {
+            background: var(--card-bg); /* [cite: 78] */
+            padding: 0.8rem 1rem; /* [cite: 79] */
+            border-radius: 8px; /* [cite: 79] */
+            margin-bottom: 0.5rem; /* [cite: 79] */
+            display: flex; /* [cite: 79] */
+            justify-content: space-between; /* [cite: 79] */
+            align-items: center; /* [cite: 79] */
+            box-shadow: 0 2px 5px var(--shadow-color); /* [cite: 79] */
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.3s ease, border-color 0.3s ease; /* [cite: 80] */
+        }
+        .saved-wheel:hover {
+            transform: translateX(3px); /* [cite: 80] */
+            box-shadow: 0 4px 8px var(--shadow-hover-color); /* [cite: 81] */
+        }
+        .saved-wheel-info {
+             font-size: 0.9rem;
+             color: var(--text-color);
+             overflow: hidden;
+             text-overflow: ellipsis;
+             white-space: nowrap;
+             margin-right: 10px;
+             transition: color 0.3s ease;
+         }
+        .saved-wheel-actions { display: flex; gap: 0.5rem; } /* [cite: 81, 82] */
+        .action-btn {
+            width: 32px; /* [cite: 82] */
+            height: 32px; /* [cite: 83] */
+            border-radius: 50%; /* [cite: 83] */
+            display: flex; align-items: center; justify-content: center; /* [cite: 83] */
+            background: var(--bg-color); /* [cite: 83] */
+            border: 1px solid var(--border-color); /* [cite: 83] */
+            color: #555;
+            cursor: pointer; /* [cite: 83] */
+            transition: all 0.2s; /* [cite: 83] */
+        }
+        .action-btn:hover {
+            background: var(--secondary-color); /* [cite: 84] */
+            color: white;
+            border-color: var(--secondary-color);
+        }
+         .action-btn.delete-btn:hover {
+             background: var(--danger-color);
+             border-color: var(--danger-color);
+             color: white;
+         }
+
+        /* Theme Selector */
+        .theme-selector {
+            display: grid; /* [cite: 85] */
+            grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); /* Responsive columns */ /* [cite: 86] */
+            gap: 0.7rem; /* [cite: 86] */
+            margin-top: 0.5rem; /* [cite: 86] */
+        }
+        .theme-option {
+            height: 35px; /* [cite: 86] */
+            border-radius: 6px; /* [cite: 87] */
+            cursor: pointer; /* [cite: 87] */
+            border: 2px solid var(--border-color); /* [cite: 87] */
+            transition: all 0.2s ease-in-out; /* [cite: 87] */
+            position: relative; /* For premium badge */
+            overflow: hidden; /* Ensure gradient stays within bounds */
+        }
+        .theme-option:hover {
+            transform: scale(1.1); /* [cite: 88] */
+            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+        }
+        .theme-option.active {
+            border-color: var(--primary-color); /* [cite: 89] */
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 30%, transparent); /* [cite: 90] */
+        }
+        .theme-1 { background: linear-gradient(45deg, #6c5ce7, #a29bfe); } /* [cite: 90] */
+        .theme-2 { background: linear-gradient(45deg, #00b894, #55efc4); } /* [cite: 91] */
+        .theme-3 { background: linear-gradient(45deg, #fd79a8, #fab1a0); } /* [cite: 92] */
+        .theme-4 { background: linear-gradient(45deg, #fdcb6e, #ffeaa7); } /* [cite: 93] */
+        .theme-5 { background: linear-gradient(45deg, #0984e3, #74b9ff); } /* [cite: 94] */
+        .theme-6 { background: linear-gradient(45deg, #d63031, #ff7675); } /* [cite: 95] */
+        .theme-7 { background: linear-gradient(45deg, #2c3e50, #34495e); } /* New */
+        .theme-8 { background: linear-gradient(45deg, #e74c3c, #f1c40f); } /* New */
+        .theme-9 { background: linear-gradient(45deg, #8e44ad, #3498db); } /* New */
+
+        /* Checkbox/Toggle Switch Styling */
+        .toggle-switch {
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            transition: transform 0.3s;
+            gap: 0.8rem;
+            margin-top: 0.5rem;
         }
-
-        .share-btn:hover {
-            transform: translateY(-3px);
+        .toggle-switch label {
+             margin-bottom: 0; /* Override default label margin */
+             cursor: pointer;
+             font-weight: normal; /* Make label less prominent */
+             font-size: 0.9rem;
+         }
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 44px; /* Smaller switch */
+          height: 24px;
         }
-
-        .twitter {
-            background-color: #1DA1F2;
+        .switch input { display:none; }
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0; left: 0; right: 0; bottom: 0;
+          background-color: #ccc;
+          transition: .4s;
+          border-radius: 24px;
         }
-
-        .facebook {
-            background-color: #4267B2;
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 18px; width: 18px;
+          left: 3px; bottom: 3px;
+          background-color: white;
+          transition: .4s;
+          border-radius: 50%;
         }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(20px); }
 
-        .whatsapp {
-            background-color: #25D366;
-        }
-
-        .copy-link {
-            background-color: var(--primary-color);
-        }
-
-        .saved-wheels {
-            margin-top: 2rem;
-        }
-
-        .saved-wheel {
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
+        /* Spin History Section */
+        .spin-history { margin-top: 1rem; }
+        .spin-history-list {
+            max-height: 150px;
+            overflow-y: auto;
+            padding-right: 5px;
+             font-size: 0.85rem;
+             list-style: none;
+             padding-left: 0;
+             border: 1px solid var(--border-color);
+             border-radius: 6px;
+             background: var(--bg-color);
+             transition: background-color 0.3s ease, border-color 0.3s ease;
+         }
+        .spin-history-list li {
+            padding: 0.4rem 0.8rem;
+            border-bottom: 1px dashed var(--border-color);
+            color: var(--text-color);
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
+            gap: 1rem;
+            transition: color 0.3s ease, border-color 0.3s ease;
         }
+        .spin-history-list li:last-child { border-bottom: none; }
+        .history-time { font-size: 0.75rem; color: #777; white-space: nowrap; }
+        .history-winner { font-weight: 600; color: var(--primary-color); transition: color 0.3s ease; }
 
-        .saved-wheel:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .saved-wheel-actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .action-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f1f1f1;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .action-btn:hover {
-            background: #e1e1e1;
-        }
-
-        .theme-selector {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .theme-option {
-            height: 40px;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .theme-option:hover {
-            transform: scale(1.05);
-        }
-
-        .theme-option.active {
-            border-color: var(--dark-color);
-        }
-
-        .theme-1 {
-            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
-        }
-
-        .theme-2 {
-            background: linear-gradient(45deg, #00b894, #55efc4);
-        }
-
-        .theme-3 {
-            background: linear-gradient(45deg, #fd79a8, #fab1a0);
-        }
-
-        .theme-4 {
-            background: linear-gradient(45deg, #fdcb6e, #ffeaa7);
-        }
-
-        .theme-5 {
-            background: linear-gradient(45deg, #0984e3, #74b9ff);
-        }
-
-        .theme-6 {
-            background: linear-gradient(45deg, #d63031, #ff7675);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes confetti {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background-color: var(--accent-color);
-            opacity: 0;
-            z-index: 999;
-            animation: confetti 3s ease-out forwards;
-        }
-
+        /* Footer */
         footer {
-            text-align: center;
-            margin-top: 3rem;
-            color: #666;
-            font-size: 0.9rem;
-            animation: fadeIn 1s ease-in-out;
+            text-align: center; /* [cite: 107] */
+            margin-top: 3rem; /* [cite: 108] */
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            color: #777; /* [cite: 108] */
+            font-size: 0.9rem; /* [cite: 108] */
+            animation: fadeInUp 1s ease-out 0.5s; /* [cite: 108] */
+            animation-fill-mode: backwards; /* Start animation later */
+             transition: border-color 0.3s ease, color 0.3s ease;
         }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        footer a {
             color: var(--primary-color);
+            text-decoration: none;
+             transition: color 0.3s ease;
+        }
+        footer a:hover { text-decoration: underline; }
+
+        /* Animations */
+        @keyframes fadeInDown { /* New animation */
+             from { opacity: 0; transform: translateY(-20px); }
+             to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp { /* Renamed from slideUp */ /* [cite: 98, 99, 100] */
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse { /* [cite: 100, 101, 102] */
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes confetti { /* [cite: 103, 104, 105] */
+            0% { transform: translateY(0) rotateZ(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotateZ(720deg); opacity: 0; }
+        }
+        .confetti {
+            position: fixed; /* [cite: 105] */
+            width: 10px; height: 15px; /* Rectangular confetti */ /* [cite: 106] */
+            background-color: var(--accent-color); /* [cite: 106] */
+            opacity: 0; /* [cite: 106] */
+            z-index: 1001; /* Above modal */ /* [cite: 106] */
+            animation: confetti 3s ease-out forwards; /* [cite: 106] */
+            pointer-events: none;
         }
 
-        .feature-title {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
-            color: var(--dark-color);
+        /* Utility Classes */
+        .hidden { display: none; }
+        .text-muted { color: #777; font-size: 0.85rem; }
+        .premium-indicator {
+            font-size: 0.7rem;
+            background-color: gold;
+            color: black;
+            padding: 1px 4px;
+            border-radius: 3px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 140px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%; /* Position above the element */
+            left: 50%;
+            margin-left: -70px; /* Center the tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8rem;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
         }
 
-        .feature-desc {
-            color: #666;
+        /* Placeholder for Pro Features */
+        .pro-feature-placeholder {
+            border: 1px dashed var(--warning-color);
+            background-color: color-mix(in srgb, var(--warning-color) 10%, transparent);
+            padding: 0.8rem;
+            margin-top: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: color-mix(in srgb, var(--warning-color) 80%, black);
         }
+         .pro-feature-placeholder i { margin-right: 5px; }
+
     </style>
 </head>
-<body>
-    <div class="container">
+<body class="theme-1"> <div class="container">
         <header>
-            <h1>SpinSelect</h1>
-            <p class="tagline">The modern, customizable random picker wheel for all your selection needs</p>
-        </header>
+            <h1><i class="fas fa-bullseye"></i> SpinSelect Pro</h1>
+            <p class="tagline">The Ultimate Customizable Random Picker Wheel</p> </header>
 
         <div class="app-container">
             <div class="controls">
                 <div class="control-group">
-                    <h2><i class="fas fa-list"></i> Entries</h2>
-                    <div class="input-group">
-                        <label for="entries">Add items (one per line or comma separated)</label>
-                        <textarea id="entries" placeholder="Enter names, items, or options"></textarea>
+                    <h2><i class="fas fa-list-check"></i> Entries</h2> <div class="input-group">
+                        <label for="entries">Add Items (one per line)</label> <textarea id="entries" placeholder="Example: Item One\nAnother Item: 3 (Weight)\nItem Three" rows="6"></textarea> <p class="text-muted">Tip: Add weight using ': number' (e.g., 'Prize: 5'). Default weight is 1.</p>
                     </div>
                     <div class="btn-group">
-                        <button class="btn btn-primary" id="add-entries">
-                            <i class="fas fa-plus"></i> Add Items
-                        </button>
-                        <button class="btn btn-secondary" id="clear-entries">
-                            <i class="fas fa-trash"></i> Clear
-                        </button>
-                    </div>
+                        <button class="btn btn-primary" id="update-wheel-btn"><i class="fas fa-sync-alt"></i> Update Wheel</button> <button class="btn btn-secondary" id="clear-entries-btn"><i class="fas fa-trash"></i> Clear All</button> </div>
                 </div>
 
                 <div class="control-group">
-                    <h2><i class="fas fa-palette"></i> Customization</h2>
+                    <h2><i class="fas fa-palette"></i> Customization</h2> <div class="input-group">
+                        <label for="wheel-title">Wheel Title</label> <input type="text" id="wheel-title" placeholder="My Awesome Wheel"> </div>
                     <div class="input-group">
-                        <label for="wheel-theme">Wheel Theme</label>
-                        <div class="theme-selector">
-                            <div class="theme-option theme-1 active" data-theme="1"></div>
-                            <div class="theme-option theme-2" data-theme="2"></div>
-                            <div class="theme-option theme-3" data-theme="3"></div>
-                            <div class="theme-option theme-4" data-theme="4"></div>
-                            <div class="theme-option theme-5" data-theme="5"></div>
-                            <div class="theme-option theme-6" data-theme="6"></div>
+                        <label>Wheel Theme</label> <div class="theme-selector">
+                            <div class="theme-option theme-1 active" data-theme="1" title="Default Purple"></div> <div class="theme-option theme-2" data-theme="2" title="Green & Blue"></div> <div class="theme-option theme-3" data-theme="3" title="Pink & Purple"></div> <div class="theme-option theme-4" data-theme="4" title="Yellow & Orange"></div> <div class="theme-option theme-5" data-theme="5" title="Blue & Light Blue"></div> <div class="theme-option theme-6" data-theme="6" title="Red & Orange"></div> <div class="theme-option theme-7" data-theme="7" title="Midnight Blue"></div> <div class="theme-option theme-8 premium-theme" data-theme="8" title="Sunset (PRO)"></div> <div class="theme-option theme-9 premium-theme" data-theme="9" title="Galaxy (PRO)"></div> </div>
+                        <div class="pro-feature-placeholder hidden" id="premium-theme-notice">
+                            <i class="fas fa-star"></i> PRO themes require activation.
                         </div>
                     </div>
+                     <div class="input-group">
+                        <label for="pointer-style">Pointer Style</label>
+                        <select id="pointer-style">
+                            <option value="triangle">Triangle</option>
+                            <option value="arrow">Arrow</option>
+                            </select>
+                    </div>
                     <div class="input-group">
-                        <label for="wheel-title">Wheel Title (optional)</label>
-                        <input type="text" id="wheel-title" placeholder="My Awesome Wheel">
+                         <div class="toggle-switch">
+                            <label class="switch">
+                              <input type="checkbox" id="spin-sound-toggle" checked>
+                              <span class="slider"></span>
+                            </label>
+                            <label for="spin-sound-toggle">Enable Spin Sounds</label>
+                         </div>
+                         <div class="toggle-switch">
+                            <label class="switch">
+                              <input type="checkbox" id="confetti-toggle" checked>
+                              <span class="slider"></span>
+                            </label>
+                            <label for="confetti-toggle">Enable Confetti</label>
+                         </div>
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <h2><i class="fas fa-save"></i> Save & Load</h2>
+                    <h2><i class="fas fa-cog"></i> Advanced Settings</h2>
+                    <div class="input-group">
+                        <label for="winner-count">Number of Winners to Pick</label>
+                        <input type="number" id="winner-count" value="1" min="1" max="10"> <p class="text-muted">Select more than one winner per spin.</p>
+                    </div>
+                    <div class="input-group">
+                        <label class="switch">
+                              <input type="checkbox" id="remove-winner-toggle">
+                              <span class="slider"></span>
+                        </label>
+                        <label for="remove-winner-toggle">Remove winner after spin</label>
+                        <p class="text-muted">Automatically remove the winning item(s) from the wheel.</p>
+                    </div>
+                 </div>
+
+                 <div class="control-group">
+                    <h2><i class="fas fa-cloud-arrow-up"></i> Save & Load</h2> <div class="input-group">
+                         <label for="save-wheel-name">Save Current Wheel As:</label>
+                         <input type="text" id="save-wheel-name" placeholder="Enter save name...">
+                    </div>
                     <div class="btn-group">
-                        <button class="btn btn-primary" id="save-wheel">
-                            <i class="fas fa-save"></i> Save Wheel
-                        </button>
-                        <button class="btn btn-secondary" id="load-wheel">
-                            <i class="fas fa-folder-open"></i> Load Wheel
-                        </button>
+                        <button class="btn btn-success" id="save-wheel-btn"><i class="fas fa-save"></i> Save</button> <button class="btn btn-outline" id="clear-saved-btn"><i class="fas fa-broom"></i> Clear All Saved</button>
                     </div>
                     <div class="saved-wheels" id="saved-wheels">
-                        <!-- Saved wheels will appear here -->
+                         <label style="margin-top: 1rem;">Load Saved Wheel:</label>
+                         <div class="saved-wheels-list" id="saved-wheels-list">
+                             <p class="text-muted">No wheels saved locally.</p> </div>
                     </div>
+                    <div class="pro-feature-placeholder">
+                        <i class="fas fa-lock"></i> <a href="#pro" id="pro-link">Upgrade to PRO</a> for Cloud Sync, User Accounts, Team Collaboration & Advanced Analytics!
+                     </div>
                 </div>
             </div>
 
-            <div class="wheel-container">
-                <div class="pointer"></div>
-                <div class="wheel" id="wheel">
-                    <div class="wheel-center">
-                        <i class="fas fa-question"></i>
-                    </div>
-                    <!-- Wheel sections will be added here dynamically -->
+            <div class="wheel-area">
+                 <div class="wheel-container">
+                    <div class="pointer" id="pointer"></div> <div class="wheel" id="wheel">
+                        <div class="wheel-center"><i class="fas fa-smile-beam"></i></div> <div class="wheel-section" style="transform: rotate(0deg) skewY(-30deg); background: #eee; --skew-angle: -30deg; --section-angle: 60deg;">
+                             <div class="wheel-section-content" style="color: #999;">Add Items!</div>
+                        </div>
+                         <div class="wheel-section" style="transform: rotate(60deg) skewY(-30deg); background: #f5f5f5; --skew-angle: -30deg; --section-angle: 60deg;">
+                             <div class="wheel-section-content" style="color: #999;">Update Wheel!</div>
+                        </div>
+                        </div>
                 </div>
                 <button class="btn btn-accent spin-btn" id="spin-btn">
-                    <i class="fas fa-redo"></i> SPIN THE WHEEL
-                </button>
+                    <i class="fas fa-play"></i> SPIN NOW!
+                </button> <div class="control-group spin-history">
+                    <h2><i class="fas fa-history"></i> Recent Wins (Local)</h2>
+                    <ul class="spin-history-list" id="spin-history-list">
+                        <li class="text-muted">No spins recorded yet.</li>
+                    </ul>
+                     <button class="btn btn-outline btn-sm" id="clear-history-btn" style="margin-top: 0.5rem; padding: 0.3rem 0.6rem; font-size: 0.8rem;"><i class="fas fa-trash"></i> Clear History</button>
+                 </div>
             </div>
         </div>
 
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-magic"></i>
-                </div>
-                <h3 class="feature-title">Beautiful Designs</h3>
-                <p class="feature-desc">Choose from multiple themes and color schemes to match your style or brand.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-share-alt"></i>
-                </div>
-                <h3 class="feature-title">Easy Sharing</h3>
-                <p class="feature-desc">Share your wheels with others via social media or direct links.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-cloud"></i>
-                </div>
-                <h3 class="feature-title">Cloud Saving</h3>
-                <p class="feature-desc">Save your wheels to access them later from any device.</p>
-            </div>
-        </div>
 
-        <footer>
-            <p>SpinSelect &copy; 2023 | A modern alternative to traditional random picker wheels</p>
+        <footer> <p>SpinSelect Pro &copy; <span id="footer-year">2024</span> | Developed for <a href="https://github.com" target="_blank" rel="noopener">GitHub</a> & <a href="https://whop.com" target="_blank" rel="noopener">Whop.com</a></p> <p><a href="#privacy">Privacy Policy</a> | <a href="#terms">Terms of Service</a></p>
         </footer>
     </div>
 
-    <div class="result-modal" id="result-modal">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close">&times;</button>
-            <div class="winner-text">The winner is...</div>
-            <div class="winner-name" id="winner-name">John Doe</div>
-            <div class="share-options">
-                <button class="share-btn twitter" title="Share on Twitter">
-                    <i class="fab fa-twitter"></i>
-                </button>
-                <button class="share-btn facebook" title="Share on Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </button>
-                <button class="share-btn whatsapp" title="Share on WhatsApp">
-                    <i class="fab fa-whatsapp"></i>
-                </button>
-                <button class="share-btn copy-link" title="Copy link">
-                    <i class="fas fa-link"></i>
-                </button>
+    <div class="result-modal" id="result-modal"> <div class="modal-content">
+            <button class="modal-close" id="modal-close" title="Close">&times;</button> <div class="winner-text">And the winner is...</div> <div id="winner-display"> <div class="winner-name" id="winner-name">Item Name</div> </div>
+            <div class="share-options"> <h3 style="font-size: 1rem; width: 100%; margin-bottom: 0.5rem; color: var(--text-color);">Share Result:</h3>
+                <a href="#" target="_blank" rel="noopener" class="share-btn twitter" id="share-twitter" title="Share on X (Twitter)"> <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" target="_blank" rel="noopener" class="share-btn facebook" id="share-facebook" title="Share on Facebook"> <i class="fab fa-facebook-f"></i> </a>
+                <a href="#" target="_blank" rel="noopener" class="share-btn whatsapp" id="share-whatsapp" title="Share on WhatsApp"> <i class="fab fa-whatsapp"></i>
+                </a>
+                 <a href="#" target="_blank" rel="noopener" class="share-btn email" id="share-email" title="Share via Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                 <div class="tooltip">
+                     <button class="share-btn copy-link" id="copy-link-btn" title="Copy result text"> <i class="fas fa-link"></i> </button>
+                    <span class="tooltiptext" id="copy-tooltip">Copy result</span>
+                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // DOM Elements
-            const wheel = document.getElementById('wheel');
-            const spinBtn = document.getElementById('spin-btn');
-            const entriesTextarea = document.getElementById('entries');
-            const addEntriesBtn = document.getElementById('add-entries');
-            const clearEntriesBtn = document.getElementById('clear-entries');
-            const saveWheelBtn = document.getElementById('save-wheel');
-            const loadWheelBtn = document.getElementById('load-wheel');
-            const savedWheelsContainer = document.getElementById('saved-wheels');
-            const wheelTitleInput = document.getElementById('wheel-title');
-            const themeOptions = document.querySelectorAll('.theme-option');
-            const resultModal = document.getElementById('result-modal');
-            const winnerName = document.getElementById('winner-name');
-            const modalClose = document.getElementById('modal-close');
-            const shareButtons = document.querySelectorAll('.share-btn');
+    <audio id="spin-sound" src="https://cdn.jsdelivr.net/gh/pixelbrackets/gfm-field-sound-level@master/example/sounds/tick.mp3" preload="auto"></audio> <audio id="win-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_1cc5468a19.mp3" preload="auto"></audio> <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- DOM Elements ---
+            const wheel = document.getElementById('wheel'); /* [cite: 139] */
+            const spinBtn = document.getElementById('spin-btn'); /* [cite: 139] */
+            const entriesTextarea = document.getElementById('entries'); /* [cite: 139] */
+            const updateWheelBtn = document.getElementById('update-wheel-btn'); /* Renamed from add-entries */
+            const clearEntriesBtn = document.getElementById('clear-entries-btn'); /* [cite: 139] */
+            const saveWheelBtn = document.getElementById('save-wheel-btn'); /* [cite: 140] */
+            const saveWheelNameInput = document.getElementById('save-wheel-name');
+            const savedWheelsList = document.getElementById('saved-wheels-list'); /* [cite: 140] */
+            const clearSavedBtn = document.getElementById('clear-saved-btn');
+            const wheelTitleInput = document.getElementById('wheel-title'); /* [cite: 140] */
+            const themeOptions = document.querySelectorAll('.theme-option'); /* [cite: 140] */
+            const resultModal = document.getElementById('result-modal'); /* [cite: 141] */
+            const winnerDisplay = document.getElementById('winner-display');
+            const winnerNameEl = document.getElementById('winner-name'); /* [cite: 141] */
+            const modalClose = document.getElementById('modal-close'); /* [cite: 141] */
+            const pointer = document.getElementById('pointer');
+            const pointerStyleSelect = document.getElementById('pointer-style');
+            const spinSoundToggle = document.getElementById('spin-sound-toggle');
+            const confettiToggle = document.getElementById('confetti-toggle');
+            const winnerCountInput = document.getElementById('winner-count');
+            const removeWinnerToggle = document.getElementById('remove-winner-toggle');
+            const spinHistoryList = document.getElementById('spin-history-list');
+            const clearHistoryBtn = document.getElementById('clear-history-btn');
+            const premiumThemeNotice = document.getElementById('premium-theme-notice');
 
-            // Variables
-            let currentItems = [];
-            let currentTheme = '1';
-            let spinning = false;
-            let savedWheels = JSON.parse(localStorage.getItem('savedWheels')) || [];
+            // Share buttons
+            const shareTwitter = document.getElementById('share-twitter'); /* [cite: 141] */
+            const shareFacebook = document.getElementById('share-facebook'); /* [cite: 141] */
+            const shareWhatsapp = document.getElementById('share-whatsapp'); /* [cite: 141] */
+            const shareEmail = document.getElementById('share-email');
+            const copyLinkBtn = document.getElementById('copy-link-btn'); /* [cite: 141] */
+            const copyTooltip = document.getElementById('copy-tooltip');
 
-            // Color themes
-            const themes = {
-                '1': ['#6c5ce7', '#a29bfe', '#fd79a8', '#fab1a0', '#fdcb6e', '#ffeaa7'],
-                '2': ['#00b894', '#55efc4', '#0984e3', '#74b9ff', '#fdcb6e', '#ffeaa7'],
-                '3': ['#fd79a8', '#fab1a0', '#6c5ce7', '#a29bfe', '#00b894', '#55efc4'],
-                '4': ['#fdcb6e', '#ffeaa7', '#fd79a8', '#fab1a0', '#00b894', '#55efc4'],
-                '5': ['#0984e3', '#74b9ff', '#6c5ce7', '#a29bfe', '#00b894', '#55efc4'],
-                '6': ['#d63031', '#ff7675', '#fdcb6e', '#ffeaa7', '#fd79a8', '#fab1a0']
-            };
+            // Audio elements
+            const spinSound = document.getElementById('spin-sound');
+            const winSound = document.getElementById('win-sound');
 
-            // Initialize
-            renderSavedWheels();
-            updateWheel(['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5', 'Item 6']);
+            // --- State Variables ---
+            let currentEntries = []; // Stores { name: string, weight: number } /* Modified from currentItems [cite: 142] */
+            let currentTheme = '1'; /* [cite: 143] */
+            let spinning = false; /* [cite: 143] */
+            let savedWheels = JSON.parse(localStorage.getItem('spinSelectProWheels')) || []; /* [cite: 143] */
+            let spinHistory = JSON.parse(localStorage.getItem('spinSelectProHistory')) || [];
+            let lastWinner = null; // Store last winner(s) for sharing
 
-            // Event Listeners
-            addEntriesBtn.addEventListener('click', addEntries);
-            clearEntriesBtn.addEventListener('click', clearEntries);
-            spinBtn.addEventListener('click', spinWheel);
-            saveWheelBtn.addEventListener('click', saveWheel);
-            loadWheelBtn.addEventListener('click', loadWheel);
-            modalClose.addEventListener('click', closeModal);
-            
-            themeOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    themeOptions.forEach(opt => opt.classList.remove('active'));
-                    option.classList.add('active');
-                    currentTheme = option.dataset.theme;
-                    updateWheel(currentItems);
-                });
+             // --- Color Themes (Defined in CSS :root and body.theme-X) ---
+             // We just need the theme IDs here now
+            const themeIds = ['1', '2', '3', '4', '5', '6', '7', '8', '9']; /* Expanded themes */
+            const premiumThemes = ['8', '9']; // Themes requiring "PRO" activation
+
+             // --- Initialization ---
+            loadInitialState(); // Load saved theme, sounds, etc.
+            renderSavedWheels(); /* [cite: 146] */
+            renderSpinHistory();
+            updateWheelUI(); // Initial wheel draw based on default/loaded entries /* [cite: 147] */
+            document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+            // --- Event Listeners ---
+            updateWheelBtn.addEventListener('click', handleUpdateWheel); /* Was addEntries [cite: 148] */
+            clearEntriesBtn.addEventListener('click', clearAllEntries); /* [cite: 148] */
+            spinBtn.addEventListener('click', spinTheWheel); /* [cite: 148] */
+            saveWheelBtn.addEventListener('click', saveCurrentWheel); /* [cite: 149] */
+            clearSavedBtn.addEventListener('click', clearAllSavedWheels);
+            modalClose.addEventListener('click', closeModal); /* [cite: 149] */
+            pointerStyleSelect.addEventListener('change', changePointerStyle);
+            spinSoundToggle.addEventListener('change', saveSettings);
+            confettiToggle.addEventListener('change', saveSettings);
+            clearHistoryBtn.addEventListener('click', clearHistory);
+            wheelTitleInput.addEventListener('input', saveSettings); // Save title changes
+
+            themeOptions.forEach(option => { /* [cite: 149] */
+                option.addEventListener('click', () => selectTheme(option));
             });
 
-            shareButtons.forEach(button => {
-                button.addEventListener('click', shareResult);
+            // Dynamic listeners for saved wheels (load/delete)
+            savedWheelsList.addEventListener('click', (e) => {
+                const loadBtn = e.target.closest('.load-btn');
+                const deleteBtn = e.target.closest('.delete-btn');
+                if (loadBtn) {
+                    loadSpecificWheel(loadBtn.dataset.index); /* [cite: 190] */
+                } else if (deleteBtn) {
+                    deleteSpecificWheel(deleteBtn.dataset.index); /* [cite: 192] */
+                }
             });
 
-            // Functions
-            function addEntries() {
-                const text = entriesTextarea.value.trim();
-                if (!text) return;
+             // Share button listeners /* [cite: 151] */
+             shareTwitter.addEventListener('click', (e) => share('twitter', e));
+             shareFacebook.addEventListener('click', (e) => share('facebook', e));
+             shareWhatsapp.addEventListener('click', (e) => share('whatsapp', e));
+             shareEmail.addEventListener('click', (e) => share('email', e));
+             copyLinkBtn.addEventListener('click', copyResultText);
 
-                // Split by new lines or commas
-                let items = text.split('\n').flatMap(line => 
-                    line.split(',').map(item => item.trim()).filter(item => item)
-                );
+             // Prevent form submission if inside a form
+             spinBtn.form?.addEventListener('submit', e => e.preventDefault());
 
-                currentItems = [...new Set([...currentItems, ...items])];
-                updateWheel(currentItems);
-                entriesTextarea.value = '';
-            }
+             // --- Core Functions ---
 
-            function clearEntries() {
-                if (confirm('Are you sure you want to clear all items?')) {
-                    currentItems = [];
-                    updateWheel(currentItems);
-                }
-            }
+            function parseEntries(text) {
+                const lines = text.trim().split('\n');
+                const entries = [];
+                const nameCheck = new Set(); // Prevent duplicate names
 
-            function updateWheel(items) {
-                if (items.length === 0) {
-                    wheel.innerHTML = `
-                        <div class="wheel-center">
-                            <i class="fas fa-question"></i>
-                        </div>
-                        <div class="wheel-section" style="transform: rotate(0deg); background: #f1f1f1;">
-                            <div class="wheel-section-content">Add items to begin</div>
-                        </div>
-                    `;
-                    return;
-                }
+                lines.forEach(line => {
+                    line = line.trim();
+                    if (!line) return;
 
-                wheel.innerHTML = `
-                    <div class="wheel-center">
-                        <i class="fas fa-question"></i>
-                    </div>
-                `;
+                    let name = line;
+                    let weight = 1;
 
-                const sectionAngle = 360 / items.length;
-                const colors = themes[currentTheme];
+                    const parts = line.split(':');
+                    if (parts.length > 1) {
+                        const potentialWeight = parseInt(parts[parts.length - 1].trim(), 10);
+                        if (!isNaN(potentialWeight) && potentialWeight > 0) {
+                            weight = potentialWeight;
+                            name = parts.slice(0, -1).join(':').trim(); // Handle names with colons
+                        }
+                    }
 
-                items.forEach((item, index) => {
-                    const section = document.createElement('div');
-                    section.className = 'wheel-section';
-                    section.style.transform = `rotate(${index * sectionAngle}deg)`;
-                    section.style.background = colors[index % colors.length];
-                    
-                    const content = document.createElement('div');
-                    content.className = 'wheel-section-content';
-                    content.textContent = item;
-                    
-                    section.appendChild(content);
-                    wheel.appendChild(section);
+                    if (name && !nameCheck.has(name)) {
+                         entries.push({ name, weight });
+                         nameCheck.add(name);
+                    }
                 });
-
-                currentItems = items;
+                 console.log("Parsed Entries:", entries);
+                return entries;
             }
 
-            function spinWheel() {
-                if (spinning || currentItems.length === 0) return;
-                
-                spinning = true;
-                spinBtn.disabled = true;
-                
-                const spinDuration = 3000 + Math.random() * 2000; // 3-5 seconds
-                const rotations = 5 + Math.random() * 3; // 5-8 full rotations
-                const finalAngle = 360 * rotations + Math.random() * 360;
-                
-                wheel.style.transform = `rotate(${-finalAngle}deg)`;
-                
-                setTimeout(() => {
-                    spinning = false;
-                    spinBtn.disabled = false;
-                    
-                    // Calculate winner
-                    const normalizedAngle = finalAngle % 360;
-                    const sectionAngle = 360 / currentItems.length;
-                    const winnerIndex = Math.floor(normalizedAngle / sectionAngle);
-                    const winner = currentItems[winnerIndex];
-                    
-                    showWinner(winner);
-                }, spinDuration);
-            }
+            function handleUpdateWheel() {
+                 const text = entriesTextarea.value; /* [cite: 152] */
+                 currentEntries = parseEntries(text); /* Modified logic */
+                 if (currentEntries.length === 0) {
+                    // Optionally show a message or keep the placeholder
+                     console.log("No valid entries found.");
+                 }
+                 updateWheelUI(); /* [cite: 154] */
+                 saveCurrentEntriesToStorage(); // Save entry state
+             }
 
-            function showWinner(winner) {
-                winnerName.textContent = winner;
-                resultModal.classList.add('active');
-                createConfetti();
-            }
-
-            function closeModal() {
-                resultModal.classList.remove('active');
-            }
-
-            function createConfetti() {
-                const colors = ['#6c5ce7', '#a29bfe', '#fd79a8', '#fab1a0', '#fdcb6e', '#ffeaa7'];
-                
-                for (let i = 0; i < 100; i++) {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.animationDelay = Math.random() * 3 + 's';
-                    document.body.appendChild(confetti);
-                    
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 3000);
+             function clearAllEntries() { /* [cite: 154] */
+                if (confirm('Are you sure you want to clear all current wheel entries?')) {
+                    currentEntries = []; /* [cite: 154] */
+                    entriesTextarea.value = '';
+                    updateWheelUI(); /* [cite: 155] */
+                    saveCurrentEntriesToStorage();
                 }
             }
 
-            function saveWheel() {
-                if (currentItems.length === 0) {
-                    alert('Please add items to the wheel before saving.');
+             function updateWheelUI() { /* [cite: 155] */
+                wheel.innerHTML = ''; // Clear existing sections
+
+                 // Add Center Circle
+                 const wheelCenter = document.createElement('div');
+                 wheelCenter.className = 'wheel-center';
+                 wheelCenter.innerHTML = `<i class="fas ${currentEntries.length > 0 ? 'fa-star' : 'fa-smile-beam'}"></i>`; /* [cite: 158] */
+                 wheel.appendChild(wheelCenter);
+
+                 if (currentEntries.length === 0) {
+                    // Display placeholder if no items
+                     const placeholderSection = document.createElement('div');
+                     placeholderSection.className = 'wheel-section';
+                     placeholderSection.style.cssText = 'transform: rotate(0deg) skewY(-60deg); background: #eee; --skew-angle: -60deg; --section-angle: 360deg;';
+                     placeholderSection.innerHTML = '<div class="wheel-section-content" style="color: #999;">Add items &amp; Update Wheel!</div>'; /* [cite: 157] */
+                     wheel.appendChild(placeholderSection);
+                     spinBtn.disabled = true;
+                     return; /* [cite: 158] */
+                 }
+
+                 spinBtn.disabled = false;
+
+                 // Calculate total weight for probability calculation if needed (though CSS handles visuals)
+                 // const totalWeight = currentEntries.reduce((sum, entry) => sum + entry.weight, 0);
+
+                 const numSections = currentEntries.length;
+                 const sectionAngle = 360 / numSections; /* [cite: 159] */
+                 const skewAngle = 90 - sectionAngle;
+
+                 // Get colors for the current theme
+                 const themeElement = document.querySelector(`.theme-${currentTheme}`) || document.querySelector('.theme-1');
+                 const themeGradient = window.getComputedStyle(themeElement).backgroundImage;
+                 // Basic gradient parsing (may not work for all gradients, but good for linear)
+                 let colors = ['#ccc', '#eee']; // Fallback colors
+                 try {
+                     const colorStops = themeGradient.match(/rgba?\([^)]+\)/g) || [];
+                     if (colorStops.length >= 2) {
+                         colors = colorStops;
+                         // Create more colors if needed by mixing
+                         while(colors.length < numSections && colors.length >= 2) {
+                             colors.push(mixColors(colors[colors.length-1], colors[colors.length-2]));
+                         }
+                     } else {
+                        // Fallback if gradient parsing fails - use theme variables
+                        const rootStyle = getComputedStyle(document.body);
+                        colors = [
+                            rootStyle.getPropertyValue('--primary-color').trim(),
+                            rootStyle.getPropertyValue('--secondary-color').trim(),
+                            rootStyle.getPropertyValue('--accent-color').trim(),
+                             rootStyle.getPropertyValue('--success-color').trim(),
+                             rootStyle.getPropertyValue('--warning-color').trim(),
+                             rootStyle.getPropertyValue('--danger-color').trim()
+                         ];
+                     }
+                 } catch (e) { console.error("Color parsing failed:", e); }
+
+
+                 currentEntries.forEach((entry, index) => { /* [cite: 160] */
+                    const section = document.createElement('div'); /* [cite: 160] */
+                    section.className = 'wheel-section'; /* [cite: 160] */
+
+                     // Calculate rotation for this section
+                    const rotation = index * sectionAngle;
+
+                     // Apply styles
+                     section.style.transform = `rotate(${rotation}deg) skewY(${skewAngle}deg)`;
+                     section.style.background = colors[index % colors.length]; /* [cite: 160] */
+                     section.style.setProperty('--skew-angle', `${skewAngle}deg`);
+                     section.style.setProperty('--section-angle', `${sectionAngle}deg`);
+
+                    const content = document.createElement('div'); /* [cite: 161] */
+                    content.className = 'wheel-section-content'; /* [cite: 161] */
+                    // Display name and weight if not 1
+                    content.textContent = entry.weight > 1 ? `${entry.name} (${entry.weight})` : entry.name; /* [cite: 161] */
+                     // Adjust font size dynamically based on text length and section size
+                     let fontSize = Math.min(1.1, 20 / Math.sqrt(entry.name.length)); // Heuristic
+                     fontSize = Math.max(0.6, fontSize * (sectionAngle / 45)); // Scale with angle
+                     content.style.fontSize = `${fontSize}rem`;
+
+                    section.appendChild(content); /* [cite: 162] */
+                    wheel.appendChild(section); /* [cite: 162] */
+                });
+            }
+
+            // Helper to mix two hex/rgb colors (basic implementation)
+             function mixColors(color1, color2, weight = 0.5) {
+                // Basic mixing - average RGB values - needs improvement for accuracy
+                const c1 = color1.match(/\d+/g).map(Number);
+                const c2 = color2.match(/\d+/g).map(Number);
+                const r = Math.round(c1[0] * (1 - weight) + c2[0] * weight);
+                const g = Math.round(c1[1] * (1 - weight) + c2[1] * weight);
+                const b = Math.round(c1[2] * (1 - weight) + c2[2] * weight);
+                return `rgb(${r}, ${g}, ${b})`;
+             }
+
+             function getWeightedEntries() {
+                 // Expand entries based on weight for selection
+                 const weightedList = [];
+                 currentEntries.forEach(entry => {
+                     for (let i = 0; i < entry.weight; i++) {
+                         weightedList.push(entry.name);
+                     }
+                 });
+                 return weightedList;
+             }
+
+             function spinTheWheel() { /* [cite: 163] */
+                if (spinning || currentEntries.length === 0) return; /* [cite: 163] */
+                spinning = true; /* [cite: 164] */
+                spinBtn.disabled = true; /* [cite: 164] */
+                spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SPINNING...';
+
+                 if (spinSoundToggle.checked) {
+                     spinSound.currentTime = 0;
+                     spinSound.play().catch(e => console.error("Audio play failed:", e)); // Handle autoplay restrictions
+                 }
+
+                 // Reset wheel rotation before applying new one
+                 wheel.style.transition = 'none'; // Disable transition for reset
+                 const currentRotation = getCurrentRotation(wheel);
+                 wheel.style.transform = `rotate(${currentRotation}deg)`;
+
+                 // Force reflow to apply the reset rotation immediately
+                 wheel.offsetHeight;
+
+                 // Calculate target angle
+                 const baseRotations = 5 + Math.random() * 5; // 5-10 full rotations /* [cite: 165] */
+                 const randomAngle = Math.random() * 360;
+                 const targetAngle = currentRotation + (360 * baseRotations) + randomAngle; /* [cite: 166] */
+                 const spinDuration = 4 + Math.random() * 2; // 4-6 seconds /* [cite: 164] */
+
+                 // Apply the spin animation
+                 wheel.style.transition = `transform ${spinDuration}s cubic-bezier(0.25, 0.1, 0.25, 1)`; /* [cite: 39] */
+                 wheel.style.transform = `rotate(${targetAngle}deg)`; /* [cite: 167] */
+
+                 // Determine winner after animation ends
+                 setTimeout(() => {
+                    determineWinner(targetAngle);
+                 }, spinDuration * 1000 + 100); // Add buffer /* [cite: 167] */
+            }
+
+             function getCurrentRotation(element) {
+                 const st = window.getComputedStyle(element, null);
+                 const tm = st.getPropertyValue("-webkit-transform") ||
+                            st.getPropertyValue("-moz-transform") ||
+                            st.getPropertyValue("-ms-transform") ||
+                            st.getPropertyValue("-o-transform") ||
+                            st.getPropertyValue("transform");
+                 if (tm && tm !== 'none') {
+                     const values = tm.split('(')[1].split(')')[0].split(',');
+                     const angle = Math.round(Math.atan2(values[1], values[0]) * (180/Math.PI));
+                     return (angle < 0 ? angle + 360 : angle); // Return degrees 0-360
+                 }
+                 return 0;
+             }
+
+             function determineWinner(finalAngle) { /* [cite: 168] */
+                 spinning = false; /* [cite: 167] */
+                 spinBtn.disabled = false; /* [cite: 167] */
+                 spinBtn.innerHTML = '<i class="fas fa-play"></i> SPIN NOW!';
+
+                 const weightedList = getWeightedEntries();
+                 if (weightedList.length === 0) return;
+
+                 const numWinnersToSelect = parseInt(winnerCountInput.value, 10) || 1;
+                 const winners = [];
+                 const availableItems = [...currentEntries]; // Clone for potential removal
+
+                 // Calculate the actual winning index based on visual rotation
+                 const normalizedAngle = (360 - (finalAngle % 360)) % 360; // Angle relative to the pointer (top = 0 deg)
+                 const sectionAngle = 360 / currentEntries.length; /* [cite: 168] */
+                 const winningIndex = Math.floor(normalizedAngle / sectionAngle); /* [cite: 168] */
+
+                 // Ensure the visually selected item is the first winner
+                 if (winningIndex >= 0 && winningIndex < currentEntries.length) {
+                     const firstWinner = currentEntries[winningIndex];
+                     winners.push(firstWinner.name);
+                     // Remove from available if needed for subsequent picks
+                     const idxToRemove = availableItems.findIndex(item => item.name === firstWinner.name);
+                     if (idxToRemove > -1) availableItems.splice(idxToRemove, 1);
+                 } else {
+                     console.error("Calculated winning index out of bounds:", winningIndex);
+                     // Fallback: pick a random one if calculation fails
+                     const randomIndex = Math.floor(Math.random() * availableItems.length);
+                     if (availableItems[randomIndex]) {
+                         winners.push(availableItems[randomIndex].name);
+                         availableItems.splice(randomIndex, 1);
+                     }
+                 }
+
+                 // Select remaining winners randomly (if needed) from the adjusted available list
+                 while (winners.length < numWinnersToSelect && availableItems.length > 0) {
+                     const availableWeightedList = [];
+                     availableItems.forEach(entry => {
+                         for (let i = 0; i < entry.weight; i++) {
+                             availableWeightedList.push(entry.name);
+                         }
+                     });
+                     if (availableWeightedList.length === 0) break; // Should not happen if availableItems > 0
+
+                     const randomIndex = Math.floor(Math.random() * availableWeightedList.length);
+                     const winnerName = availableWeightedList[randomIndex];
+
+                     if (!winners.includes(winnerName)) {
+                         winners.push(winnerName);
+                     }
+                     // Remove the selected winner from available items for next pick
+                     const idxToRemove = availableItems.findIndex(item => item.name === winnerName);
+                     if (idxToRemove > -1) availableItems.splice(idxToRemove, 1);
+                 }
+
+                 lastWinner = winners; // Store for sharing
+                 showWinnerModal(winners); /* [cite: 169] */
+                 addToHistory(winners);
+
+                 // Remove winners from wheel if option is checked
+                 if (removeWinnerToggle.checked) {
+                     currentEntries = currentEntries.filter(entry => !winners.includes(entry.name));
+                     entriesTextarea.value = currentEntries.map(e => e.weight > 1 ? `${e.name}: ${e.weight}` : e.name).join('\n');
+                     saveCurrentEntriesToStorage();
+                     updateWheelUI();
+                 }
+             }
+
+             function showWinnerModal(winners) { /* [cite: 170] */
+                winnerDisplay.innerHTML = ''; // Clear previous winners
+
+                 if (winners.length === 1) {
+                     winnerDisplay.innerHTML = `<div class="winner-name" id="winner-name">${winners[0]}</div>`; /* [cite: 170] */
+                 } else {
+                     const winnerList = document.createElement('div');
+                     winnerList.className = 'winner-list';
+                     winners.forEach(winner => {
+                         const winnerEl = document.createElement('div');
+                         winnerEl.className = 'winner-name';
+                         winnerEl.textContent = winner;
+                         winnerList.appendChild(winnerEl);
+                     });
+                     winnerDisplay.appendChild(winnerList);
+                     // Adjust modal title
+                     document.querySelector('.result-modal .winner-text').textContent = `The ${winners.length} winners are...`;
+                 }
+
+                 resultModal.classList.add('active'); /* [cite: 171] */
+
+                 if (confettiToggle.checked) {
+                     createConfettiEffect(); /* [cite: 171] */
+                 }
+                 if (spinSoundToggle.checked) {
+                     winSound.currentTime = 0;
+                     winSound.play().catch(e => console.error("Audio play failed:", e));
+                 }
+             }
+
+             function closeModal() { /* [cite: 171] */
+                resultModal.classList.remove('active'); /* [cite: 171] */
+                 // Reset modal title if changed
+                 document.querySelector('.result-modal .winner-text').textContent = `And the winner is...`;
+             }
+
+             function createConfettiEffect() { /* [cite: 172] */
+                 const confettiContainer = document.body; // Or a specific container
+                 const colors = ['var(--primary-color)', 'var(--secondary-color)', 'var(--accent-color)', '#FFD700', '#FFFFFF']; /* Updated colors [cite: 172] */
+                 const confettiCount = 100; /* [cite: 173] */
+
+                 for (let i = 0; i < confettiCount; i++) {
+                     const confetti = document.createElement('div'); /* [cite: 173] */
+                     confetti.className = 'confetti'; /* [cite: 174] */
+                     confetti.style.left = Math.random() * 100 + 'vw'; /* [cite: 174] */
+                     confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)]; /* [cite: 174] */
+                     confetti.style.animationDelay = Math.random() * 0.5 + 's'; /* Stagger start [cite: 175] */
+                     confetti.style.setProperty('--duration', (Math.random() * 2 + 3) + 's'); // Vary duration
+                     confetti.style.width = (Math.random() * 5 + 5) + 'px';
+                     confetti.style.height = (Math.random() * 10 + 10) + 'px';
+                     confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+                     confettiContainer.appendChild(confetti); /* [cite: 175] */
+
+                     setTimeout(() => { /* [cite: 175] */
+                         confetti.remove(); /* [cite: 175] */
+                     }, 5000); // Remove after max animation duration
+                 }
+             }
+
+            // --- Save & Load (localStorage) ---
+
+            function saveCurrentWheel() { /* [cite: 176] */
+                const name = saveWheelNameInput.value.trim();
+                 if (!name) {
+                    alert('Please enter a name to save the wheel.');
+                    saveWheelNameInput.focus();
                     return;
+                 }
+                 if (currentEntries.length === 0) { /* [cite: 176] */
+                    alert('Please add items to the wheel before saving.'); /* [cite: 176] */
+                    return; /* [cite: 177] */
                 }
-                
-                const title = wheelTitleInput.value.trim() || `My Wheel ${savedWheels.length + 1}`;
-                const wheelData = {
-                    title,
-                    items: currentItems,
-                    theme: currentTheme,
-                    date: new Date().toISOString()
+
+                 // Check for duplicate names
+                 if (savedWheels.some(wheel => wheel.name === name)) {
+                     if (!confirm(`A wheel named "${name}" already exists. Overwrite it?`)) {
+                         return;
+                     }
+                     // Remove existing wheel with the same name before adding new one
+                     savedWheels = savedWheels.filter(wheel => wheel.name !== name);
+                 }
+
+                const wheelData = { /* [cite: 178] */
+                    name: name, /* Use input name */
+                    title: wheelTitleInput.value.trim(), // Save wheel title too
+                    entries: currentEntries, /* [cite: 178] */
+                    theme: currentTheme, /* [cite: 178] */
+                    date: new Date().toISOString() /* [cite: 178] */
                 };
-                
-                savedWheels.push(wheelData);
-                localStorage.setItem('savedWheels', JSON.stringify(savedWheels));
-                renderSavedWheels();
-                
-                alert(`Wheel "${title}" saved successfully!`);
+
+                savedWheels.push(wheelData); /* [cite: 179] */
+                 // Sort saved wheels alphabetically by name
+                 savedWheels.sort((a, b) => a.name.localeCompare(b.name));
+
+                localStorage.setItem('spinSelectProWheels', JSON.stringify(savedWheels)); /* [cite: 179] */
+                renderSavedWheels(); /* [cite: 179] */
+                saveWheelNameInput.value = ''; // Clear input after save
+                alert(`Wheel "${name}" saved successfully!`); /* [cite: 179] */
             }
 
-            function loadWheel() {
-                if (savedWheels.length === 0) {
-                    alert('No saved wheels found.');
-                    return;
+             function renderSavedWheels() { /* [cite: 183] */
+                savedWheelsList.innerHTML = ''; /* [cite: 183] */
+                if (savedWheels.length === 0) { /* [cite: 184] */
+                    savedWheelsList.innerHTML = '<li class="text-muted" style="padding: 0.5rem;">No wheels saved locally.</li>'; /* [cite: 184] */
+                    return; /* [cite: 185] */
                 }
-                
-                // In a more complete app, you'd have a proper selection UI
-                const wheelToLoad = savedWheels[savedWheels.length - 1];
-                currentItems = wheelToLoad.items;
-                currentTheme = wheelToLoad.theme;
-                wheelTitleInput.value = wheelToLoad.title;
-                
-                // Update theme selector
-                themeOptions.forEach(opt => {
-                    opt.classList.toggle('active', opt.dataset.theme === currentTheme);
-                });
-                
-                updateWheel(currentItems);
-                alert(`Loaded wheel "${wheelToLoad.title}"`);
-            }
 
-            function renderSavedWheels() {
-                savedWheelsContainer.innerHTML = '';
-                
-                if (savedWheels.length === 0) {
-                    savedWheelsContainer.innerHTML = '<p>No saved wheels yet.</p>';
-                    return;
-                }
-                
-                savedWheels.forEach((wheel, index) => {
-                    const wheelEl = document.createElement('div');
-                    wheelEl.className = 'saved-wheel';
+                savedWheels.forEach((wheel, index) => { /* [cite: 185] */
+                    const wheelEl = document.createElement('div'); /* [cite: 185] */
+                    wheelEl.className = 'saved-wheel'; /* [cite: 185] */
+                    const displayTitle = wheel.title || wheel.name; // Show custom title or save name
                     wheelEl.innerHTML = `
-                        <div>${wheel.title} (${wheel.items.length} items)</div>
-                        <div class="saved-wheel-actions">
-                            <button class="action-btn load-btn" data-index="${index}" title="Load wheel">
-                                <i class="fas fa-upload"></i>
-                            </button>
-                            <button class="action-btn delete-btn" data-index="${index}" title="Delete wheel">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                        <div class="saved-wheel-info" title="${displayTitle} (${wheel.entries.length} items)">
+                            ${displayTitle} <span class="text-muted">(${wheel.entries.length} items)</span>
                         </div>
-                    `;
-                    
-                    savedWheelsContainer.appendChild(wheelEl);
+                        <div class="saved-wheel-actions"> <button class="action-btn load-btn" data-index="${index}" title="Load '${wheel.name}'"> <i class="fas fa-upload"></i> </button>
+                            <button class="action-btn delete-btn" data-index="${index}" title="Delete '${wheel.name}'"> <i class="fas fa-trash"></i> </button>
+                        </div>
+                    `; /* [cite: 188] */
+                    savedWheelsList.appendChild(wheelEl); /* [cite: 189] */
                 });
-                
-                // Add event listeners to the new buttons
-                document.querySelectorAll('.load-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = e.currentTarget.dataset.index;
-                        loadSpecificWheel(index);
-                    });
-                });
-                
-                document.querySelectorAll('.delete-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const index = e.currentTarget.dataset.index;
-                        deleteWheel(index);
-                    });
-                });
+                 // Event listeners are now delegated to savedWheelsList container
             }
 
-            function loadSpecificWheel(index) {
-                const wheelToLoad = savedWheels[index];
-                currentItems = wheelToLoad.items;
-                currentTheme = wheelToLoad.theme;
-                wheelTitleInput.value = wheelToLoad.title;
-                
-                // Update theme selector
-                themeOptions.forEach(opt => {
-                    opt.classList.toggle('active', opt.dataset.theme === currentTheme);
-                });
-                
-                updateWheel(currentItems);
-            }
+             function loadSpecificWheel(index) { /* [cite: 194] */
+                 index = parseInt(index, 10);
+                 if (index >= 0 && index < savedWheels.length) {
+                    const wheelToLoad = savedWheels[index]; /* [cite: 194] */
+                    currentEntries = wheelToLoad.entries.map(entry => ({ // Ensure weights are numbers
+                        name: entry.name,
+                        weight: parseInt(entry.weight, 10) || 1
+                    })); /* [cite: 195] */
+                    currentTheme = wheelToLoad.theme; /* [cite: 195] */
+                    wheelTitleInput.value = wheelToLoad.title || ''; /* [cite: 195] */
+                    saveWheelNameInput.value = wheelToLoad.name; // Pre-fill save name for potential overwrite
 
-            function deleteWheel(index) {
-                if (confirm('Are you sure you want to delete this wheel?')) {
-                    savedWheels.splice(index, 1);
-                    localStorage.setItem('savedWheels', JSON.stringify(savedWheels));
-                    renderSavedWheels();
+                    // Update entries textarea
+                    entriesTextarea.value = currentEntries.map(e => e.weight > 1 ? `${e.name}: ${e.weight}` : e.name).join('\n');
+
+                    // Update theme selector UI /* [cite: 195] */
+                    themeOptions.forEach(opt => {
+                        opt.classList.toggle('active', opt.dataset.theme === currentTheme);
+                    });
+                    document.body.className = `theme-${currentTheme}`; // Apply theme class to body
+
+                    updateWheelUI(); /* [cite: 196] */
+                     saveCurrentEntriesToStorage(); // Persist loaded entries
+                     saveSettings(); // Persist loaded theme/title
+                    alert(`Loaded wheel "${wheelToLoad.name}"`);
+                 } else {
+                     console.error("Invalid index for loading wheel:", index);
+                 }
+             }
+
+             function deleteSpecificWheel(index) { /* [cite: 196] */
+                 index = parseInt(index, 10);
+                 if (index >= 0 && index < savedWheels.length) {
+                    const wheelName = savedWheels[index].name;
+                    if (confirm(`Are you sure you want to delete the saved wheel "${wheelName}"?`)) { /* [cite: 196] */
+                        savedWheels.splice(index, 1); /* [cite: 196] */
+                        localStorage.setItem('spinSelectProWheels', JSON.stringify(savedWheels)); /* [cite: 197] */
+                        renderSavedWheels(); /* [cite: 197] */
+                    }
                 }
+             }
+
+             function clearAllSavedWheels() {
+                 if (savedWheels.length > 0 && confirm('Are you sure you want to delete ALL saved wheels? This cannot be undone.')) {
+                    savedWheels = [];
+                    localStorage.removeItem('spinSelectProWheels');
+                    renderSavedWheels();
+                 } else if (savedWheels.length === 0) {
+                     alert('There are no saved wheels to clear.');
+                 }
+             }
+
+            // --- Settings & Persistence ---
+            function selectTheme(optionElement) {
+                 const themeId = optionElement.dataset.theme;
+                 // Basic "PRO" check placeholder
+                 if (premiumThemes.includes(themeId)) {
+                     // In a real app, check license status here
+                     const isProActivated = false; // Placeholder
+                     if (!isProActivated) {
+                         premiumThemeNotice.classList.remove('hidden');
+                         // Optionally prevent selection or just show notice
+                          // alert("This is a PRO theme. Upgrade to unlock!");
+                          // return; // Uncomment to prevent selection
+                     } else {
+                          premiumThemeNotice.classList.add('hidden');
+                     }
+                 } else {
+                      premiumThemeNotice.classList.add('hidden');
+                 }
+
+                 themeOptions.forEach(opt => opt.classList.remove('active')); /* [cite: 149] */
+                 optionElement.classList.add('active'); /* [cite: 149] */
+                 currentTheme = themeId; /* [cite: 149] */
+                 document.body.className = `theme-${currentTheme}`; // Apply theme class to body
+                 updateWheelUI(); // Redraw wheel with new colors potentially /* [cite: 150] */
+                 saveSettings();
+             }
+
+             function changePointerStyle() {
+                 pointer.className = `pointer ${pointerStyleSelect.value === 'arrow' ? 'style-arrow' : ''}`;
+                 saveSettings();
+             }
+
+             function saveSettings() {
+                 const settings = {
+                     theme: currentTheme,
+                     title: wheelTitleInput.value.trim(),
+                     pointerStyle: pointerStyleSelect.value,
+                     soundEnabled: spinSoundToggle.checked,
+                     confettiEnabled: confettiToggle.checked
+                 };
+                 localStorage.setItem('spinSelectProSettings', JSON.stringify(settings));
+                 // Apply theme immediately
+                 document.body.className = `theme-${currentTheme}`;
+                 // Apply pointer style immediately
+                 changePointerStyle();
+             }
+
+             function loadInitialState() {
+                 // Load Settings
+                 const settings = JSON.parse(localStorage.getItem('spinSelectProSettings'));
+                 if (settings) {
+                     currentTheme = settings.theme || '1';
+                     wheelTitleInput.value = settings.title || '';
+                     pointerStyleSelect.value = settings.pointerStyle || 'triangle';
+                     spinSoundToggle.checked = settings.soundEnabled !== false; // Default true
+                     confettiToggle.checked = settings.confettiEnabled !== false; // Default true
+
+                     // Apply loaded settings
+                     document.body.className = `theme-${currentTheme}`;
+                     themeOptions.forEach(opt => {
+                         opt.classList.toggle('active', opt.dataset.theme === currentTheme);
+                     });
+                     changePointerStyle();
+                 }
+
+                 // Load Last Entries
+                 const lastEntries = JSON.parse(localStorage.getItem('spinSelectProLastEntries'));
+                 if (lastEntries && Array.isArray(lastEntries)) {
+                     currentEntries = lastEntries;
+                     entriesTextarea.value = currentEntries.map(e => e.weight > 1 ? `${e.name}: ${e.weight}` : e.name).join('\n');
+                 } else {
+                     // Initialize with default example if no saved entries
+                      entriesTextarea.value = "Item 1\nItem 2: 2\nItem 3\nTry Weights!";
+                      handleUpdateWheel(); // Parse and display the default
+                 }
+             }
+
+            function saveCurrentEntriesToStorage() {
+                localStorage.setItem('spinSelectProLastEntries', JSON.stringify(currentEntries));
             }
 
-            function shareResult() {
-                // In a real app, this would use proper sharing APIs
-                alert('Sharing functionality would be implemented here with proper social media APIs.');
-            }
+             // --- Spin History ---
+             function addToHistory(winners) {
+                 const timestamp = new Date();
+                 const historyEntry = {
+                     winners: winners, // Array of winner names
+                     time: timestamp.toISOString()
+                 };
+                 spinHistory.unshift(historyEntry); // Add to the beginning
+                 // Limit history size (e.g., last 20 spins)
+                 if (spinHistory.length > 20) {
+                     spinHistory.pop();
+                 }
+                 localStorage.setItem('spinSelectProHistory', JSON.stringify(spinHistory));
+                 renderSpinHistory();
+             }
+
+             function renderSpinHistory() {
+                 spinHistoryList.innerHTML = '';
+                 if (spinHistory.length === 0) {
+                     spinHistoryList.innerHTML = '<li class="text-muted">No spins recorded yet.</li>';
+                     clearHistoryBtn.style.display = 'none';
+                 } else {
+                     clearHistoryBtn.style.display = 'inline-block';
+                     spinHistory.forEach(entry => {
+                         const li = document.createElement('li');
+                         const time = new Date(entry.time);
+                         const formattedTime = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                         const winnerText = entry.winners.join(', '); // Join multiple winners
+                         li.innerHTML = `
+                             <span class="history-winner">${winnerText}</span>
+                             <span class="history-time">${formattedTime}</span>
+                         `;
+                         spinHistoryList.appendChild(li);
+                     });
+                 }
+             }
+
+             function clearHistory() {
+                 if (confirm('Are you sure you want to clear the local spin history?')) {
+                     spinHistory = [];
+                     localStorage.removeItem('spinSelectProHistory');
+                     renderSpinHistory();
+                 }
+             }
+
+             // --- Sharing ---
+             function share(platform, event) { /* Based on [cite: 197] */
+                 event.preventDefault(); // Prevent default link behavior
+                 if (!lastWinner || lastWinner.length === 0) {
+                     alert("Spin the wheel first to get a result to share!");
+                     return;
+                 }
+
+                 const winnerText = lastWinner.length === 1 ? `Winner: ${lastWinner[0]}` : `Winners: ${lastWinner.join(', ')}`;
+                 const wheelTitle = wheelTitleInput.value.trim() || 'SpinSelect Pro Wheel';
+                 const shareText = `🎉 I just used ${wheelTitle} on SpinSelect Pro! ${winnerText}`;
+                 // Use window.location.href for a link back, although it won't replicate the state on GitHub Pages easily.
+                 // For Whop, you might have a dedicated share URL.
+                 const shareUrl = window.location.href;
+                 const encodedText = encodeURIComponent(shareText);
+                 const encodedUrl = encodeURIComponent(shareUrl);
+                 let url = '';
+
+                 switch (platform) {
+                     case 'twitter':
+                         url = `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}&hashtags=SpinSelectPro,RandomPicker`; /* Uses Twitter Web Intent */
+                         break;
+                     case 'facebook':
+                         url = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`; /* Uses Facebook Sharer */
+                         break;
+                     case 'whatsapp':
+                         url = `https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}`; /* Uses WhatsApp API */
+                         break;
+                     case 'email':
+                         url = `mailto:?subject=${encodeURIComponent(wheelTitle + ' Result')}&body=${encodedText}%0A%0ACheck out the wheel: ${encodedUrl}`; /* Uses mailto link */
+                         break;
+                     default:
+                         return;
+                 }
+                 window.open(url, '_blank', 'noopener,noreferrer,width=600,height=400');
+             }
+
+             function copyResultText() {
+                 if (!lastWinner || lastWinner.length === 0) {
+                     alert("Spin the wheel first to get a result to copy!");
+                     return;
+                 }
+                 const winnerText = lastWinner.length === 1 ? `Winner: ${lastWinner[0]}` : `Winners: ${lastWinner.join(', ')}`;
+                 const wheelTitle = wheelTitleInput.value.trim() || 'SpinSelect Pro Wheel';
+                 const textToCopy = `🎉 ${wheelTitle} Result 🎉\n${winnerText}`;
+
+                 navigator.clipboard.writeText(textToCopy).then(() => {
+                     copyTooltip.textContent = 'Copied!';
+                     setTimeout(() => { copyTooltip.textContent = 'Copy result'; }, 1500);
+                 }).catch(err => {
+                     console.error('Failed to copy text: ', err);
+                     copyTooltip.textContent = 'Error!';
+                      setTimeout(() => { copyTooltip.textContent = 'Copy result'; }, 1500);
+                 });
+             }
+
+             // --- End of Script ---
         });
     </script>
 </body>
