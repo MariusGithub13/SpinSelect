@@ -3,42 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpinSelect Pro - Customizable Random Picker</title>
-    <meta name="description" content="Advanced random picker wheel with customization options">
-    <meta name="keywords" content="random picker, wheel, decision maker, spinner">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>SpinSelect Pro | Premium Random Picker Wheel</title>
+    <meta name="description" content="Beautiful, customizable wheel spinner for giveaways, decisions, and random selections">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Modern CSS with CSS Variables */
         :root {
-            /* Base Theme Colors */
-            --primary-color: #6c5ce7;
-            --secondary-color: #a29bfe;
-            --accent-color: #fd79a8;
-            --dark-color: #2d3436;
-            --light-color: #f5f6fa;
-            --success-color: #00b894;
-            --warning-color: #fdcb6e;
-            --danger-color: #d63031;
-            --bg-color: #f8f9fa;
-            --text-color: #333;
-            --card-bg: white;
-            --border-color: #e0e0e0;
-            --shadow-color: rgba(0, 0, 0, 0.1);
-            --shadow-hover: rgba(0, 0, 0, 0.15);
+            --primary: #6c5ce7;
+            --primary-light: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+            --success: #00b894;
+            --warning: #fdcb6e;
+            --danger: #d63031;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Theme Variations */
-        .theme-1 { --primary-color: #6c5ce7; --secondary-color: #a29bfe; --accent-color: #fd79a8; }
-        .theme-2 { --primary-color: #00b894; --secondary-color: #55efc4; --accent-color: #0984e3; }
-        .theme-3 { --primary-color: #fd79a8; --secondary-color: #fab1a0; --accent-color: #6c5ce7; }
-        .theme-4 { --primary-color: #fdcb6e; --secondary-color: #ffeaa7; --accent-color: #fd79a8; }
-        .theme-5 { --primary-color: #0984e3; --secondary-color: #74b9ff; --accent-color: #00b894; }
-        .theme-6 { --primary-color: #d63031; --secondary-color: #ff7675; --accent-color: #fdcb6e; }
-        .theme-7 { --primary-color: #2c3e50; --secondary-color: #34495e; --accent-color: #1abc9c; }
-        .theme-8 { --primary-color: #e74c3c; --secondary-color: #c0392b; --accent-color: #f1c40f; }
-        .theme-9 { --primary-color: #8e44ad; --secondary-color: #9b59b6; --accent-color: #3498db; }
-
-        /* Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -47,57 +28,59 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #f8f9fa;
+            color: var(--dark);
             line-height: 1.6;
-            transition: all 0.3s ease;
             min-height: 100vh;
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
 
-        /* Header Styles */
         header {
             text-align: center;
             margin-bottom: 2rem;
-            animation: fadeInDown 0.8s ease-out;
+            animation: fadeIn 0.8s ease-out;
         }
 
         h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-size: 2.8rem;
             margin-bottom: 0.5rem;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(45deg, var(--primary), var(--accent));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            display: inline-block;
+            letter-spacing: -0.5px;
         }
 
         .tagline {
-            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            font-size: 1.2rem;
             color: #666;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
         }
 
-        /* Main App Layout */
         .app-container {
             display: grid;
-            grid-template-columns: 350px 1fr;
+            grid-template-columns: 1fr 2fr;
             gap: 2rem;
-            background: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px var(--shadow-color);
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
             padding: 2rem;
-            animation: fadeInUp 0.6s ease-out;
+            animation: slideUp 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
         }
 
-        @media (max-width: 992px) {
+        @media (max-width: 768px) {
             .app-container {
                 grid-template-columns: 1fr;
             }
-            .controls { order: 2; }
         }
 
         /* Controls Panel */
@@ -108,25 +91,26 @@
         }
 
         .control-group {
-            background: var(--bg-color);
+            background: #f8f9fa;
             padding: 1.5rem;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .control-group:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
             font-size: 1.3rem;
             margin-bottom: 1rem;
-            color: var(--primary-color);
+            color: var(--primary);
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
         }
 
-        /* Form Elements */
         .input-group {
             margin-bottom: 1rem;
         }
@@ -134,62 +118,75 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 600;
+            font-weight: 500;
+            color: #555;
         }
 
         input, textarea, select {
             width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 10px;
             font-size: 1rem;
-            background: var(--card-bg);
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
 
         input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary-color) 20%, transparent);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
         }
 
         textarea {
             min-height: 120px;
             resize: vertical;
+            line-height: 1.5;
         }
 
         /* Buttons */
         .btn {
             padding: 0.8rem 1.5rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 10px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: var(--transition);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px var(--shadow-hover);
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
         }
 
-        .btn-primary {
-            background: var(--primary-color);
-            color: white;
+        .btn-primary:hover {
+            background-color: #5a4bd1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(108, 92, 231, 0.3);
         }
 
         .btn-secondary {
-            background: var(--secondary-color);
+            background-color: var(--primary-light);
             color: white;
         }
 
+        .btn-secondary:hover {
+            background-color: #8c7ae6;
+            transform: translateY(-2px);
+        }
+
         .btn-accent {
-            background: var(--accent-color);
+            background-color: var(--accent);
             color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #e84393;
+            transform: translateY(-2px);
         }
 
         .btn-group {
@@ -198,250 +195,374 @@
             flex-wrap: wrap;
         }
 
-        /* Wheel Styles */
-        .wheel-area {
+        /* Wheel Container */
+        .wheel-container {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             position: relative;
-            min-height: 550px;
+            padding: 1rem;
         }
 
-        .wheel-container {
-            width: 100%;
-            padding-top: 100%;
+        .wheel-wrapper {
             position: relative;
-            margin-bottom: 1rem;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1/1;
+            margin: 0 auto;
         }
 
         .wheel {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
+            position: relative;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 0 25px var(--shadow-color);
-            border: 5px solid white;
-            transition: transform 5s cubic-bezier(0.25, 0.1, 0.25, 1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
             transform: rotate(0deg);
+            border: 8px solid white;
         }
 
         .wheel-center {
             position: absolute;
-            width: 12%;
-            height: 12%;
+            width: 60px;
+            height: 60px;
             background: white;
             border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 10;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--primary);
             font-size: 1.5rem;
-            color: var(--primary-color);
+            border: 4px solid var(--light);
         }
 
         .wheel-section {
             position: absolute;
             width: 50%;
             height: 50%;
-            transform-origin: 100% 100%;
+            transform-origin: bottom right;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             overflow: hidden;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 0%);
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            transition: var(--transition);
         }
 
         .wheel-section-content {
             position: absolute;
-            left: -100%;
             width: 200%;
             height: 200%;
-            text-align: center;
-            padding: 10px;
-            font-weight: 600;
-            color: white;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
-            font-size: clamp(0.7rem, 1.5vw, 1.1rem);
-            word-break: break-word;
+            transform: rotate(45deg);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1rem;
+            word-break: break-word;
+            transition: var(--transition);
         }
 
-        /* Pointer */
         .pointer {
             position: absolute;
-            top: -10px;
+            top: -5px;
             left: 50%;
             transform: translateX(-50%);
-            width: 0;
-            height: 0;
+            width: 40px;
+            height: 40px;
             z-index: 20;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 30px solid var(--danger-color);
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.3));
         }
 
-        /* Spin Button */
+        .pointer:before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid var(--danger);
+        }
+
         .spin-btn {
+            margin-top: 2rem;
             padding: 1rem 2.5rem;
             font-size: 1.2rem;
             border-radius: 50px;
-            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            background: linear-gradient(45deg, var(--primary), var(--accent));
             color: white;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
             border: none;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 1.5rem;
+            transition: var(--transition);
         }
 
-        /* Result Modal */
-        .result-modal {
-            position: fixed;
+        .spin-btn:before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+            z-index: -1;
             opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            transition: var(--transition);
         }
 
-        .result-modal.active {
+        .spin-btn:hover:before {
             opacity: 1;
-            pointer-events: all;
         }
 
-        .modal-content {
-            background: var(--card-bg);
-            padding: 2rem 2.5rem;
-            border-radius: 15px;
-            text-align: center;
-            max-width: 550px;
-            width: 90%;
+        .spin-btn:active {
+            transform: translateY(2px) scale(0.98);
+        }
+
+        /* Premium Locks */
+        .premium-lock {
             position: relative;
         }
 
-        .winner-name {
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
+        .premium-lock:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(3px);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .premium-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
             font-weight: bold;
-            color: var(--accent-color);
-            animation: pulse 1.5s infinite;
+            z-index: 10;
+        }
+
+        /* Upgrade CTA */
+        .upgrade-cta {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            animation: pulse 2s infinite alternate;
+        }
+
+        .upgrade-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .upgrade-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #555;
+        }
+
+        .feature-item i {
+            color: var(--success);
         }
 
         /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            0% { transform: scale(1); box-shadow: 0 10px 30px rgba(108, 92, 231, 0.1); }
+            100% { transform: scale(1.01); box-shadow: 0 15px 40px rgba(108, 92, 231, 0.2); }
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
         }
 
         /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
             }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
             .app-container {
                 padding: 1rem;
             }
-            .spin-btn {
-                padding: 0.9rem 2rem;
+            
+            .wheel-wrapper {
+                max-width: 300px;
             }
         }
     </style>
 </head>
-<body class="theme-1">
+<body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-bullseye"></i> SpinSelect Pro</h1>
-            <p class="tagline">The Ultimate Customizable Random Picker Wheel</p>
+            <h1>SpinSelect Pro</h1>
+            <p class="tagline">The most beautiful random picker wheel for giveaways, decisions, and fun</p>
         </header>
 
         <div class="app-container">
             <div class="controls">
                 <div class="control-group">
-                    <h2><i class="fas fa-list-check"></i> Entries</h2>
+                    <h2><i class="fas fa-list"></i> Entries</h2>
                     <div class="input-group">
-                        <label for="entries">Add Items (one per line)</label>
-                        <textarea id="entries" placeholder="Example: Item One\nAnother Item: 3 (Weight)\nItem Three"></textarea>
+                        <label for="entries">Add items (one per line or comma separated)</label>
+                        <textarea id="entries" placeholder="Example: John, Jane, Mike\nOr one per line"></textarea>
                     </div>
                     <div class="btn-group">
-                        <button class="btn btn-primary" id="update-wheel-btn">
-                            <i class="fas fa-sync-alt"></i> Update Wheel
+                        <button class="btn btn-primary" id="add-entries">
+                            <i class="fas fa-plus"></i> Add Items
                         </button>
-                        <button class="btn btn-secondary" id="clear-entries-btn">
-                            <i class="fas fa-trash"></i> Clear All
+                        <button class="btn btn-secondary" id="clear-entries">
+                            <i class="fas fa-trash"></i> Clear
                         </button>
                     </div>
                 </div>
 
-                <div class="control-group">
+                <div class="control-group premium-lock">
+                    <div class="premium-badge">PRO</div>
                     <h2><i class="fas fa-palette"></i> Customization</h2>
                     <div class="input-group">
-                        <label for="wheel-title">Wheel Title</label>
-                        <input type="text" id="wheel-title" placeholder="My Awesome Wheel">
+                        <label>Wheel Themes</label>
+                        <div class="theme-selector">
+                            <div class="theme-option theme-1"></div>
+                            <div class="theme-option theme-2"></div>
+                            <div class="theme-option theme-3"></div>
+                        </div>
                     </div>
                     <div class="input-group">
-                        <label>Wheel Theme</label>
-                        <div class="theme-selector" id="theme-selector">
-                            <div class="theme-option theme-1 active" data-theme="1"></div>
-                            <div class="theme-option theme-2" data-theme="2"></div>
-                            <div class="theme-option theme-3" data-theme="3"></div>
-                            <div class="theme-option theme-4" data-theme="4"></div>
-                            <div class="theme-option theme-5" data-theme="5"></div>
-                            <div class="theme-option theme-6" data-theme="6"></div>
-                            <div class="theme-option theme-7" data-theme="7"></div>
-                        </div>
+                        <label>Background Music</label>
+                        <select disabled>
+                            <option>None</option>
+                            <option>Game Show (PRO)</option>
+                            <option>Casino (PRO)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="control-group premium-lock">
+                    <div class="premium-badge">PRO</div>
+                    <h2><i class="fas fa-save"></i> Save & Share</h2>
+                    <p>Save unlimited wheels and share them with others</p>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" disabled>
+                            <i class="fas fa-save"></i> Save Wheel
+                        </button>
+                        <button class="btn btn-secondary" disabled>
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="wheel-area">
-                <div class="wheel-container">
-                    <div class="pointer" id="pointer"></div>
+            <div class="wheel-container">
+                <div class="wheel-wrapper">
+                    <div class="pointer"></div>
                     <div class="wheel" id="wheel">
-                        <div class="wheel-center"><i class="fas fa-smile-beam"></i></div>
-                        <div class="wheel-section" style="transform: rotate(0deg) skewY(-30deg);">
-                            <div class="wheel-section-content">Add Items!</div>
+                        <div class="wheel-center">
+                            <i class="fas fa-question"></i>
                         </div>
-                        <div class="wheel-section" style="transform: rotate(60deg) skewY(-30deg);">
-                            <div class="wheel-section-content">Update Wheel!</div>
-                        </div>
+                        <!-- Wheel sections will be added here dynamically -->
                     </div>
                 </div>
                 <button class="spin-btn" id="spin-btn">
-                    <i class="fas fa-play"></i> SPIN NOW!
+                    <i class="fas fa-redo"></i> SPIN THE WHEEL
                 </button>
             </div>
         </div>
 
-        <footer>
-            <p>SpinSelect Pro &copy; <span id="year"></span> | Developed for GitHub & Whop</p>
-        </footer>
-    </div>
-
-    <div class="result-modal" id="result-modal">
-        <div class="modal-content">
-            <button class="modal-close" id="modal-close">&times;</button>
-            <div class="winner-text">And the winner is...</div>
-            <div class="winner-name" id="winner-name">Item Name</div>
+        <div class="upgrade-cta">
+            <h3 class="upgrade-title">Unlock Premium Features</h3>
+            <p class="upgrade-price">$9.99/month</p>
+            
+            <div class="features-list">
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>20+ Premium Themes</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Save Unlimited Wheels</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Background Music</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Share & Collaborate</span>
+                </div>
+            </div>
+            
+            <button class="btn btn-accent upgrade-btn" id="upgrade-btn">
+                <i class="fas fa-rocket"></i> Upgrade Now
+            </button>
         </div>
     </div>
 
@@ -451,214 +572,179 @@
             const wheel = document.getElementById('wheel');
             const spinBtn = document.getElementById('spin-btn');
             const entriesTextarea = document.getElementById('entries');
-            const updateWheelBtn = document.getElementById('update-wheel-btn');
-            const clearEntriesBtn = document.getElementById('clear-entries-btn');
-            const wheelTitleInput = document.getElementById('wheel-title');
-            const themeOptions = document.querySelectorAll('.theme-option');
-            const resultModal = document.getElementById('result-modal');
-            const winnerNameEl = document.getElementById('winner-name');
-            const modalClose = document.getElementById('modal-close');
-            const pointer = document.getElementById('pointer');
-            const yearSpan = document.getElementById('year');
-
-            // State Variables
-            let currentEntries = [];
-            let currentTheme = '1';
+            const addEntriesBtn = document.getElementById('add-entries');
+            const clearEntriesBtn = document.getElementById('clear-entries');
+            const upgradeBtn = document.getElementById('upgrade-btn');
+            
+            // Variables
+            let currentItems = ['Option 1', 'Option 2', 'Option 3', 'Option 4'];
             let spinning = false;
-            let savedWheels = JSON.parse(localStorage.getItem('spinSelectProWheels')) || [];
+            let isPremium = false;
+
+            // Check for premium (Whop license key)
+            function checkPremium() {
+                // Whop will pass ?key=LICENSE_KEY in the URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const licenseKey = urlParams.get('key');
+                
+                if (licenseKey) {
+                    localStorage.setItem('spinselect_premium', 'true');
+                    return true;
+                }
+                
+                return localStorage.getItem('spinselect_premium') === 'true';
+            }
+
+            // Unlock premium features
+            function unlockPremium() {
+                isPremium = true;
+                document.querySelectorAll('.premium-lock').forEach(el => {
+                    el.style.opacity = '0.5';
+                    setTimeout(() => {
+                        el.style.display = 'none';
+                    }, 300);
+                });
+                
+                // Enable actual premium features here
+                console.log("Premium features unlocked!");
+            }
 
             // Initialize
-            yearSpan.textContent = new Date().getFullYear();
-            loadInitialState();
-            updateWheelUI();
+            isPremium = checkPremium();
+            if (isPremium) unlockPremium();
+            updateWheel(currentItems);
 
-            // Event Listeners
-            updateWheelBtn.addEventListener('click', handleUpdateWheel);
-            clearEntriesBtn.addEventListener('click', clearAllEntries);
-            spinBtn.addEventListener('click', spinTheWheel);
-            modalClose.addEventListener('click', closeModal);
-            
-            themeOptions.forEach(option => {
-                option.addEventListener('click', () => selectTheme(option));
-            });
-
-            // Core Functions
-            function parseEntries(text) {
-                const lines = text.trim().split('\n');
-                const entries = [];
-                
-                lines.forEach(line => {
-                    line = line.trim();
-                    if (!line) return;
-
-                    let name = line;
-                    let weight = 1;
-
-                    const parts = line.split(':');
-                    if (parts.length > 1) {
-                        const potentialWeight = parseInt(parts[parts.length - 1].trim(), 10);
-                        if (!isNaN(potentialWeight) && potentialWeight > 0) {
-                            weight = potentialWeight;
-                            name = parts.slice(0, -1).join(':').trim();
-                        }
-                    }
-
-                    if (name) {
-                        entries.push({ name, weight });
-                    }
-                });
-
-                return entries;
-            }
-
-            function handleUpdateWheel() {
-                currentEntries = parseEntries(entriesTextarea.value);
-                updateWheelUI();
-                saveCurrentEntriesToStorage();
-            }
-
-            function clearAllEntries() {
-                if (confirm('Clear all current wheel entries?')) {
-                    currentEntries = [];
-                    entriesTextarea.value = '';
-                    updateWheelUI();
-                    saveCurrentEntriesToStorage();
-                }
-            }
-
-            function updateWheelUI() {
-                wheel.innerHTML = '';
-                
-                // Add Center Circle
-                const wheelCenter = document.createElement('div');
-                wheelCenter.className = 'wheel-center';
-                wheelCenter.innerHTML = `<i class="fas ${currentEntries.length > 0 ? 'fa-star' : 'fa-smile-beam'}"></i>`;
-                wheel.appendChild(wheelCenter);
-
-                if (currentEntries.length === 0) {
-                    const placeholderSection = document.createElement('div');
-                    placeholderSection.className = 'wheel-section';
-                    placeholderSection.style.cssText = 'transform: rotate(0deg) skewY(-60deg); --skew-angle: -60deg; --section-angle: 360deg;';
-                    placeholderSection.innerHTML = '<div class="wheel-section-content">Add items & Update Wheel!</div>';
-                    wheel.appendChild(placeholderSection);
-                    spinBtn.disabled = true;
+            // Wheel Functions
+            function updateWheel(items) {
+                if (items.length === 0) {
+                    wheel.innerHTML = `
+                        <div class="wheel-center">
+                            <i class="fas fa-question"></i>
+                        </div>
+                        <div class="wheel-section" style="transform: rotate(0deg); background: #f1f1f1;">
+                            <div class="wheel-section-content">Add items to begin</div>
+                        </div>
+                    `;
                     return;
                 }
 
-                spinBtn.disabled = false;
+                wheel.innerHTML = `
+                    <div class="wheel-center">
+                        <i class="fas fa-question"></i>
+                    </div>
+                `;
 
-                const numSections = currentEntries.length;
-                const sectionAngle = 360 / numSections;
-                const skewAngle = 90 - sectionAngle;
-
-                currentEntries.forEach((entry, index) => {
+                const sectionAngle = 360 / items.length;
+                
+                items.forEach((item, index) => {
+                    const hue = (index * 360 / items.length);
                     const section = document.createElement('div');
                     section.className = 'wheel-section';
-                    const rotation = index * sectionAngle;
+                    section.style.transform = `rotate(${index * sectionAngle}deg)`;
+                    section.style.background = `hsl(${hue}, 80%, 60%)`;
                     
-                    section.style.transform = `rotate(${rotation}deg) skewY(${skewAngle}deg)`;
-                    section.style.setProperty('--skew-angle', `${skewAngle}deg`);
-                    section.style.setProperty('--section-angle', `${sectionAngle}deg`);
-
                     const content = document.createElement('div');
                     content.className = 'wheel-section-content';
-                    content.textContent = entry.weight > 1 ? `${entry.name} (${entry.weight})` : entry.name;
+                    content.textContent = item;
+                    content.style.fontSize = `${Math.max(1, 2 - items.length * 0.05)}rem`;
                     
                     section.appendChild(content);
                     wheel.appendChild(section);
                 });
+
+                currentItems = items;
             }
 
-            function spinTheWheel() {
-                if (spinning || currentEntries.length === 0) return;
+            function spinWheel() {
+                if (spinning || currentItems.length === 0) return;
+                
                 spinning = true;
                 spinBtn.disabled = true;
                 spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SPINNING...';
-
-                // Reset wheel rotation
-                wheel.style.transition = 'none';
-                wheel.style.transform = 'rotate(0deg)';
                 
-                // Force reflow
-                wheel.offsetHeight;
-
-                // Calculate target angle
-                const baseRotations = 5 + Math.random() * 5;
-                const randomAngle = Math.random() * 360;
-                const targetAngle = (360 * baseRotations) + randomAngle;
-                const spinDuration = 4 + Math.random() * 2;
-
-                // Apply spin animation
-                wheel.style.transition = `transform ${spinDuration}s cubic-bezier(0.25, 0.1, 0.25, 1)`;
-                wheel.style.transform = `rotate(${targetAngle}deg)`;
-
-                // Determine winner after animation
+                const spinDuration = 3000 + Math.random() * 2000; // 3-5 seconds
+                const rotations = 5 + Math.random() * 3; // 5-8 full rotations
+                const finalAngle = 360 * rotations + Math.random() * 360;
+                
+                wheel.style.transform = `rotate(${-finalAngle}deg)`;
+                
                 setTimeout(() => {
-                    determineWinner(targetAngle);
-                }, spinDuration * 1000 + 100);
+                    spinning = false;
+                    spinBtn.disabled = false;
+                    spinBtn.innerHTML = '<i class="fas fa-redo"></i> SPIN THE WHEEL';
+                    
+                    // Calculate winner
+                    const normalizedAngle = finalAngle % 360;
+                    const sectionAngle = 360 / currentItems.length;
+                    const winnerIndex = Math.floor(normalizedAngle / sectionAngle);
+                    const winner = currentItems[winnerIndex];
+                    
+                    showWinner(winner);
+                }, spinDuration);
             }
 
-            function determineWinner(finalAngle) {
-                spinning = false;
-                spinBtn.disabled = false;
-                spinBtn.innerHTML = '<i class="fas fa-play"></i> SPIN NOW!';
-
-                const normalizedAngle = (360 - (finalAngle % 360)) % 360;
-                const sectionAngle = 360 / currentEntries.length;
-                const winningIndex = Math.floor(normalizedAngle / sectionAngle);
-
-                if (winningIndex >= 0 && winningIndex < currentEntries.length) {
-                    const winner = currentEntries[winningIndex].name;
-                    showWinnerModal(winner);
+            function showWinner(winner) {
+                // Create confetti
+                for (let i = 0; i < 50; i++) {
+                    createConfetti();
                 }
+                
+                // Show winner alert
+                alert(`🎉 Winner: ${winner}`);
             }
 
-            function showWinnerModal(winner) {
-                winnerNameEl.textContent = winner;
-                resultModal.classList.add('active');
+            function createConfetti() {
+                const colors = ['#6c5ce7', '#a29bfe', '#fd79a8', '#fab1a0', '#fdcb6e', '#ffeaa7'];
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.borderRadius = '50%';
+                confetti.style.animation = 'confetti 3s linear forwards';
+                confetti.style.zIndex = '9999';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
             }
 
-            function closeModal() {
-                resultModal.classList.remove('active');
-            }
+            // Event Listeners
+            addEntriesBtn.addEventListener('click', function() {
+                const text = entriesTextarea.value.trim();
+                if (!text) return;
 
-            function selectTheme(optionElement) {
-                themeOptions.forEach(opt => opt.classList.remove('active'));
-                optionElement.classList.add('active');
-                currentTheme = optionElement.dataset.theme;
-                document.body.className = `theme-${currentTheme}`;
-                saveSettings();
-            }
+                let items = text.split('\n').flatMap(line => 
+                    line.split(',').map(item => item.trim()).filter(item => item)
+                );
 
-            function loadInitialState() {
-                const settings = JSON.parse(localStorage.getItem('spinSelectProSettings'));
-                if (settings) {
-                    currentTheme = settings.theme || '1';
-                    wheelTitleInput.value = settings.title || '';
-                    document.body.className = `theme-${currentTheme}`;
-                    themeOptions.forEach(opt => {
-                        opt.classList.toggle('active', opt.dataset.theme === currentTheme);
-                    });
+                if (!isPremium && items.length + currentItems.length > 8) {
+                    alert('Free version limited to 8 items. Upgrade to add more.');
+                    return;
                 }
 
-                const lastEntries = JSON.parse(localStorage.getItem('spinSelectProLastEntries'));
-                if (lastEntries) {
-                    currentEntries = lastEntries;
-                    entriesTextarea.value = currentEntries.map(e => e.weight > 1 ? `${e.name}: ${e.weight}` : e.name).join('\n');
+                currentItems = [...new Set([...currentItems, ...items])];
+                updateWheel(currentItems);
+                entriesTextarea.value = '';
+            });
+
+            clearEntriesBtn.addEventListener('click', function() {
+                if (confirm('Clear all items?')) {
+                    currentItems = [];
+                    updateWheel(currentItems);
                 }
-            }
+            });
 
-            function saveSettings() {
-                const settings = {
-                    theme: currentTheme,
-                    title: wheelTitleInput.value.trim()
-                };
-                localStorage.setItem('spinSelectProSettings', JSON.stringify(settings));
-            }
+            spinBtn.addEventListener('click', spinWheel);
 
-            function saveCurrentEntriesToStorage() {
-                localStorage.setItem('spinSelectProLastEntries', JSON.stringify(currentEntries));
-            }
+            upgradeBtn.addEventListener('click', function() {
+                alert("Redirecting to Whop to complete your upgrade...");
+                // In production, replace with your Whop checkout URL
+                // window.location.href = "YOUR_WHOP_CHECKOUT_LINK";
+            });
         });
     </script>
 </body>
