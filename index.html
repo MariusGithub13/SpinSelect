@@ -4,19 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpinSelect Pro | Advanced Customizable Picker Wheel</title>
-    <meta name="description" content="Sleek, responsive, and highly customizable wheel spinner with advanced features for giveaways, decisions, team collaboration, and more. Perfect for selling on Whop.com.">
+    <meta name="description" content="Sleek, responsive, and highly customizable wheel spinner with advanced features for giveaways, decisions, team collaboration, and more.">
+    
+    <!-- Social meta tags -->
+    <meta property="og:title" content="SpinSelect Pro | Advanced Customizable Picker Wheel">
+    <meta property="og:description" content="Sleek, responsive, and highly customizable wheel spinner with advanced features.">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+    
     <style>
         /* --- Base Variables & Reset --- */
         :root {
-            --primary: #6a11cb; /* Updated primary color */
+            --primary: #6a11cb;
             --primary-light: #a29bfe;
-            --secondary: #2575fc; /* Added secondary for gradients */
-            --accent: #ff5733; /* Updated accent */
+            --secondary: #2575fc;
+            --accent: #ff5733;
             --dark: #333;
             --light: #fdfdfd;
             --gray: #e9e9e9;
@@ -26,8 +35,8 @@
             --shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
             --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.07);
             --transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --border-radius: 12px; /* Consistent border radius */
-            --font-family: 'Poppins', sans-serif; /* Changed font */
+            --border-radius: 12px;
+            --font-family: 'Poppins', sans-serif;
         }
 
         * {
@@ -42,7 +51,7 @@
 
         body {
             font-family: var(--font-family);
-            background-color: #f4f7f6; /* Slightly different background */
+            background-color: #f4f7f6;
             color: var(--dark);
             line-height: 1.7;
             min-height: 100vh;
@@ -52,9 +61,9 @@
 
         .container {
             max-width: 1300px;
-            margin: 1rem auto; /* Added top margin */
+            margin: 1rem auto;
             padding: 1.5rem;
-            flex-grow: 1; /* Make container take available space */
+            flex-grow: 1;
         }
 
         /* --- Header --- */
@@ -68,7 +77,6 @@
             font-size: 3rem;
             margin-bottom: 0.5rem;
             font-weight: 700;
-            /* Updated gradient */
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
@@ -87,20 +95,18 @@
         /* --- Main App Layout --- */
         .app-container {
             display: grid;
-            /* Adjusted grid for better balance */
             grid-template-columns: 350px 1fr;
-            gap: 2.5rem; /* Increased gap */
+            gap: 2.5rem;
             background: var(--light);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
-            padding: 2.5rem; /* Increased padding */
+            padding: 2.5rem;
             animation: fadeInUp 0.8s ease-out;
             position: relative;
-            overflow: hidden; /* Keep overflow hidden */
+            overflow: hidden;
             margin-bottom: 2rem;
         }
 
-        /* --- Responsive Grid --- */
         @media (max-width: 992px) {
             .app-container {
                 grid-template-columns: 1fr;
@@ -118,18 +124,18 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
-            height: fit-content; /* Prevent stretching */
+            height: fit-content;
         }
 
         .control-group {
-            background: #fff; /* Lighter background for contrast */
+            background: #fff;
             padding: 1.5rem;
             border-radius: var(--border-radius);
-            border: 1px solid var(--gray); /* Subtle border */
+            border: 1px solid var(--gray);
             box-shadow: var(--shadow-light);
             transition: var(--transition);
-            opacity: 1; /* For fade out animation */
-            transform: translateY(0); /* For slide up animation */
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .control-group.fade-out {
@@ -142,35 +148,35 @@
         }
 
         h2 {
-            font-size: 1.4rem; /* Slightly larger */
+            font-size: 1.4rem;
             font-weight: 600;
             margin-bottom: 1rem;
             color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 0.6rem; /* Increased gap */
+            gap: 0.6rem;
         }
 
         .input-group {
             margin-bottom: 1rem;
-            position: relative; /* For potential icons inside */
+            position: relative;
         }
 
         label {
             display: block;
-            margin-bottom: 0.6rem; /* Increased margin */
+            margin-bottom: 0.6rem;
             font-weight: 500;
-            color: #444; /* Darker label */
-            font-size: 0.95rem; /* Slightly smaller label */
+            color: #444;
+            font-size: 0.95rem;
         }
 
         input, textarea, select {
             width: 100%;
-            padding: 0.9rem 1.1rem; /* Adjusted padding */
-            border: 1px solid #ccc; /* Lighter border */
-            border-radius: 8px; /* Slightly smaller radius */
+            padding: 0.9rem 1.1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
             font-size: 1rem;
-            font-family: inherit; /* Inherit font */
+            font-family: inherit;
             transition: var(--transition);
             background-color: #fff;
         }
@@ -178,7 +184,7 @@
         input:focus, textarea:focus, select:focus {
             outline: none;
             border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.15); /* Adjusted shadow */
+            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.15);
         }
 
         textarea {
@@ -187,7 +193,6 @@
             line-height: 1.6;
         }
 
-        /* Weighted Entry Styling (Example) */
         .entry-item {
             display: flex;
             gap: 0.5rem;
@@ -200,7 +205,7 @@
 
         /* --- Buttons --- */
         .btn {
-            padding: 0.9rem 1.6rem; /* Adjusted padding */
+            padding: 0.9rem 1.6rem;
             border: none;
             border-radius: 8px;
             font-size: 1rem;
@@ -211,11 +216,11 @@
             align-items: center;
             justify-content: center;
             gap: 0.6rem;
-            text-decoration: none; /* For link buttons */
-            white-space: nowrap; /* Prevent wrapping */
+            text-decoration: none;
+            white-space: nowrap;
         }
 
-        .btn i { line-height: 1; /* Align icons better */ }
+        .btn i { line-height: 1; }
 
         .btn-primary {
             background-color: var(--primary);
@@ -224,7 +229,7 @@
         }
 
         .btn-primary:hover {
-            background-color: #580ca7; /* Darker hover */
+            background-color: #580ca7;
             transform: translateY(-3px);
             box-shadow: 0 7px 20px rgba(106, 17, 203, 0.3);
         }
@@ -236,7 +241,7 @@
         }
 
         .btn-secondary:hover {
-            background-color: #1f66e0; /* Darker hover */
+            background-color: #1f66e0;
             transform: translateY(-3px);
             box-shadow: 0 7px 20px rgba(37, 117, 252, 0.3);
         }
@@ -248,7 +253,7 @@
         }
 
         .btn-accent:hover {
-            background-color: #e64a19; /* Darker hover */
+            background-color: #e64a19;
             transform: translateY(-3px);
             box-shadow: 0 7px 20px rgba(255, 87, 51, 0.3);
         }
@@ -272,8 +277,8 @@
 
         .btn-group {
             display: flex;
-            gap: 0.75rem; /* Increased gap */
-            flex-wrap: wrap; /* Allow wrapping */
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
         /* --- Wheel Container --- */
@@ -281,19 +286,19 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-around; /* Better spacing */
+            justify-content: space-around;
             position: relative;
             padding: 1rem;
-            min-height: 500px; /* Ensure space */
-            perspective: 1000px; /* For 3D effects */
+            min-height: 500px;
+            perspective: 1000px;
         }
 
         .wheel-wrapper {
             position: relative;
-            width: 90%; /* Responsive width */
-            max-width: 550px; /* Increased max width */
+            width: 90%;
+            max-width: 550px;
             aspect-ratio: 1/1;
-            margin: 1rem auto; /* Center and add margin */
+            margin: 1rem auto;
             animation: zoomIn 0.7s ease-out;
         }
 
@@ -303,24 +308,22 @@
             position: relative;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0,0,0,0.1); /* Enhanced shadow */
-            /* Improved transition for smoother spin */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0,0,0,0.1);
             transition: transform 6s cubic-bezier(0.1, 0.7, 0.3, 1);
             transform: rotate(0deg);
-            border: 10px solid white; /* Thicker border */
-            background-color: var(--gray); /* Fallback background */
+            border: 10px solid white;
+            background-color: var(--gray);
         }
 
         .wheel.spinning {
-             /* Use a less bouncy ease-out during spin */
             transition: transform 6s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         .wheel-center {
             position: absolute;
-            width: 70px; /* Larger center */
+            width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, #ffffff, #f0f0f0); /* Gradient center */
+            background: linear-gradient(135deg, #ffffff, #f0f0f0);
             border-radius: 50%;
             top: 50%;
             left: 50%;
@@ -331,7 +334,7 @@
             align-items: center;
             justify-content: center;
             color: var(--primary);
-            font-size: 1.8rem; /* Larger icon */
+            font-size: 1.8rem;
             border: 5px solid var(--light);
         }
 
@@ -341,34 +344,32 @@
             height: 50%;
             transform-origin: bottom right;
             overflow: hidden;
-            /* Advanced clip-path for better segment shapes */
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 100%); /* Example */
-            border-left: 1px solid rgba(255,255,255,0.2); /* Subtle separator */
-            transition: var(--transition); /* For hover effects maybe */
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 100%);
+            border-left: 1px solid rgba(255,255,255,0.2);
+            transition: var(--transition);
         }
 
         .wheel-section-content {
             position: absolute;
-            /* Adjust positioning and rotation for better text alignment */
-            width: 150%; /* Adjust as needed */
-            height: 150%; /* Adjust as needed */
+            width: 150%;
+            height: 150%;
             transform: translate(-25%, -10%) rotate(calc(var(--angle) / 2 + 270deg));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600; /* Bolder text */
+            font-weight: 600;
             color: white;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-            font-size: clamp(0.8rem, 3vw, 1.1rem); /* Responsive font size */
+            font-size: clamp(0.8rem, 3vw, 1.1rem);
             text-align: center;
             padding: 0.5rem;
             word-break: break-word;
-            user-select: none; /* Prevent text selection */
+            user-select: none;
         }
 
         .pointer {
             position: absolute;
-            top: -10px; /* Adjusted position */
+            top: -10px;
             left: 50%;
             transform: translateX(-50%);
             width: 0;
@@ -376,19 +377,17 @@
             z-index: 20;
             border-left: 20px solid transparent;
             border-right: 20px solid transparent;
-            border-top: 35px solid var(--danger); /* Larger pointer */
+            border-top: 35px solid var(--danger);
             filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
-            /* Animation */
             animation: bouncePointer 1.5s infinite ease-in-out;
         }
 
         .spin-btn {
-            margin-top: 1rem; /* Reduced margin */
-            padding: 1rem 2.8rem; /* Larger padding */
-            font-size: 1.3rem; /* Larger font */
+            margin-top: 1rem;
+            padding: 1rem 2.8rem;
+            font-size: 1.3rem;
             font-weight: 700;
             border-radius: 50px;
-            /* Updated gradient */
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: white;
             box-shadow: 0 10px 25px rgba(106, 17, 203, 0.3);
@@ -397,24 +396,23 @@
             z-index: 1;
             border: none;
             cursor: pointer;
-            transition: all 0.2s ease-out; /* Faster click transition */
+            transition: all 0.2s ease-out;
         }
 
         .spin-btn:before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%; /* Start hidden */
+            left: -100%;
             width: 100%;
             height: 100%;
-            /* Shine effect gradient */
             background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
             z-index: 1;
             transition: left 0.6s ease-out;
         }
 
         .spin-btn:hover:before {
-            left: 100%; /* Move shine across */
+            left: 100%;
         }
 
         .spin-btn:hover {
@@ -423,7 +421,7 @@
         }
 
         .spin-btn:active {
-            transform: translateY(1px) scale(0.98); /* Subtle press effect */
+            transform: translateY(1px) scale(0.98);
             box-shadow: 0 6px 15px rgba(106, 17, 203, 0.2);
         }
 
@@ -441,14 +439,14 @@
             cursor: pointer;
             border: 2px solid var(--gray);
             transition: var(--transition);
-            position: relative; /* For checkmark */
+            position: relative;
         }
         .theme-option:hover, .theme-option.active {
             border-color: var(--primary);
             transform: scale(1.1);
         }
         .theme-option.active::after {
-            content: '\f00c'; /* Font Awesome check */
+            content: '\f00c';
             font-family: 'Font Awesome 6 Free';
             font-weight: 900;
             position: absolute;
@@ -460,7 +458,6 @@
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        /* Example Theme Colors */
         .theme-default { background: linear-gradient(45deg, #6a11cb, #2575fc); }
         .theme-sunset { background: linear-gradient(45deg, #ff8c00, #ff0080); }
         .theme-forest { background: linear-gradient(45deg, #138d75, #27ae60); }
@@ -479,7 +476,7 @@
         .switch {
             position: relative;
             display: inline-block;
-            width: 44px; /* Smaller switch */
+            width: 44px;
             height: 24px;
         }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -513,10 +510,10 @@
             margin-top: 1rem;
             display: flex;
             gap: 0.8rem;
-            justify-content: center; /* Center share buttons */
+            justify-content: center;
         }
         .share-btn {
-            font-size: 1.5rem; /* Larger icons */
+            font-size: 1.5rem;
             color: #555;
             transition: var(--transition);
             text-decoration: none;
@@ -533,13 +530,13 @@
         /* --- Premium Features & CTA --- */
         .premium-lock {
             position: relative;
-            filter: grayscale(60%); /* More subtle lock */
+            filter: grayscale(60%);
             opacity: 0.8;
-            pointer-events: none; /* Disable interaction */
+            pointer-events: none;
             transition: var(--transition);
         }
         .premium-lock > *:not(.premium-badge) {
-            pointer-events: none; /* Ensure children are not interactive */
+            pointer-events: none;
         }
 
         body.premium .premium-lock {
@@ -551,9 +548,8 @@
              pointer-events: auto;
         }
         body.premium .premium-badge {
-            display: none; /* Hide badge when premium */
+            display: none;
         }
-        /* Adjust disabled state for premium */
         body.premium .premium-lock select,
         body.premium .premium-lock button,
         body.premium .premium-lock input,
@@ -577,21 +573,21 @@
             right: 10px;
             background: var(--primary);
             color: white;
-            padding: 0.3rem 0.8rem; /* More padding */
+            padding: 0.3rem 0.8rem;
             border-radius: 20px;
-            font-size: 0.75rem; /* Slightly smaller */
+            font-size: 0.75rem;
             font-weight: 600;
             z-index: 10;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            cursor: help; /* Indicate it's informative */
-            pointer-events: auto; /* Make badge clickable/hoverable */
+            cursor: help;
+            pointer-events: auto;
         }
 
         .upgrade-cta {
             text-align: center;
-            margin-top: 3rem; /* More space */
-            padding: 2.5rem; /* More padding */
-            background: linear-gradient(135deg, white, #f8f9fa); /* Subtle gradient */
+            margin-top: 3rem;
+            padding: 2.5rem;
+            background: linear-gradient(135deg, white, #f8f9fa);
             border-radius: var(--border-radius);
             box-shadow: var(--shadow);
             animation: subtlePulse 2.5s infinite alternate ease-in-out;
@@ -599,11 +595,11 @@
         }
 
          body.premium .upgrade-cta {
-             display: none; /* Hide CTA when premium */
+             display: none;
          }
 
         .upgrade-title {
-            font-size: 1.8rem; /* Larger */
+            font-size: 1.8rem;
             font-weight: 600;
             margin-bottom: 0.5rem;
             color: var(--primary);
@@ -615,12 +611,10 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Removed price - handled by Whop */
-
         .features-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Wider columns */
-            gap: 1.2rem; /* Increased gap */
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
             margin: 2rem 0;
             text-align: left;
         }
@@ -628,27 +622,27 @@
         .feature-item {
             display: flex;
             align-items: center;
-            gap: 0.8rem; /* Increased gap */
-            color: #444; /* Darker text */
-            font-size: 1.05rem; /* Slightly larger */
+            gap: 0.8rem;
+            color: #444;
+            font-size: 1.05rem;
         }
 
         .feature-item i {
             color: var(--success);
-            font-size: 1.2rem; /* Larger icon */
-            width: 20px; /* Align icons */
+            font-size: 1.2rem;
+            width: 20px;
             text-align: center;
         }
 
         .upgrade-btn {
             margin-top: 1rem;
-            padding: 1rem 2.5rem; /* Larger button */
+            padding: 1rem 2.5rem;
             font-size: 1.1rem;
         }
 
         /* --- Winner Modal --- */
         .modal {
-            display: none; /* Hidden by default */
+            display: none;
             position: fixed;
             z-index: 1000;
             left: 0;
@@ -656,14 +650,14 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.6); /* Darker overlay */
-            backdrop-filter: blur(5px); /* Frosted glass effect */
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
             animation: fadeIn 0.5s;
         }
 
         .modal-content {
             background: white;
-            margin: 10% auto; /* Vertically centered */
+            margin: 10% auto;
             padding: 3rem;
             border-radius: var(--border-radius);
             width: 90%;
@@ -699,7 +693,7 @@
             color: var(--accent);
             margin: 1rem 0 2rem 0;
             padding: 1rem;
-            background-color: #fff3e0; /* Highlight background */
+            background-color: #fff3e0;
             border-radius: 8px;
             border: 1px solid var(--warning);
         }
@@ -708,7 +702,7 @@
             list-style: none;
             padding: 0;
             margin: 1rem 0 2rem 0;
-            max-height: 150px; /* Scrollable list for multiple winners */
+            max-height: 150px;
             overflow-y: auto;
             text-align: left;
         }
@@ -756,7 +750,7 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background-color: var(--primary); /* Will be overridden */
+            background-color: var(--primary);
             opacity: 1;
             transform: rotate(0deg);
             animation: fall 3s linear forwards;
@@ -768,7 +762,6 @@
                 opacity: 0;
             }
         }
-
 
         /* --- Footer --- */
         footer {
@@ -784,10 +777,10 @@
         .text-center { text-align: center; }
         .mt-1 { margin-top: 1rem; }
         .mb-1 { margin-bottom: 1rem; }
-
     </style>
 </head>
-<body class=""> <div class="container">
+<body>
+    <div class="container">
         <header>
             <h1>SpinSelect Pro</h1>
             <p class="tagline">Advanced Random Picker Wheel: Customize, Share & Collaborate</p>
@@ -833,7 +826,9 @@
                             <span class="slider"></span>
                             <label for="sound-toggle" style="cursor: not-allowed;">Enable Sounds</label>
                         </div>
-                        <audio id="spin-sound" src="sounds/spin.mp3" preload="auto"></audio> <audio id="win-sound" src="sounds/win.mp3" preload="auto"></audio>   </div>
+                        <audio id="spin-sound" preload="auto"></audio>
+                        <audio id="win-sound" preload="auto"></audio>
+                    </div>
                      <div class="input-group premium-lock">
                         <div class="premium-badge">PRO</div>
                         <label for="wheel-style">Wheel Style</label>
@@ -884,12 +879,14 @@
                          <a href="#" class="btn btn-light btn-sm" id="team-collab-btn" style="opacity: 0.6; cursor: not-allowed;"><i class="fas fa-users"></i> Team Collaboration</a>
                      </div>
                 </div>
-            </div><div class="wheel-container">
+            </div>
+            <div class="wheel-container">
                 <div class="wheel-wrapper">
                     <div class="pointer"></div>
                     <div class="wheel" id="wheel">
                         <div class="wheel-center">
-                            <i class="fas fa-star"></i> </div>
+                            <i class="fas fa-star"></i>
+                        </div>
                     </div>
                 </div>
 
@@ -904,8 +901,10 @@
                      <a href="#" target="_blank" class="share-btn whatsapp" id="share-whatsapp" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
                      <button class="share-btn copy" id="copy-link-btn" title="Copy Link"><i class="fas fa-link"></i></button>
                  </div>
+            </div>
+        </div>
 
-            </div></div> <div class="upgrade-cta" id="upgrade-cta">
+        <div class="upgrade-cta" id="upgrade-cta">
             <h3 class="upgrade-title">🚀 Unlock the Full Power of SpinSelect Pro!</h3>
             <p class="upgrade-subtitle">Get access to all premium features and create amazing experiences.</p>
             <div class="features-list">
@@ -927,15 +926,14 @@
             </button>
              <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">Secure checkout via Whop.com</p>
         </div>
+    </div>
 
-    </div><div id="winnerModal" class="modal">
+    <div id="winnerModal" class="modal">
         <div class="modal-content">
             <span class="modal-close" id="modal-close-btn">&times;</span>
             <h2>🎉 Winner(s)! 🎉</h2>
-            <div id="winner-display">
-                 </div>
-             <div id="modal-share-buttons" class="share-buttons mt-1">
-                 </div>
+            <div id="winner-display"></div>
+             <div id="modal-share-buttons" class="share-buttons mt-1"></div>
             <button class="btn btn-primary mt-1" id="spin-again-btn">Spin Again</button>
         </div>
     </div>
@@ -969,35 +967,30 @@
             const confettiContainer = document.getElementById('confetti-container');
             const spinSound = document.getElementById('spin-sound');
             const winSound = document.getElementById('win-sound');
-            const saveWheelBtn = document.getElementById('save-wheel-btn'); // Placeholder
-            const loadWheelBtn = document.getElementById('load-wheel-btn'); // Placeholder
-            const shareModalBtn = document.getElementById('share-modal-btn'); // Placeholder
-            const viewAnalyticsBtn = document.getElementById('view-analytics-btn'); // Placeholder
-            const teamCollabBtn = document.getElementById('team-collab-btn'); // Placeholder
+            const saveWheelBtn = document.getElementById('save-wheel-btn');
+            const loadWheelBtn = document.getElementById('load-wheel-btn');
+            const shareModalBtn = document.getElementById('share-modal-btn');
+            const viewAnalyticsBtn = document.getElementById('view-analytics-btn');
+            const teamCollabBtn = document.getElementById('team-collab-btn');
 
             // --- State Variables ---
-            let currentEntries = []; // Array of objects: { text: 'Entry 1', weight: 1 }
+            let currentEntries = [];
             let currentRotation = 0;
             let spinning = false;
-            let isPremium = false; // This will be set by Whop integration
+            let isPremium = false;
             let soundEnabled = false;
             let weightedEnabled = false;
             let winnerCount = 1;
-            let currentTheme = 'default'; // Default theme
+            let currentTheme = 'default';
 
             // --- Whop Integration (Simulated) ---
             function checkPremiumStatus() {
-                // ** REAL IMPLEMENTATION REQUIRED **
-                // This function needs to securely verify the user's license key
-                // passed via URL (?key=LICENSE_KEY) or using Whop's API/SDK.
-                // For demonstration, we'll use a simple check.
                 const urlParams = new URLSearchParams(window.location.search);
-                const licenseKey = urlParams.get('key'); // Whop usually passes the key like this
+                const licenseKey = urlParams.get('key');
 
-                // Example: Check local storage or validate key (replace with actual validation)
                 if (licenseKey === 'VALID_PREMIUM_KEY' || localStorage.getItem('spinselect_premium') === 'true') {
                      if (licenseKey === 'VALID_PREMIUM_KEY') {
-                        localStorage.setItem('spinselect_premium', 'true'); // Persist status
+                        localStorage.setItem('spinselect_premium', 'true');
                     }
                     isPremium = true;
                     document.body.classList.add('premium');
@@ -1012,14 +1005,12 @@
             }
 
             function enablePremiumFeatures() {
-                // Remove 'premium-lock' visual styles and enable controls
                 document.querySelectorAll('.premium-lock').forEach(el => {
-                     // Enable contained form elements
                     el.querySelectorAll('input, select, button, textarea').forEach(input => {
                         input.disabled = false;
                         if (input.labels && input.labels[0]) input.labels[0].style.cursor = 'pointer';
                          if (input.classList.contains('slider')) {
-                             input.parentElement.style.cursor = 'pointer'; // Enable toggle switch click
+                             input.parentElement.style.cursor = 'pointer';
                          }
                     });
                     el.querySelectorAll('a.btn').forEach(a => {
@@ -1031,33 +1022,28 @@
                          label.style.cursor = 'pointer';
                      })
                 });
-                 // Update state variables based on potentially saved premium settings
+                 
                 soundEnabled = soundToggle.checked;
                 weightedEnabled = weightedToggle.checked;
                 winnerCount = parseInt(winnerCountInput.value) || 1;
 
-                // Add event listeners for premium features
                 soundToggle.addEventListener('change', handleSoundToggle);
                 weightedToggle.addEventListener('change', handleWeightedToggle);
                 winnerCountInput.addEventListener('change', handleWinnerCountChange);
 
-                // Activate Premium Theme Selection
                 themeOptions.forEach(option => {
                     option.addEventListener('click', handleThemeChange);
-                    option.style.cursor = 'pointer'; // Ensure cursor is pointer
+                    option.style.cursor = 'pointer';
                 });
 
-                 // TODO: Add functionality for Save/Load/Share/Analytics/Teams buttons
                  saveWheelBtn.onclick = () => alert('Premium Feature: Save Wheel functionality needs backend integration.');
                  loadWheelBtn.onclick = () => alert('Premium Feature: Load Wheel functionality needs backend integration.');
                  shareModalBtn.onclick = () => alert('Premium Feature: Share Wheel functionality needs backend integration.');
                  viewAnalyticsBtn.onclick = () => alert('Premium Feature: Analytics functionality needs backend integration.');
                  teamCollabBtn.onclick = () => alert('Premium Feature: Team Collaboration needs backend integration.');
-
             }
 
              function applyFreeLimitations() {
-                // Ensure premium controls are visually locked and disabled
                  document.querySelectorAll('.premium-lock').forEach(el => {
                      el.querySelectorAll('input, select, button, textarea').forEach(input => {
                          input.disabled = true;
@@ -1076,16 +1062,15 @@
                      })
                  });
 
-                // Disable premium theme options (except default)
                 themeOptions.forEach(option => {
                     if (!option.classList.contains('theme-default')) {
                         option.style.cursor = 'not-allowed';
                         option.removeEventListener('click', handleThemeChange);
                     } else {
-                         option.addEventListener('click', handleThemeChange); // Allow default theme click
+                         option.addEventListener('click', handleThemeChange);
                     }
                 });
-                 // Reset settings to free defaults
+                 
                  soundToggle.checked = false;
                  weightedToggle.checked = false;
                  winnerCountInput.value = 1;
@@ -1093,27 +1078,24 @@
                  weightedEnabled = false;
                  winnerCount = 1;
 
-                // Remove event listeners for premium features
                 soundToggle.removeEventListener('change', handleSoundToggle);
                 weightedToggle.removeEventListener('change', handleWeightedToggle);
                 winnerCountInput.removeEventListener('change', handleWinnerCountChange);
 
-                 // Disable premium buttons explicitly
                   const premiumButtons = [saveWheelBtn, loadWheelBtn, shareModalBtn, viewAnalyticsBtn, teamCollabBtn];
                   premiumButtons.forEach(btn => {
                       if(btn) {
                           btn.disabled = true;
-                          btn.onclick = () => document.getElementById('upgrade-cta').scrollIntoView({ behavior: 'smooth' }); // Scroll to CTA on click
+                          btn.onclick = () => document.getElementById('upgrade-cta').scrollIntoView({ behavior: 'smooth' });
                       }
                   });
             }
-
 
             // --- Core Wheel Logic ---
             function parseEntries(text) {
                 const lines = text.split('\n').map(line => line.trim()).filter(line => line);
                 const entries = [];
-                 const weightRegex = /\(Weight:\s*(\d+)\s*\)/i; // Case-insensitive regex
+                 const weightRegex = /\(Weight:\s*(\d+)\s*\)/i;
 
                 lines.forEach(line => {
                     let text = line;
@@ -1123,40 +1105,35 @@
                     if (isPremium && weightedEnabled && match) {
                         text = line.replace(weightRegex, '').trim();
                         weight = parseInt(match[1], 10);
-                        if (isNaN(weight) || weight < 1) {
-                            weight = 1; // Default to 1 if invalid weight
-                        }
+                        if (isNaN(weight) weight = 1;
                     } else {
-                         text = line.replace(weightRegex, '').trim(); // Still remove "(Weight: X)" text even if not used
+                         text = line.replace(weightRegex, '').trim();
                     }
-
 
                     if (text) {
                         entries.push({ text: text, weight: weight });
                     }
                 });
 
-                 // Free version limitation
                  if (!isPremium && entries.length > 10) {
                     alert('Free version is limited to 10 entries. Please upgrade for unlimited entries.');
-                    return entries.slice(0, 10); // Return only the first 10
+                    return entries.slice(0, 10);
                 }
 
                 return entries;
             }
 
             function updateWheel() {
-                wheel.innerHTML = `<div class="wheel-center"><i class="fas fa-star"></i></div>`; // Reset wheel content
+                wheel.innerHTML = `<div class="wheel-center"><i class="fas fa-star"></i></div>`;
                 const totalWeight = currentEntries.reduce((sum, entry) => sum + entry.weight, 0);
                 const itemsToDraw = isPremium && weightedEnabled ? createWeightedList() : currentEntries;
 
                  if (itemsToDraw.length === 0) {
-                     // Display placeholder when no entries
                      const placeholderSection = document.createElement('div');
                      placeholderSection.className = 'wheel-section';
                      placeholderSection.style.background = '#eee';
                      placeholderSection.style.transform = 'rotate(0deg)';
-                     placeholderSection.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'; // Full circle segment
+                     placeholderSection.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
 
                      const placeholderContent = document.createElement('div');
                      placeholderContent.className = 'wheel-section-content';
@@ -1170,15 +1147,12 @@
                       placeholderContent.style.color = '#888';
                       placeholderContent.style.textShadow = 'none';
 
-
                      placeholderSection.appendChild(placeholderContent);
                      wheel.appendChild(placeholderSection);
                      return;
                  }
 
-
                 const sectionAngle = 360 / itemsToDraw.length;
-                 // Theme colors
                 const themeColors = getThemeColors(currentTheme);
 
                 itemsToDraw.forEach((entry, index) => {
@@ -1186,42 +1160,34 @@
                     const section = document.createElement('div');
                     section.className = 'wheel-section';
 
-                    // Calculate transform for segment
-                    const skewY = sectionAngle <= 90 ? 90 - sectionAngle : 0; // Adjust skew for > 4 segments
+                    const skewY = sectionAngle <= 90 ? 90 - sectionAngle : 0;
                     section.style.transform = `rotate(${angle}deg) skewY(-${skewY}deg)`;
 
-                     // Apply themed background color
-                    const colorIndex = index % themeColors.length;
+                     const colorIndex = index % themeColors.length;
                     section.style.background = themeColors[colorIndex];
 
-
-                     // Clip-path calculation (simplified for broad compatibility)
-                     const clipAngle = sectionAngle * (Math.PI / 180); // Angle in radians
+                     const clipAngle = sectionAngle * (Math.PI / 180);
                      const clipX = 50 + 50 * Math.tan(clipAngle / 2);
                      if (sectionAngle < 180) {
                          section.style.clipPath = `polygon(50% 50%, 0% 0%, ${clipX}% 0%)`;
-                     } else { // Handle cases with 1 or 2 entries
+                     } else {
                           section.style.clipPath = `polygon(50% 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%)`;
                      }
-
 
                     const content = document.createElement('div');
                     content.className = 'wheel-section-content';
                     content.textContent = entry.text;
 
-                    // Adjust text rotation to be readable
                      const textRotation = 90 + sectionAngle / 2;
                      content.style.transform = `skewY(${skewY}deg) rotate(${textRotation}deg) translate(-50%, -50%)`;
-                    // Adjust position for better centering within segment
                      content.style.position = 'absolute';
                      content.style.left = '50%';
-                     content.style.top = '25%'; // Move text towards the outer edge
-                    content.style.width = '90%'; // Prevent overflow
+                     content.style.top = '25%';
+                    content.style.width = '90%';
 
-                     // Adjust font size based on number of items and text length
-                     const baseFontSize = 1.1; // Base font size in rem
-                     const lengthFactor = Math.max(0.4, 1 - (entry.text.length / 20)); // Reduce size for long text
-                     const countFactor = Math.max(0.5, 1 - (itemsToDraw.length / 30)); // Reduce size for many items
+                     const baseFontSize = 1.1;
+                     const lengthFactor = Math.max(0.4, 1 - (entry.text.length / 20));
+                     const countFactor = Math.max(0.5, 1 - (itemsToDraw.length / 30));
                      content.style.fontSize = `clamp(0.6rem, ${baseFontSize * lengthFactor * countFactor}rem, 1.2rem)`;
 
                     section.appendChild(content);
@@ -1229,23 +1195,19 @@
                 });
             }
 
-            // Creates a list where items are repeated based on weight for fair selection
             function createWeightedList() {
                 const weightedList = [];
                 currentEntries.forEach(entry => {
                     for (let i = 0; i < entry.weight; i++) {
-                        weightedList.push(entry); // Add reference to the original entry object
+                        weightedList.push(entry);
                     }
                 });
-                 // Shuffle the weighted list to ensure randomness in wheel display order
-                 // (Fisher-Yates Shuffle)
                  for (let i = weightedList.length - 1; i > 0; i--) {
                      const j = Math.floor(Math.random() * (i + 1));
                      [weightedList[i], weightedList[j]] = [weightedList[j], weightedList[i]];
                  }
                 return weightedList;
             }
-
 
             function spinWheel() {
                 const itemsToSpin = isPremium && weightedEnabled ? createWeightedList() : currentEntries;
@@ -1254,83 +1216,61 @@
                 spinning = true;
                 spinBtn.disabled = true;
                 spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SPINNING...';
-                wheel.classList.add('spinning'); // Add class for specific spin transition
-                 hideSocialShare(); // Hide previous results share buttons
-
+                wheel.classList.add('spinning');
+                 hideSocialShare();
 
                  if (soundEnabled && spinSound) {
                      spinSound.currentTime = 0;
                      spinSound.play().catch(e => console.error("Error playing spin sound:", e));
                  }
 
-                const numSpins = 8 + Math.random() * 5; // More spins
-                const spinDuration = 6000; // Fixed duration matches CSS transition
+                const numSpins = 8 + Math.random() * 5;
+                const spinDuration = 6000;
                 const totalRotation = 360 * numSpins;
                 const sectionAngle = 360 / itemsToSpin.length;
-                // Calculate winning angle - ensure it lands IN the segment, not on the line
-                const randomAngleWithinSegment = (Math.random() * 0.8 + 0.1) * sectionAngle; // Land between 10% and 90% of the segment
-                const targetAngle = Math.random() * 360; // Pick a random target angle first
+                const randomAngleWithinSegment = (Math.random() * 0.8 + 0.1) * sectionAngle;
+                const targetAngle = Math.random() * 360;
                 const finalRotation = totalRotation + targetAngle;
 
-                currentRotation = finalRotation; // Store the final rotation
+                currentRotation = finalRotation;
                 wheel.style.transform = `rotate(${currentRotation}deg)`;
 
                 setTimeout(() => {
                     spinning = false;
                     spinBtn.disabled = false;
                     spinBtn.innerHTML = '<i class="fas fa-sync-alt"></i> SPIN THE WHEEL';
-                     wheel.classList.remove('spinning'); // Remove class to revert to default transition
+                     wheel.classList.remove('spinning');
 
-
-                    // Calculate winners based on the final angle
                     const actualAngle = currentRotation % 360;
                     const winners = determineWinners(itemsToSpin, actualAngle, winnerCount);
 
-                     // --- Store Spin History (Premium - Placeholder) ---
-                     if (isPremium) {
-                         // Needs backend or advanced local storage implementation
-                         console.log("Spin Result:", { winners: winners.map(w => w.text), timestamp: new Date() });
-                         // storeSpinResult(winners);
-                     }
-
                     showWinnerModal(winners);
-
-                }, spinDuration + 100); // Add slight buffer after transition ends
+                }, spinDuration + 100);
             }
 
              function determineWinners(items, finalAngle, count) {
                  const winners = [];
-                 const sectionAngle = 360 / items.length;
-                 const selectedIndices = new Set(); // Keep track of selected physical slots
+                 const selectedIndices = new Set();
 
-                 // Find the index of the segment the pointer lands on
                  const firstWinnerPhysicalIndex = Math.floor(((360 - finalAngle) % 360) / sectionAngle);
 
                  if (items[firstWinnerPhysicalIndex]) {
                       winners.push(items[firstWinnerPhysicalIndex]);
                       selectedIndices.add(firstWinnerPhysicalIndex);
                  } else {
-                     console.error("Could not determine winner for index:", firstWinnerPhysicalIndex);
-                     // Fallback: just pick a random item if calculation fails
                      if(items.length > 0) winners.push(items[Math.floor(Math.random() * items.length)]);
-                     return winners; // Return only the fallback winner
+                     return winners;
                  }
 
-
-                 // Select additional unique winners if needed (Premium)
-                 let attempts = 0; // Prevent infinite loops
+                 let attempts = 0;
                  while (winners.length < count && winners.length < items.length && attempts < items.length * 2) {
                      const randomIndex = Math.floor(Math.random() * items.length);
-                     // Ensure the randomly picked item *and* its original physical slot haven't been chosen
-                     // This prevents picking the same name twice if it appears multiple times due weighted entries
-                     // AND prevents picking the same physical slot twice
                      if (!selectedIndices.has(randomIndex)) {
-                         // Check if this item text is already a winner (important for weighted where same text exists)
                          const alreadyWinner = winners.some(winner => winner.text === items[randomIndex].text);
                          if (!alreadyWinner) {
                             winners.push(items[randomIndex]);
                          }
-                         selectedIndices.add(randomIndex); // Mark this physical slot as used
+                         selectedIndices.add(randomIndex);
                      }
                      attempts++;
                  }
@@ -1347,7 +1287,7 @@
                  }
                  launchConfetti();
 
-                 winnerDisplay.innerHTML = ''; // Clear previous content
+                 winnerDisplay.innerHTML = '';
                  if (winners.length === 1) {
                      const winnerP = document.createElement('p');
                      winnerP.className = 'winner-name';
@@ -1364,10 +1304,9 @@
                      winnerDisplay.appendChild(winnerList);
                  }
 
-                  // Show and populate share buttons in modal
                   populateShareButtons(winners.map(w => w.text).join(', '));
-                  modalShareContainer.innerHTML = socialShareContainer.innerHTML; // Copy buttons
-                  attachShareButtonListeners(modalShareContainer, winners.map(w => w.text).join(', ')); // Re-attach listeners for modal buttons
+                  modalShareContainer.innerHTML = socialShareContainer.innerHTML;
+                  attachShareButtonListeners(modalShareContainer, winners.map(w => w.text).join(', '));
 
                  modal.style.display = 'block';
              }
@@ -1380,14 +1319,13 @@
             // --- Confetti ---
             let confettiInterval;
             function launchConfetti() {
-                stopConfetti(); // Clear any existing confetti
-                confettiInterval = setInterval(createConfettiPiece, 100); // Create confetti continuously
-                setTimeout(stopConfetti, 4000); // Stop after 4 seconds
+                stopConfetti();
+                confettiInterval = setInterval(createConfettiPiece, 100);
+                setTimeout(stopConfetti, 4000);
             }
 
             function stopConfetti() {
                 clearInterval(confettiInterval);
-                 // Optionally remove remaining confetti elements after a delay
                  setTimeout(() => {
                      confettiContainer.innerHTML = '';
                  }, 3000);
@@ -1396,29 +1334,25 @@
             function createConfettiPiece() {
                  const confetti = document.createElement('div');
                  confetti.className = 'confetti';
-                 const colors = getThemeColors(currentTheme); // Use theme colors
+                 const colors = getThemeColors(currentTheme);
                  confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                  confetti.style.left = Math.random() * 100 + 'vw';
-                 // Start slightly above the viewport
                  confetti.style.top = '-20px';
-                 // Randomize horizontal movement and rotation
-                 const randomX = (Math.random() - 0.5) * 500; // Horizontal drift
-                 const randomRot = Math.random() * 720 - 360; // Rotation
+                 const randomX = (Math.random() - 0.5) * 500;
+                 const randomRot = Math.random() * 720 - 360;
                  confetti.style.transform = `translateX(${randomX}px) rotate(${randomRot}deg)`;
 
-                 // Randomize animation duration and delay
-                 const duration = Math.random() * 2 + 3; // 3-5 seconds fall time
+                 const duration = Math.random() * 2 + 3;
                  confetti.style.animation = `fall ${duration}s linear forwards`;
-                 confetti.style.width = (Math.random() * 5 + 5) + 'px'; // Random size
+                 confetti.style.width = (Math.random() * 5 + 5) + 'px';
                  confetti.style.height = confetti.style.width;
-                  if (Math.random() > 0.5) { // Make some rectangular
+                  if (Math.random() > 0.5) {
                       confetti.style.height = (parseInt(confetti.style.width) / 2) + 'px';
                   }
-                 confetti.style.opacity = Math.random() * 0.5 + 0.5; // Random opacity
+                 confetti.style.opacity = Math.random() * 0.5 + 0.5;
 
                  confettiContainer.appendChild(confetti);
 
-                 // Remove confetti element from DOM after animation ends
                  setTimeout(() => {
                      confetti.remove();
                  }, duration * 1000);
@@ -1426,33 +1360,26 @@
 
             // --- Theme Handling ---
              function getThemeColors(themeName) {
-                // Define color palettes for themes
                  const themes = {
                      'default': ['#6a11cb', '#2575fc', '#a29bfe', '#6c5ce7', '#00d2d3'],
                      'sunset': ['#ff8c00', '#ff0080', '#ff4e50', '#fc913a', '#f9d423'],
                      'forest': ['#138d75', '#27ae60', '#58b368', '#82c97c', '#abdda4'],
                      'ocean': ['#00c6ff', '#0072ff', '#4facfe', '#00f2fe', '#89f7fe'],
-                     // Add more themes here
                  };
-                 return themes[themeName] || themes['default']; // Fallback to default
+                 return themes[themeName] || themes['default'];
              }
 
              function applyTheme(themeName) {
                  currentTheme = themeName;
-                 // Update active class on theme selector
                  themeOptions.forEach(opt => {
                      opt.classList.toggle('active', opt.dataset.theme === themeName);
                  });
-                 // Re-draw the wheel with new colors
                  updateWheel();
-                 // Optional: You could also change other UI elements based on theme
-                 // document.documentElement.style.setProperty('--primary', getThemeColors(themeName)[0]);
              }
 
              function handleThemeChange(event) {
                  const selectedTheme = event.target.dataset.theme;
-                  // Check if the clicked theme is premium and user is not premium
-                 const isPremiumTheme = !event.target.classList.contains('theme-default'); // Assuming default is free
+                  const isPremiumTheme = !event.target.classList.contains('theme-default');
                  if (isPremiumTheme && !isPremium) {
                      alert('This theme is a premium feature. Please upgrade to use it.');
                       document.getElementById('upgrade-cta').scrollIntoView({ behavior: 'smooth' });
@@ -1463,17 +1390,15 @@
 
              // --- Settings Handlers (Premium Features) ---
               function handleSoundToggle() {
-                 if (!isPremium) return; // Should be disabled anyway, but double-check
+                 if (!isPremium) return;
                  soundEnabled = soundToggle.checked;
                  console.log("Sounds enabled:", soundEnabled);
-                 // You might want to play a test sound here
              }
 
               function handleWeightedToggle() {
                  if (!isPremium) return;
                  weightedEnabled = weightedToggle.checked;
                  console.log("Weighted entries enabled:", weightedEnabled);
-                 // Re-parse entries and update wheel if needed, as weights might now apply/unapply
                  currentEntries = parseEntries(entriesTextarea.value);
                  updateWheel();
              }
@@ -1483,15 +1408,14 @@
                  let count = parseInt(winnerCountInput.value);
                  if (isNaN(count) || count < 1) {
                      count = 1;
-                     winnerCountInput.value = 1; // Correct invalid input
+                     winnerCountInput.value = 1;
                  }
-                  // Limit max winners based on number of unique entries?
-                 const uniqueEntries = new Set(currentEntries.map(e => e.text)).size;
+                  const uniqueEntries = new Set(currentEntries.map(e => e.text)).size;
                  if (count > uniqueEntries && uniqueEntries > 0) {
                      count = uniqueEntries;
                       winnerCountInput.value = count;
                       alert(`Cannot select more winners than unique entries (${uniqueEntries}).`);
-                 } else if (count > 50) { // Arbitrary upper limit
+                 } else if (count > 50) {
                       count = 50;
                       winnerCountInput.value = count;
                       alert(`Maximum number of winners is 50.`);
@@ -1503,7 +1427,7 @@
             // --- Social Sharing ---
              function populateShareButtons(winnerText) {
                  const shareText = encodeURIComponent(`Check out the result from SpinSelect Pro: ${winnerText}!`);
-                 const shareUrl = encodeURIComponent(window.location.href); // URL of the current page
+                 const shareUrl = encodeURIComponent(window.location.href);
 
                  const twitterBtn = socialShareContainer.querySelector('#share-twitter');
                  const facebookBtn = socialShareContainer.querySelector('#share-facebook');
@@ -1514,10 +1438,7 @@
                  if(facebookBtn) facebookBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&quote=${shareText}`;
                  if(whatsappBtn) whatsappBtn.href = `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`;
 
-                 // Attach listener specifically for copy button within the current context (modal or main page)
-                 attachShareButtonListeners(socialShareContainer, winnerText); // Attach listeners for main page buttons
-
-                 // Make the container visible
+                 attachShareButtonListeners(socialShareContainer, winnerText);
                  socialShareContainer.classList.remove('hidden');
             }
 
@@ -1537,19 +1458,16 @@
                   }
              }
 
-
             function hideSocialShare() {
                 socialShareContainer.classList.add('hidden');
-                 modalShareContainer.innerHTML = ''; // Clear modal share buttons too
+                 modalShareContainer.innerHTML = '';
             }
 
             // --- Event Listeners ---
             addEntriesBtn.addEventListener('click', function() {
                 currentEntries = parseEntries(entriesTextarea.value);
                 updateWheel();
-                // Optional: Clear textarea after adding?
-                // entriesTextarea.value = '';
-                 hideSocialShare(); // Hide share buttons when list changes
+                 hideSocialShare();
             });
 
             clearEntriesBtn.addEventListener('click', function() {
@@ -1564,7 +1482,6 @@
             spinBtn.addEventListener('click', spinWheel);
 
             upgradeBtn.addEventListener('click', function() {
-                // ** Replace with your actual Whop checkout link **
                 const whopCheckoutUrl = "YOUR_WHOP_CHECKOUT_LINK_HERE";
                  if (whopCheckoutUrl === "YOUR_WHOP_CHECKOUT_LINK_HERE") {
                      alert("Please replace 'YOUR_WHOP_CHECKOUT_LINK_HERE' in the script with your actual Whop checkout URL.");
@@ -1577,25 +1494,16 @@
              modalCloseBtn.addEventListener('click', closeModal);
              spinAgainBtn.addEventListener('click', () => {
                  closeModal();
-                 spinWheel(); // Immediately spin again
-             });
-
-             // Close modal if clicked outside the content
-             window.addEventListener('click', function(event) {
-                 if (event.target === modal) {
-                     closeModal();
-                 }
+                 spinWheel();
              });
 
               // Initial Setup
              document.getElementById('current-year').textContent = new Date().getFullYear();
-             checkPremiumStatus(); // Check license key on load
-             currentEntries = parseEntries(entriesTextarea.value || "Entry 1\nEntry 2\nEntry 3"); // Load initial/example entries
-             applyTheme(currentTheme); // Applies default theme and updates wheel
-             updateWheel(); // Draw initial wheel state
-
+             checkPremiumStatus();
+             currentEntries = parseEntries(entriesTextarea.value || "Entry 1\nEntry 2\nEntry 3");
+             applyTheme(currentTheme);
+             updateWheel();
         });
     </script>
-
 </body>
 </html>
