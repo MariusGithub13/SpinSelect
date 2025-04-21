@@ -3,1507 +3,344 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpinSelect Pro | Advanced Customizable Picker Wheel</title>
-    <meta name="description" content="Sleek, responsive, and highly customizable wheel spinner with advanced features for giveaways, decisions, team collaboration, and more.">
-    
-    <!-- Social meta tags -->
-    <meta property="og:title" content="SpinSelect Pro | Advanced Customizable Picker Wheel">
-    <meta property="og:description" content="Sleek, responsive, and highly customizable wheel spinner with advanced features.">
-    <meta name="twitter:card" content="summary_large_image">
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* --- Base Variables & Reset --- */
-        :root {
-            --primary: #6a11cb;
-            --primary-light: #a29bfe;
-            --secondary: #2575fc;
-            --accent: #ff5733;
-            --dark: #333;
-            --light: #fdfdfd;
-            --gray: #e9e9e9;
-            --success: #2ecc71;
-            --warning: #f1c40f;
-            --danger: #e74c3c;
-            --shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
-            --shadow-light: 0 4px 15px rgba(0, 0, 0, 0.07);
-            --transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-            --border-radius: 12px;
-            --font-family: 'Poppins', sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-family);
-            background-color: #f4f7f6;
-            color: var(--dark);
-            line-height: 1.7;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: 1rem auto;
-            padding: 1.5rem;
-            flex-grow: 1;
-        }
-
-        /* --- Header --- */
-        header {
-            text-align: center;
-            margin-bottom: 2.5rem;
-            animation: fadeInDown 0.8s ease-out;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-block;
-            letter-spacing: -1px;
-        }
-
-        .tagline {
-            font-size: 1.3rem;
-            color: #555;
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-        }
-
-        /* --- Main App Layout --- */
-        .app-container {
-            display: grid;
-            grid-template-columns: 350px 1fr;
-            gap: 2.5rem;
-            background: var(--light);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 2.5rem;
-            animation: fadeInUp 0.8s ease-out;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 992px) {
-            .app-container {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            h1 { font-size: 2.4rem; }
-            .tagline { font-size: 1.1rem; }
-            .app-container { padding: 1.5rem; gap: 1.5rem; }
-        }
-
-        /* --- Controls Panel --- */
-        .controls {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            height: fit-content;
-        }
-
-        .control-group {
-            background: #fff;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            border: 1px solid var(--gray);
-            box-shadow: var(--shadow-light);
-            transition: var(--transition);
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .control-group.fade-out {
-            animation: fadeOut 0.5s forwards;
-        }
-
-        .control-group:hover {
-            border-color: var(--primary-light);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .input-group {
-            margin-bottom: 1rem;
-            position: relative;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.6rem;
-            font-weight: 500;
-            color: #444;
-            font-size: 0.95rem;
-        }
-
-        input, textarea, select {
-            width: 100%;
-            padding: 0.9rem 1.1rem;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: var(--transition);
-            background-color: #fff;
-        }
-
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.15);
-        }
-
-        textarea {
-            min-height: 130px;
-            resize: vertical;
-            line-height: 1.6;
-        }
-
-        .entry-item {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            align-items: center;
-        }
-        .entry-item input[type="text"] { flex-grow: 1; }
-        .entry-item input[type="number"] { width: 70px; text-align: center; }
-        .entry-item button { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
-
-        /* --- Buttons --- */
-        .btn {
-            padding: 0.9rem 1.6rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.6rem;
-            text-decoration: none;
-            white-space: nowrap;
-        }
-
-        .btn i { line-height: 1; }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.2);
-        }
-
-        .btn-primary:hover {
-            background-color: #580ca7;
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(106, 17, 203, 0.3);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-            box-shadow: 0 4px 15px rgba(37, 117, 252, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background-color: #1f66e0;
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(37, 117, 252, 0.3);
-        }
-
-         .btn-accent {
-            background-color: var(--accent);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 87, 51, 0.2);
-        }
-
-        .btn-accent:hover {
-            background-color: #e64a19;
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px rgba(255, 87, 51, 0.3);
-        }
-
-        .btn-light {
-            background-color: #f0f0f0;
-            color: var(--dark);
-            border: 1px solid #ddd;
-        }
-        .btn-light:hover {
-            background-color: #e5e5e5;
-             transform: translateY(-2px);
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        /* --- Wheel Container --- */
-        .wheel-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-            position: relative;
-            padding: 1rem;
-            min-height: 500px;
-            perspective: 1000px;
-        }
-
-        .wheel-wrapper {
-            position: relative;
-            width: 90%;
-            max-width: 550px;
-            aspect-ratio: 1/1;
-            margin: 1rem auto;
-            animation: zoomIn 0.7s ease-out;
-        }
-
-        .wheel {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            border-radius: 50%;
-            overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0,0,0,0.1);
-            transition: transform 6s cubic-bezier(0.1, 0.7, 0.3, 1);
-            transform: rotate(0deg);
-            border: 10px solid white;
-            background-color: var(--gray);
-        }
-
-        .wheel.spinning {
-            transition: transform 6s cubic-bezier(0.25, 0.1, 0.25, 1);
-        }
-
-        .wheel-center {
-            position: absolute;
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #ffffff, #f0f0f0);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.8rem;
-            border: 5px solid var(--light);
-        }
-
-        .wheel-section {
-            position: absolute;
-            width: 50%;
-            height: 50%;
-            transform-origin: bottom right;
-            overflow: hidden;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 100%);
-            border-left: 1px solid rgba(255,255,255,0.2);
-            transition: var(--transition);
-        }
-
-        .wheel-section-content {
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            transform: translate(-25%, -10%) rotate(calc(var(--angle) / 2 + 270deg));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: white;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-            font-size: clamp(0.8rem, 3vw, 1.1rem);
-            text-align: center;
-            padding: 0.5rem;
-            word-break: break-word;
-            user-select: none;
-        }
-
-        .pointer {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            z-index: 20;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-top: 35px solid var(--danger);
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
-            animation: bouncePointer 1.5s infinite ease-in-out;
-        }
-
-        .spin-btn {
-            margin-top: 1rem;
-            padding: 1rem 2.8rem;
-            font-size: 1.3rem;
-            font-weight: 700;
-            border-radius: 50px;
-            background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
-            box-shadow: 0 10px 25px rgba(106, 17, 203, 0.3);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s ease-out;
-        }
-
-        .spin-btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
-            z-index: 1;
-            transition: left 0.6s ease-out;
-        }
-
-        .spin-btn:hover:before {
-            left: 100%;
-        }
-
-        .spin-btn:hover {
-             box-shadow: 0 12px 30px rgba(106, 17, 203, 0.4);
-             transform: translateY(-2px);
-        }
-
-        .spin-btn:active {
-            transform: translateY(1px) scale(0.98);
-            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.2);
-        }
-
-        /* --- Customization & Advanced Settings --- */
-        .theme-selector {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-top: 0.5rem;
-        }
-        .theme-option {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 2px solid var(--gray);
-            transition: var(--transition);
-            position: relative;
-        }
-        .theme-option:hover, .theme-option.active {
-            border-color: var(--primary);
-            transform: scale(1.1);
-        }
-        .theme-option.active::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 0.8rem;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        }
-
-        .theme-default { background: linear-gradient(45deg, #6a11cb, #2575fc); }
-        .theme-sunset { background: linear-gradient(45deg, #ff8c00, #ff0080); }
-        .theme-forest { background: linear-gradient(45deg, #138d75, #27ae60); }
-        .theme-ocean { background: linear-gradient(45deg, #00c6ff, #0072ff); }
-
-        .sound-toggle i { font-size: 1.2rem; }
-
-        /* Advanced Settings Toggles */
-        .toggle-switch {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-        .toggle-switch label { margin-bottom: 0; cursor: pointer;}
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 44px;
-            height: 24px;
-        }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 24px;
-        }
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 18px;
-            width: 18px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        input:checked + .slider { background-color: var(--success); }
-        input:checked + .slider:before { transform: translateX(20px); }
-
-        /* --- Social Sharing --- */
-        .share-buttons {
-            margin-top: 1rem;
-            display: flex;
-            gap: 0.8rem;
-            justify-content: center;
-        }
-        .share-btn {
-            font-size: 1.5rem;
-            color: #555;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-        .share-btn:hover {
-            transform: scale(1.2);
-            color: var(--primary);
-        }
-        .share-btn.twitter:hover { color: #1DA1F2; }
-        .share-btn.facebook:hover { color: #1877F2; }
-        .share-btn.whatsapp:hover { color: #25D366; }
-        .share-btn.copy:hover { color: var(--accent); }
-
-        /* --- Premium Features & CTA --- */
-        .premium-lock {
-            position: relative;
-            filter: grayscale(60%);
-            opacity: 0.8;
-            pointer-events: none;
-            transition: var(--transition);
-        }
-        .premium-lock > *:not(.premium-badge) {
-            pointer-events: none;
-        }
-
-        body.premium .premium-lock {
-            filter: grayscale(0%);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        body.premium .premium-lock > * {
-             pointer-events: auto;
-        }
-        body.premium .premium-badge {
-            display: none;
-        }
-        body.premium .premium-lock select,
-        body.premium .premium-lock button,
-        body.premium .premium-lock input,
-        body.premium .premium-lock textarea {
-            pointer-events: auto !important;
-            opacity: 1 !important;
-            cursor: pointer !important;
-        }
-        body.premium .premium-lock .toggle-switch input:disabled + .slider {
-            cursor: pointer;
-            opacity: 1;
-        }
-         body.premium .premium-lock .toggle-switch label {
-            cursor: pointer;
-            opacity: 1;
-        }
-
-        .premium-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--primary);
-            color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            z-index: 10;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            cursor: help;
-            pointer-events: auto;
-        }
-
-        .upgrade-cta {
-            text-align: center;
-            margin-top: 3rem;
-            padding: 2.5rem;
-            background: linear-gradient(135deg, white, #f8f9fa);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            animation: subtlePulse 2.5s infinite alternate ease-in-out;
-            border: 1px solid var(--gray);
-        }
-
-         body.premium .upgrade-cta {
-             display: none;
-         }
-
-        .upgrade-title {
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        .upgrade-subtitle {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .features-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.2rem;
-            margin: 2rem 0;
-            text-align: left;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            color: #444;
-            font-size: 1.05rem;
-        }
-
-        .feature-item i {
-            color: var(--success);
-            font-size: 1.2rem;
-            width: 20px;
-            text-align: center;
-        }
-
-        .upgrade-btn {
-            margin-top: 1rem;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-        }
-
-        /* --- Winner Modal --- */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-            backdrop-filter: blur(5px);
-            animation: fadeIn 0.5s;
-        }
-
-        .modal-content {
-            background: white;
-            margin: 10% auto;
-            padding: 3rem;
-            border-radius: var(--border-radius);
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            animation: slideDown 0.5s ease-out;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            color: #aaa;
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .modal-close:hover { color: var(--danger); transform: scale(1.1); }
-
-        .modal h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .winner-name {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin: 1rem 0 2rem 0;
-            padding: 1rem;
-            background-color: #fff3e0;
-            border-radius: 8px;
-            border: 1px solid var(--warning);
-        }
-
-        .winner-list {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0 2rem 0;
-            max-height: 150px;
-            overflow-y: auto;
-            text-align: left;
-        }
-        .winner-list li {
-            font-size: 1.2rem;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            margin-bottom: 0.5rem;
-            background-color: #e8f5e9;
-            border-radius: 5px;
-            border-left: 4px solid var(--success);
-        }
-
-        /* --- Animations --- */
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes zoomIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-
-        @keyframes subtlePulse {
-            0% { transform: scale(1); box-shadow: var(--shadow); }
-            100% { transform: scale(1.005); box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12); }
-        }
-
-        @keyframes bouncePointer {
-            0%, 100% { transform: translate(-50%, 0); }
-            50% { transform: translate(-50%, -5px); }
-        }
-
-        /* Confetti Container */
-        #confetti-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            overflow: hidden;
-        }
-
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: var(--primary);
-            opacity: 1;
-            transform: rotate(0deg);
-            animation: fall 3s linear forwards;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* --- Footer --- */
-        footer {
-            text-align: center;
-            margin-top: 2rem;
-            padding: 1rem;
-            font-size: 0.9rem;
-            color: #777;
-        }
-
-        /* --- Utility Classes --- */
-        .hidden { display: none; }
-        .text-center { text-align: center; }
-        .mt-1 { margin-top: 1rem; }
-        .mb-1 { margin-bottom: 1rem; }
-    </style>
-</head>
+    <title>Modern Wheel of Names</title>
+    </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>SpinSelect Pro</h1>
-            <p class="tagline">Advanced Random Picker Wheel: Customize, Share & Collaborate</p>
+    <header>
+        <h1>Modern Wheel of Names</h1>
         </header>
 
-        <div class="app-container">
-            <div class="controls">
+    <main>
+        <section id="input-area">
+            <h2>Add Names</h2>
+            <textarea id="name-input" placeholder="Enter names here, one per line"></textarea>
+            <button id="add-name-button">Add Name</button>
+            <ul id="name-list">
+                </ul>
+        </section>
 
-                <div class="control-group">
-                    <h2><i class="fas fa-list-ul"></i> Entries</h2>
-                    <div class="input-group">
-                        <label for="entries">Add items (one per line)</label>
-                        <textarea id="entries" placeholder="Entry 1\nEntry 2 (Weight: 3)\nEntry 3\n..."></textarea>
-                        <small style="color:#777; font-size: 0.8rem;">Tip: Add weights like "Entry (Weight: 3)" (Premium)</small>
-                    </div>
-                    <div class="btn-group">
-                        <button class="btn btn-primary" id="add-entries">
-                            <i class="fas fa-plus"></i> Update List
-                        </button>
-                        <button class="btn btn-light" id="clear-entries">
-                            <i class="fas fa-trash"></i> Clear All
-                        </button>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <h2><i class="fas fa-palette"></i> Customization</h2>
-                     <div class="input-group">
-                        <label>Wheel Color Theme</label>
-                        <div class="theme-selector">
-                            <div class="theme-option theme-default active" data-theme="default" title="Default Theme"></div>
-                            <div class="theme-option theme-sunset" data-theme="sunset" title="Sunset Theme (Premium)"></div>
-                            <div class="theme-option theme-forest" data-theme="forest" title="Forest Theme (Premium)"></div>
-                            <div class="theme-option theme-ocean" data-theme="ocean" title="Ocean Theme (Premium)"></div>
-                            </div>
-                         <div class="premium-badge" style="top:5px; right: 5px;">PRO</div>
-                    </div>
-                    <div class="input-group premium-lock">
-                         <div class="premium-badge">PRO</div>
-                        <label>Spin Sounds</label>
-                         <div class="toggle-switch">
-                            <input type="checkbox" id="sound-toggle" class="switch" disabled>
-                            <span class="slider"></span>
-                            <label for="sound-toggle" style="cursor: not-allowed;">Enable Sounds</label>
-                        </div>
-                        <audio id="spin-sound" preload="auto"></audio>
-                        <audio id="win-sound" preload="auto"></audio>
-                    </div>
-                     <div class="input-group premium-lock">
-                        <div class="premium-badge">PRO</div>
-                        <label for="wheel-style">Wheel Style</label>
-                        <select id="wheel-style" disabled>
-                            <option value="standard">Standard</option>
-                            <option value="pie">Pie Chart</option>
-                            <option value="neon">Neon Glow</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="control-group premium-lock">
-                    <div class="premium-badge">PRO</div>
-                    <h2><i class="fas fa-cogs"></i> Advanced Settings</h2>
-                     <div class="input-group">
-                         <div class="toggle-switch">
-                            <input type="checkbox" id="weighted-toggle" class="switch" disabled>
-                             <span class="slider"></span>
-                             <label for="weighted-toggle" style="cursor: not-allowed;">Enable Weighted Entries</label>
-                         </div>
-                         <small style="color:#777; font-size: 0.8rem;">Use format: "Entry Name (Weight: number)"</small>
-                    </div>
-                     <div class="input-group">
-                        <label for="winner-count">Number of Winners</label>
-                        <input type="number" id="winner-count" value="1" min="1" max="10" style="width: 80px;" disabled>
-                    </div>
-                    <div class="mt-1">
-                         <a href="#" class="btn btn-light btn-sm" id="view-analytics-btn" style="opacity: 0.6; cursor: not-allowed;"><i class="fas fa-chart-line"></i> View Spin History</a>
-                     </div>
-                </div>
-
-                <div class="control-group premium-lock">
-                     <div class="premium-badge">PRO</div>
-                    <h2><i class="fas fa-share-alt"></i> Share & Save</h2>
-                    <p style="font-size: 0.9rem; color: #555; margin-bottom: 1rem;">Save your wheel configuration online and share it with friends or teams.</p>
-                    <div class="btn-group">
-                        <button class="btn btn-secondary" id="save-wheel-btn" disabled>
-                            <i class="fas fa-cloud-upload-alt"></i> Save Online
-                        </button>
-                         <button class="btn btn-secondary" id="load-wheel-btn" disabled>
-                            <i class="fas fa-cloud-download-alt"></i> Load Wheel
-                        </button>
-                    </div>
-                     <div class="mt-1">
-                         <button class="btn btn-light" id="share-modal-btn" disabled><i class="fas fa-share-square"></i> Share This Wheel</button>
-                     </div>
-                     <div class="mt-1">
-                         <a href="#" class="btn btn-light btn-sm" id="team-collab-btn" style="opacity: 0.6; cursor: not-allowed;"><i class="fas fa-users"></i> Team Collaboration</a>
-                     </div>
-                </div>
+        <section id="wheel-container">
+            <h2>The Wheel</h2>
+            <canvas id="wheel" width="400" height="400"></canvas>
+            <div id="winner-display" class="hidden">
+                <h3>Winner:</h3>
+                <p id="winner-name"></p>
             </div>
-            <div class="wheel-container">
-                <div class="wheel-wrapper">
-                    <div class="pointer"></div>
-                    <div class="wheel" id="wheel">
-                        <div class="wheel-center">
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
+            <button id="spin-button">Spin</button>
+        </section>
 
-                <button class="spin-btn" id="spin-btn">
-                    <i class="fas fa-sync-alt"></i> SPIN THE WHEEL
-                </button>
-
-                 <div id="social-share-container" class="share-buttons mt-1 hidden">
-                     <span>Share the result:</span>
-                     <a href="#" target="_blank" class="share-btn twitter" id="share-twitter" title="Share on Twitter/X"><i class="fab fa-twitter"></i></a>
-                     <a href="#" target="_blank" class="share-btn facebook" id="share-facebook" title="Share on Facebook"><i class="fab fa-facebook"></i></a>
-                     <a href="#" target="_blank" class="share-btn whatsapp" id="share-whatsapp" title="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                     <button class="share-btn copy" id="copy-link-btn" title="Copy Link"><i class="fas fa-link"></i></button>
-                 </div>
+        <section id="customization-options">
+            <h2>Customize</h2>
+            <div class="option">
+                <label for="wheel-color">Wheel Color:</label>
+                <input type="color" id="wheel-color" value="#3498db">
             </div>
-        </div>
-
-        <div class="upgrade-cta" id="upgrade-cta">
-            <h3 class="upgrade-title">🚀 Unlock the Full Power of SpinSelect Pro!</h3>
-            <p class="upgrade-subtitle">Get access to all premium features and create amazing experiences.</p>
-            <div class="features-list">
-                <div class="feature-item"><i class="fas fa-check-circle"></i><span>Multiple Color Themes</span></div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i><span>Engaging Spin Sounds</span></div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i><span>Advanced Wheel Styles</span></div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i><span>Weighted Entries Support</span></div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i><span>Select Multiple Winners</span></div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i><span>Unlimited Entries</span></div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i><span>Save Wheels to Cloud</span></div>
-                <div class="feature-item"><i class="fas fa-check-circle"></i><span>Share Wheels Easily</span></div>
-                 <div class="feature-item"><i class="fas fa-check-circle"></i><span>Spin History & Analytics</span></div>
-                 <div class="feature-item"><i class="fas fa-check-circle"></i><span>Team Collaboration Features</span></div>
-                 <div class="feature-item"><i class="fas fa-check-circle"></i><span>Ad-Free Experience</span></div>
-                 <div class="feature-item"><i class="fas fa-check-circle"></i><span>Priority Support</span></div>
+            <div class="option">
+                <label for="segment-color">Segment Color:</label>
+                <input type="color" id="segment-color" value="#f1c40f">
             </div>
-            <button class="btn btn-accent upgrade-btn" id="upgrade-btn">
-                <i class="fas fa-rocket"></i> Get Premium Access Now!
-            </button>
-             <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">Secure checkout via Whop.com</p>
-        </div>
-    </div>
+            <div class="option">
+                <label for="text-color">Text Color:</label>
+                <input type="color" id="text-color" value="#ffffff">
+            </div>
+            <div class="option">
+                <label for="spin-duration">Spin Duration (seconds):</label>
+                <input type="number" id="spin-duration" value="5" min="1" max="10">
+            </div>
+            </section>
 
-    <div id="winnerModal" class="modal">
-        <div class="modal-content">
-            <span class="modal-close" id="modal-close-btn">&times;</span>
-            <h2>🎉 Winner(s)! 🎉</h2>
-            <div id="winner-display"></div>
-             <div id="modal-share-buttons" class="share-buttons mt-1"></div>
-            <button class="btn btn-primary mt-1" id="spin-again-btn">Spin Again</button>
-        </div>
-    </div>
+        <section id="controls">
+            <h2>Actions</h2>
+            <button id="save-button">Save Wheel</button>
+            <button id="share-button">Share Wheel</button>
+            </section>
+    </main>
 
-    <div id="confetti-container"></div>
-
-     <footer>
-        &copy; <span id="current-year"></span> SpinSelect Pro. Built for Whop.com deployment.
-        | <a href="#" style="color: #777;">Support</a>
+    <footer>
+        <p>&copy; 2024 Modern Wheel of Names</p>
     </footer>
 
     <script>
+        // Basic JavaScript functionality will be added here
         document.addEventListener('DOMContentLoaded', function() {
-            // --- DOM Elements ---
-            const wheel = document.getElementById('wheel');
-            const spinBtn = document.getElementById('spin-btn');
-            const entriesTextarea = document.getElementById('entries');
-            const addEntriesBtn = document.getElementById('add-entries');
-            const clearEntriesBtn = document.getElementById('clear-entries');
-            const upgradeBtn = document.getElementById('upgrade-btn');
-            const themeOptions = document.querySelectorAll('.theme-option');
-            const soundToggle = document.getElementById('sound-toggle');
-            const weightedToggle = document.getElementById('weighted-toggle');
-            const winnerCountInput = document.getElementById('winner-count');
-            const modal = document.getElementById('winnerModal');
-            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const nameInput = document.getElementById('name-input');
+            const addNameButton = document.getElementById('add-name-button');
+            const nameList = document.getElementById('name-list');
+            const wheelCanvas = document.getElementById('wheel');
+            const spinButton = document.getElementById('spin-button');
             const winnerDisplay = document.getElementById('winner-display');
-            const modalShareContainer = document.getElementById('modal-share-buttons');
-            const socialShareContainer = document.getElementById('social-share-container');
-            const spinAgainBtn = document.getElementById('spin-again-btn');
-            const confettiContainer = document.getElementById('confetti-container');
-            const spinSound = document.getElementById('spin-sound');
-            const winSound = document.getElementById('win-sound');
-            const saveWheelBtn = document.getElementById('save-wheel-btn');
-            const loadWheelBtn = document.getElementById('load-wheel-btn');
-            const shareModalBtn = document.getElementById('share-modal-btn');
-            const viewAnalyticsBtn = document.getElementById('view-analytics-btn');
-            const teamCollabBtn = document.getElementById('team-collab-btn');
-
-            // --- State Variables ---
-            let currentEntries = [];
-            let currentRotation = 0;
-            let spinning = false;
-            let isPremium = false;
-            let soundEnabled = false;
-            let weightedEnabled = false;
-            let winnerCount = 1;
-            let currentTheme = 'default';
-
-            // --- Whop Integration (Simulated) ---
-            function checkPremiumStatus() {
-                const urlParams = new URLSearchParams(window.location.search);
-                const licenseKey = urlParams.get('key');
-
-                if (licenseKey === 'VALID_PREMIUM_KEY' || localStorage.getItem('spinselect_premium') === 'true') {
-                     if (licenseKey === 'VALID_PREMIUM_KEY') {
-                        localStorage.setItem('spinselect_premium', 'true');
-                    }
-                    isPremium = true;
-                    document.body.classList.add('premium');
-                    console.log("Premium features ACTIVATED.");
-                    enablePremiumFeatures();
-                } else {
-                    isPremium = false;
-                    document.body.classList.remove('premium');
-                    console.log("Running in FREE mode.");
-                    applyFreeLimitations();
-                }
-            }
-
-            function enablePremiumFeatures() {
-                document.querySelectorAll('.premium-lock').forEach(el => {
-                    el.querySelectorAll('input, select, button, textarea').forEach(input => {
-                        input.disabled = false;
-                        if (input.labels && input.labels[0]) input.labels[0].style.cursor = 'pointer';
-                         if (input.classList.contains('slider')) {
-                             input.parentElement.style.cursor = 'pointer';
-                         }
-                    });
-                    el.querySelectorAll('a.btn').forEach(a => {
-                        a.style.opacity = '1';
-                        a.style.pointerEvents = 'auto';
-                        a.style.cursor = 'pointer';
-                    });
-                     el.querySelectorAll('label').forEach(label => {
-                         label.style.cursor = 'pointer';
-                     })
-                });
-                 
-                soundEnabled = soundToggle.checked;
-                weightedEnabled = weightedToggle.checked;
-                winnerCount = parseInt(winnerCountInput.value) || 1;
-
-                soundToggle.addEventListener('change', handleSoundToggle);
-                weightedToggle.addEventListener('change', handleWeightedToggle);
-                winnerCountInput.addEventListener('change', handleWinnerCountChange);
-
-                themeOptions.forEach(option => {
-                    option.addEventListener('click', handleThemeChange);
-                    option.style.cursor = 'pointer';
-                });
-
-                 saveWheelBtn.onclick = () => alert('Premium Feature: Save Wheel functionality needs backend integration.');
-                 loadWheelBtn.onclick = () => alert('Premium Feature: Load Wheel functionality needs backend integration.');
-                 shareModalBtn.onclick = () => alert('Premium Feature: Share Wheel functionality needs backend integration.');
-                 viewAnalyticsBtn.onclick = () => alert('Premium Feature: Analytics functionality needs backend integration.');
-                 teamCollabBtn.onclick = () => alert('Premium Feature: Team Collaboration needs backend integration.');
-            }
-
-             function applyFreeLimitations() {
-                 document.querySelectorAll('.premium-lock').forEach(el => {
-                     el.querySelectorAll('input, select, button, textarea').forEach(input => {
-                         input.disabled = true;
-                         if (input.labels && input.labels[0]) input.labels[0].style.cursor = 'not-allowed';
-                         if (input.classList.contains('slider')) {
-                             input.parentElement.style.cursor = 'not-allowed';
-                         }
-                     });
-                      el.querySelectorAll('a.btn').forEach(a => {
-                         a.style.opacity = '0.6';
-                         a.style.pointerEvents = 'none';
-                         a.style.cursor = 'not-allowed';
-                     });
-                     el.querySelectorAll('label').forEach(label => {
-                         label.style.cursor = 'not-allowed';
-                     })
-                 });
-
-                themeOptions.forEach(option => {
-                    if (!option.classList.contains('theme-default')) {
-                        option.style.cursor = 'not-allowed';
-                        option.removeEventListener('click', handleThemeChange);
-                    } else {
-                         option.addEventListener('click', handleThemeChange);
-                    }
-                });
-                 
-                 soundToggle.checked = false;
-                 weightedToggle.checked = false;
-                 winnerCountInput.value = 1;
-                 soundEnabled = false;
-                 weightedEnabled = false;
-                 winnerCount = 1;
-
-                soundToggle.removeEventListener('change', handleSoundToggle);
-                weightedToggle.removeEventListener('change', handleWeightedToggle);
-                winnerCountInput.removeEventListener('change', handleWinnerCountChange);
-
-                  const premiumButtons = [saveWheelBtn, loadWheelBtn, shareModalBtn, viewAnalyticsBtn, teamCollabBtn];
-                  premiumButtons.forEach(btn => {
-                      if(btn) {
-                          btn.disabled = true;
-                          btn.onclick = () => document.getElementById('upgrade-cta').scrollIntoView({ behavior: 'smooth' });
-                      }
-                  });
-            }
-
-            // --- Core Wheel Logic ---
-            function parseEntries(text) {
-                const lines = text.split('\n').map(line => line.trim()).filter(line => line);
-                const entries = [];
-                 const weightRegex = /\(Weight:\s*(\d+)\s*\)/i;
-
-                lines.forEach(line => {
-                    let text = line;
-                    let weight = 1;
-
-                    const match = line.match(weightRegex);
-                    if (isPremium && weightedEnabled && match) {
-                        text = line.replace(weightRegex, '').trim();
-                        weight = parseInt(match[1], 10);
-                        if (isNaN(weight) weight = 1;
-                    } else {
-                         text = line.replace(weightRegex, '').trim();
-                    }
-
-                    if (text) {
-                        entries.push({ text: text, weight: weight });
-                    }
-                });
-
-                 if (!isPremium && entries.length > 10) {
-                    alert('Free version is limited to 10 entries. Please upgrade for unlimited entries.');
-                    return entries.slice(0, 10);
-                }
-
-                return entries;
-            }
-
-            function updateWheel() {
-                wheel.innerHTML = `<div class="wheel-center"><i class="fas fa-star"></i></div>`;
-                const totalWeight = currentEntries.reduce((sum, entry) => sum + entry.weight, 0);
-                const itemsToDraw = isPremium && weightedEnabled ? createWeightedList() : currentEntries;
-
-                 if (itemsToDraw.length === 0) {
-                     const placeholderSection = document.createElement('div');
-                     placeholderSection.className = 'wheel-section';
-                     placeholderSection.style.background = '#eee';
-                     placeholderSection.style.transform = 'rotate(0deg)';
-                     placeholderSection.style.clipPath = 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)';
-
-                     const placeholderContent = document.createElement('div');
-                     placeholderContent.className = 'wheel-section-content';
-                     placeholderContent.textContent = 'Add entries below!';
-                      placeholderContent.style.transform = 'translate(-50%, -50%) rotate(0deg)';
-                      placeholderContent.style.position = 'absolute';
-                      placeholderContent.style.top = '50%';
-                      placeholderContent.style.left = '50%';
-                      placeholderContent.style.width = '100%';
-                      placeholderContent.style.height = 'auto';
-                      placeholderContent.style.color = '#888';
-                      placeholderContent.style.textShadow = 'none';
-
-                     placeholderSection.appendChild(placeholderContent);
-                     wheel.appendChild(placeholderSection);
-                     return;
-                 }
-
-                const sectionAngle = 360 / itemsToDraw.length;
-                const themeColors = getThemeColors(currentTheme);
-
-                itemsToDraw.forEach((entry, index) => {
-                    const angle = sectionAngle * index;
-                    const section = document.createElement('div');
-                    section.className = 'wheel-section';
-
-                    const skewY = sectionAngle <= 90 ? 90 - sectionAngle : 0;
-                    section.style.transform = `rotate(${angle}deg) skewY(-${skewY}deg)`;
-
-                     const colorIndex = index % themeColors.length;
-                    section.style.background = themeColors[colorIndex];
-
-                     const clipAngle = sectionAngle * (Math.PI / 180);
-                     const clipX = 50 + 50 * Math.tan(clipAngle / 2);
-                     if (sectionAngle < 180) {
-                         section.style.clipPath = `polygon(50% 50%, 0% 0%, ${clipX}% 0%)`;
-                     } else {
-                          section.style.clipPath = `polygon(50% 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%)`;
-                     }
-
-                    const content = document.createElement('div');
-                    content.className = 'wheel-section-content';
-                    content.textContent = entry.text;
-
-                     const textRotation = 90 + sectionAngle / 2;
-                     content.style.transform = `skewY(${skewY}deg) rotate(${textRotation}deg) translate(-50%, -50%)`;
-                     content.style.position = 'absolute';
-                     content.style.left = '50%';
-                     content.style.top = '25%';
-                    content.style.width = '90%';
-
-                     const baseFontSize = 1.1;
-                     const lengthFactor = Math.max(0.4, 1 - (entry.text.length / 20));
-                     const countFactor = Math.max(0.5, 1 - (itemsToDraw.length / 30));
-                     content.style.fontSize = `clamp(0.6rem, ${baseFontSize * lengthFactor * countFactor}rem, 1.2rem)`;
-
-                    section.appendChild(content);
-                    wheel.appendChild(section);
-                });
-            }
-
-            function createWeightedList() {
-                const weightedList = [];
-                currentEntries.forEach(entry => {
-                    for (let i = 0; i < entry.weight; i++) {
-                        weightedList.push(entry);
-                    }
-                });
-                 for (let i = weightedList.length - 1; i > 0; i--) {
-                     const j = Math.floor(Math.random() * (i + 1));
-                     [weightedList[i], weightedList[j]] = [weightedList[j], weightedList[i]];
-                 }
-                return weightedList;
-            }
-
-            function spinWheel() {
-                const itemsToSpin = isPremium && weightedEnabled ? createWeightedList() : currentEntries;
-
-                if (spinning || itemsToSpin.length === 0) return;
-                spinning = true;
-                spinBtn.disabled = true;
-                spinBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> SPINNING...';
-                wheel.classList.add('spinning');
-                 hideSocialShare();
-
-                 if (soundEnabled && spinSound) {
-                     spinSound.currentTime = 0;
-                     spinSound.play().catch(e => console.error("Error playing spin sound:", e));
-                 }
-
-                const numSpins = 8 + Math.random() * 5;
-                const spinDuration = 6000;
-                const totalRotation = 360 * numSpins;
-                const sectionAngle = 360 / itemsToSpin.length;
-                const randomAngleWithinSegment = (Math.random() * 0.8 + 0.1) * sectionAngle;
-                const targetAngle = Math.random() * 360;
-                const finalRotation = totalRotation + targetAngle;
-
-                currentRotation = finalRotation;
-                wheel.style.transform = `rotate(${currentRotation}deg)`;
-
-                setTimeout(() => {
-                    spinning = false;
-                    spinBtn.disabled = false;
-                    spinBtn.innerHTML = '<i class="fas fa-sync-alt"></i> SPIN THE WHEEL';
-                     wheel.classList.remove('spinning');
-
-                    const actualAngle = currentRotation % 360;
-                    const winners = determineWinners(itemsToSpin, actualAngle, winnerCount);
-
-                    showWinnerModal(winners);
-                }, spinDuration + 100);
-            }
-
-             function determineWinners(items, finalAngle, count) {
-                 const winners = [];
-                 const selectedIndices = new Set();
-
-                 const firstWinnerPhysicalIndex = Math.floor(((360 - finalAngle) % 360) / sectionAngle);
-
-                 if (items[firstWinnerPhysicalIndex]) {
-                      winners.push(items[firstWinnerPhysicalIndex]);
-                      selectedIndices.add(firstWinnerPhysicalIndex);
-                 } else {
-                     if(items.length > 0) winners.push(items[Math.floor(Math.random() * items.length)]);
-                     return winners;
-                 }
-
-                 let attempts = 0;
-                 while (winners.length < count && winners.length < items.length && attempts < items.length * 2) {
-                     const randomIndex = Math.floor(Math.random() * items.length);
-                     if (!selectedIndices.has(randomIndex)) {
-                         const alreadyWinner = winners.some(winner => winner.text === items[randomIndex].text);
-                         if (!alreadyWinner) {
-                            winners.push(items[randomIndex]);
-                         }
-                         selectedIndices.add(randomIndex);
-                     }
-                     attempts++;
-                 }
-
-                 return winners;
-             }
-
-             function showWinnerModal(winners) {
-                 if (winners.length === 0) return;
-
-                 if (soundEnabled && winSound) {
-                     winSound.currentTime = 0;
-                     winSound.play().catch(e => console.error("Error playing win sound:", e));
-                 }
-                 launchConfetti();
-
-                 winnerDisplay.innerHTML = '';
-                 if (winners.length === 1) {
-                     const winnerP = document.createElement('p');
-                     winnerP.className = 'winner-name';
-                     winnerP.textContent = winners[0].text;
-                     winnerDisplay.appendChild(winnerP);
-                 } else {
-                     const winnerList = document.createElement('ul');
-                     winnerList.className = 'winner-list';
-                     winners.forEach(winner => {
-                         const li = document.createElement('li');
-                         li.textContent = winner.text;
-                         winnerList.appendChild(li);
-                     });
-                     winnerDisplay.appendChild(winnerList);
-                 }
-
-                  populateShareButtons(winners.map(w => w.text).join(', '));
-                  modalShareContainer.innerHTML = socialShareContainer.innerHTML;
-                  attachShareButtonListeners(modalShareContainer, winners.map(w => w.text).join(', '));
-
-                 modal.style.display = 'block';
-             }
-
-            function closeModal() {
-                modal.style.display = 'none';
-                stopConfetti();
-            }
-
-            // --- Confetti ---
-            let confettiInterval;
-            function launchConfetti() {
-                stopConfetti();
-                confettiInterval = setInterval(createConfettiPiece, 100);
-                setTimeout(stopConfetti, 4000);
-            }
-
-            function stopConfetti() {
-                clearInterval(confettiInterval);
-                 setTimeout(() => {
-                     confettiContainer.innerHTML = '';
-                 }, 3000);
-            }
-
-            function createConfettiPiece() {
-                 const confetti = document.createElement('div');
-                 confetti.className = 'confetti';
-                 const colors = getThemeColors(currentTheme);
-                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                 confetti.style.left = Math.random() * 100 + 'vw';
-                 confetti.style.top = '-20px';
-                 const randomX = (Math.random() - 0.5) * 500;
-                 const randomRot = Math.random() * 720 - 360;
-                 confetti.style.transform = `translateX(${randomX}px) rotate(${randomRot}deg)`;
-
-                 const duration = Math.random() * 2 + 3;
-                 confetti.style.animation = `fall ${duration}s linear forwards`;
-                 confetti.style.width = (Math.random() * 5 + 5) + 'px';
-                 confetti.style.height = confetti.style.width;
-                  if (Math.random() > 0.5) {
-                      confetti.style.height = (parseInt(confetti.style.width) / 2) + 'px';
-                  }
-                 confetti.style.opacity = Math.random() * 0.5 + 0.5;
-
-                 confettiContainer.appendChild(confetti);
-
-                 setTimeout(() => {
-                     confetti.remove();
-                 }, duration * 1000);
-            }
-
-            // --- Theme Handling ---
-             function getThemeColors(themeName) {
-                 const themes = {
-                     'default': ['#6a11cb', '#2575fc', '#a29bfe', '#6c5ce7', '#00d2d3'],
-                     'sunset': ['#ff8c00', '#ff0080', '#ff4e50', '#fc913a', '#f9d423'],
-                     'forest': ['#138d75', '#27ae60', '#58b368', '#82c97c', '#abdda4'],
-                     'ocean': ['#00c6ff', '#0072ff', '#4facfe', '#00f2fe', '#89f7fe'],
-                 };
-                 return themes[themeName] || themes['default'];
-             }
-
-             function applyTheme(themeName) {
-                 currentTheme = themeName;
-                 themeOptions.forEach(opt => {
-                     opt.classList.toggle('active', opt.dataset.theme === themeName);
-                 });
-                 updateWheel();
-             }
-
-             function handleThemeChange(event) {
-                 const selectedTheme = event.target.dataset.theme;
-                  const isPremiumTheme = !event.target.classList.contains('theme-default');
-                 if (isPremiumTheme && !isPremium) {
-                     alert('This theme is a premium feature. Please upgrade to use it.');
-                      document.getElementById('upgrade-cta').scrollIntoView({ behavior: 'smooth' });
-                     return;
-                 }
-                 applyTheme(selectedTheme);
-             }
-
-             // --- Settings Handlers (Premium Features) ---
-              function handleSoundToggle() {
-                 if (!isPremium) return;
-                 soundEnabled = soundToggle.checked;
-                 console.log("Sounds enabled:", soundEnabled);
-             }
-
-              function handleWeightedToggle() {
-                 if (!isPremium) return;
-                 weightedEnabled = weightedToggle.checked;
-                 console.log("Weighted entries enabled:", weightedEnabled);
-                 currentEntries = parseEntries(entriesTextarea.value);
-                 updateWheel();
-             }
-
-             function handleWinnerCountChange() {
-                 if (!isPremium) return;
-                 let count = parseInt(winnerCountInput.value);
-                 if (isNaN(count) || count < 1) {
-                     count = 1;
-                     winnerCountInput.value = 1;
-                 }
-                  const uniqueEntries = new Set(currentEntries.map(e => e.text)).size;
-                 if (count > uniqueEntries && uniqueEntries > 0) {
-                     count = uniqueEntries;
-                      winnerCountInput.value = count;
-                      alert(`Cannot select more winners than unique entries (${uniqueEntries}).`);
-                 } else if (count > 50) {
-                      count = 50;
-                      winnerCountInput.value = count;
-                      alert(`Maximum number of winners is 50.`);
-                 }
-                 winnerCount = count;
-                 console.log("Number of winners set to:", winnerCount);
-             }
-
-            // --- Social Sharing ---
-             function populateShareButtons(winnerText) {
-                 const shareText = encodeURIComponent(`Check out the result from SpinSelect Pro: ${winnerText}!`);
-                 const shareUrl = encodeURIComponent(window.location.href);
-
-                 const twitterBtn = socialShareContainer.querySelector('#share-twitter');
-                 const facebookBtn = socialShareContainer.querySelector('#share-facebook');
-                 const whatsappBtn = socialShareContainer.querySelector('#share-whatsapp');
-                 const copyBtn = socialShareContainer.querySelector('#copy-link-btn');
-
-                 if(twitterBtn) twitterBtn.href = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}`;
-                 if(facebookBtn) facebookBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&quote=${shareText}`;
-                 if(whatsappBtn) whatsappBtn.href = `https://api.whatsapp.com/send?text=${shareText}%20${shareUrl}`;
-
-                 attachShareButtonListeners(socialShareContainer, winnerText);
-                 socialShareContainer.classList.remove('hidden');
-            }
-
-             function attachShareButtonListeners(container, winnerText) {
-                 const copyBtn = container.querySelector('#copy-link-btn');
-                  if (copyBtn) {
-                      copyBtn.onclick = (e) => {
-                          e.preventDefault();
-                          const textToCopy = `SpinSelect Pro Result: ${winnerText} - See it here: ${window.location.href}`;
-                          navigator.clipboard.writeText(textToCopy).then(() => {
-                              alert('Result link copied to clipboard!');
-                          }).catch(err => {
-                              console.error('Failed to copy text: ', err);
-                              alert('Failed to copy link.');
-                          });
-                      };
-                  }
-             }
-
-            function hideSocialShare() {
-                socialShareContainer.classList.add('hidden');
-                 modalShareContainer.innerHTML = '';
-            }
-
-            // --- Event Listeners ---
-            addEntriesBtn.addEventListener('click', function() {
-                currentEntries = parseEntries(entriesTextarea.value);
-                updateWheel();
-                 hideSocialShare();
-            });
-
-            clearEntriesBtn.addEventListener('click', function() {
-                if (confirm('Are you sure you want to clear all entries?')) {
-                    currentEntries = [];
-                    entriesTextarea.value = '';
-                    updateWheel();
-                    hideSocialShare();
+            const winnerNameDisplay = document.getElementById('winner-name');
+            const wheelColorInput = document.getElementById('wheel-color');
+            const segmentColorInput = document.getElementById('segment-color');
+            const textColorInput = document.getElementById('text-color');
+            const spinDurationInput = document.getElementById('spin-duration');
+            const names =;
+
+            addNameButton.addEventListener('click', function() {
+                const name = nameInput.value.trim();
+                if (name!== '') {
+                    names.push(name);
+                    const listItem = document.createElement('li');
+                    listItem.textContent = name;
+                    nameList.appendChild(listItem);
+                    nameInput.value = '';
+                    drawWheel();
                 }
             });
 
-            spinBtn.addEventListener('click', spinWheel);
+            function drawWheel() {
+                const canvas = wheelCanvas;
+                const ctx = canvas.getContext('2d');
+                const diameter = canvas.width;
+                const radius = diameter / 2;
+                ctx.clearRect(0, 0, diameter, diameter);
 
-            upgradeBtn.addEventListener('click', function() {
-                const whopCheckoutUrl = "YOUR_WHOP_CHECKOUT_LINK_HERE";
-                 if (whopCheckoutUrl === "YOUR_WHOP_CHECKOUT_LINK_HERE") {
-                     alert("Please replace 'YOUR_WHOP_CHECKOUT_LINK_HERE' in the script with your actual Whop checkout URL.");
-                 } else {
-                    alert("Redirecting to Whop to complete your upgrade...");
-                    window.location.href = whopCheckoutUrl;
-                 }
+                if (names.length === 0) {
+                    ctx.beginPath();
+                    ctx.arc(radius, radius, radius - 10, 0, 2 * Math.PI);
+                    ctx.fillStyle = wheelColorInput.value;
+                    ctx.fill();
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                    return;
+                }
+
+                const segmentAngle = 2 * Math.PI / names.length;
+                for (let i = 0; i < names.length; i++) {
+                    const startAngle = i * segmentAngle;
+                    const endAngle = startAngle + segmentAngle;
+                    ctx.beginPath();
+                    ctx.arc(radius, radius, radius - 10, startAngle, endAngle);
+                    ctx.lineTo(radius, radius);
+                    ctx.fillStyle = segmentColorInput.value;
+                    ctx.fill();
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+
+                    ctx.fillStyle = textColorInput.value;
+                    ctx.font = '16px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    const textRadius = radius * 0.7;
+                    const angle = startAngle + segmentAngle / 2;
+                    ctx.save();
+                    ctx.translate(radius + textRadius * Math.cos(angle), radius + textRadius * Math.sin(angle));
+                    ctx.rotate(angle + Math.PI / 2);
+                    const text = names[i];
+                    ctx.fillText(text, 0, 0);
+                    ctx.restore();
+                }
+                // Draw the outer circle
+                ctx.beginPath();
+                ctx.arc(radius, radius, radius - 10, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+
+            drawWheel();
+
+            spinButton.addEventListener('click', function() {
+                if (names.length > 0) {
+                    const duration = parseInt(spinDurationInput.value) * 1000;
+                    const spins = 10; // Number of full rotations
+                    const randomOffset = Math.random() * 2 * Math.PI;
+                    const finalAngle = spins * 2 * Math.PI + randomOffset;
+
+                    let animationStartTime;
+
+                    function animate(currentTime) {
+                        if (!animationStartTime) {
+                            animationStartTime = currentTime;
+                        }
+
+                        const elapsedTime = currentTime - animationStartTime;
+                        const ease = Math.easeInOutCubic(elapsedTime / duration);
+                        const currentRotation = finalAngle * ease;
+
+                        const canvas = wheelCanvas;
+                        const ctx = canvas.getContext('2d');
+                        const diameter = canvas.width;
+                        const radius = diameter / 2;
+                        ctx.clearRect(0, 0, diameter, diameter);
+
+                        const segmentAngle = 2 * Math.PI / names.length;
+                        for (let i = 0; i < names.length; i++) {
+                            const startAngle = i * segmentAngle + currentRotation;
+                            const endAngle = startAngle + segmentAngle;
+                            ctx.beginPath();
+                            ctx.arc(radius, radius, radius - 10, startAngle, endAngle);
+                            ctx.lineTo(radius, radius);
+                            ctx.fillStyle = segmentColorInput.value;
+                            ctx.fill();
+                            ctx.strokeStyle = '#000';
+                            ctx.lineWidth = 1;
+                            ctx.stroke();
+
+                            ctx.fillStyle = textColorInput.value;
+                            ctx.font = '16px sans-serif';
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+                            const textRadius = radius * 0.7;
+                            const angle = startAngle + segmentAngle / 2;
+                            ctx.save();
+                            ctx.translate(radius + textRadius * Math.cos(angle), radius + textRadius * Math.sin(angle));
+                            ctx.rotate(angle + Math.PI / 2);
+                            const text = names[i];
+                            ctx.fillText(text, 0, 0);
+                            ctx.restore();
+                        }
+                        // Draw the outer circle
+                        ctx.beginPath();
+                        ctx.arc(radius, radius, radius - 10, currentRotation, 2 * Math.PI + currentRotation);
+                        ctx.strokeStyle = '#000';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+
+
+                        if (elapsedTime < duration) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            const winningSegmentIndex = Math.floor(names.length - (currentRotation % (2 * Math.PI)) / segmentAngle);
+                            const winner = names;
+                            winnerNameDisplay.textContent = winner;
+                            winnerDisplay.classList.remove('hidden');
+                        }
+                    }
+
+                    requestAnimationFrame(animate);
+                }
             });
 
-             modalCloseBtn.addEventListener('click', closeModal);
-             spinAgainBtn.addEventListener('click', () => {
-                 closeModal();
-                 spinWheel();
-             });
-
-              // Initial Setup
-             document.getElementById('current-year').textContent = new Date().getFullYear();
-             checkPremiumStatus();
-             currentEntries = parseEntries(entriesTextarea.value || "Entry 1\nEntry 2\nEntry 3");
-             applyTheme(currentTheme);
-             updateWheel();
+            // Easing function for smooth animation
+            Math.easeInOutCubic = function (t) {
+                return t <.5? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1
+            };
         });
     </script>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            max-width: 960px;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: calc(33% - 60px); /* Adjust width for responsiveness */
+            min-width: 300px; /* Minimum width for smaller screens */
+        }
+
+        #wheel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: auto;
+        }
+
+        #wheel {
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        #winner-display {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #e6ffe6;
+            border: 1px solid #a6e3a6;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        #winner-display.hidden {
+            display: none;
+        }
+
+        #input-area ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #input-area ul li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        #input-area ul li:last-child {
+            border-bottom: none;
+        }
+
+       .option {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #777;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        input[type="color"] {
+            width: 80px;
+            height: 30px;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+    </style>
 </body>
 </html>
